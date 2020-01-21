@@ -1,10 +1,8 @@
+//This is my first c++ program, It prints Hello World! 5 times
 #include <iostream>
-#include <string>
 
-int main(int argc, char** argv)
+int main()
 {
-	std::string input;
-	std::cout << "Hello World" << std::endl;
-	std::cout << std::endl;
+	std::cout << "Hello World!\n" "Hello World!\n" "Hello World!\n" "Hello World!\n" "Hello World!\n";
 	return 0;
 }
