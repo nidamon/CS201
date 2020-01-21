@@ -12,6 +12,6 @@ int main()
 	std::cout << "Be careful, and listen, learn from your mistakes" << std::endl;
 	std::cout << "Because one day you'll advance on the choices you make" << std::endl;
 	std::cout << "Your future is here, your future is now" << std::endl;
-	std::cout << "But don't worry, you'll show yourself how" << std::endl;
+	std::cout << "But don't worry, you'll show yourself how." << std::endl;
 	return 0;
 }
