@@ -10,13 +10,13 @@ using std::cin;
 using std::endl;
 
 int main() {
-	int n;
+	int n=0;
 
-	while (true) {
+	while (n < 1) {
 
 		cout << "Please enter a positive integer ";
 		cin >> n;
-		if (n >= 0) {
+		if (n >= 1) {
 			break;
 		}
 		else {
@@ -24,8 +24,8 @@ int main() {
 		}
 	}
 	cout << "You entered: " << n << endl;
-	for (int i = 1; i <= n; i++) {
-
+	for (int i = 0; i <= n; i=i+2) {
+		cout << "#";
 	}
 	return 0;
 }
