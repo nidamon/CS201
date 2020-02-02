@@ -6,13 +6,12 @@ This program will calculate the dot product and cross product of a 3-component v
 
 #include <iostream>
 #include <iomanip>
-#include <cmath>
 using std::cout;
 using std::cin;
 using std::endl;
 
 int main() {
-	int Ax = Ay = Az = Bx = By = Bz = Cx = Cy = Cz = 0;
+	float Ax, Ay, Az, Bx, By, Bz;
 
 	cout << "Enter the x, y, and z for vector A:" << endl; //asks for the components for vector A
 	cout << "x = ";
@@ -34,7 +33,7 @@ int main() {
 	cout << "A cross B = (";
 	cout << std::setprecision(5) << Ay * Bz - Az * By << ",";
 	cout << std::setprecision(5) << Az * Bx - Ax * Bz << ",";
-	cout << std::setprecision(5) << Ax * By - Ay * Bx << "," << endl;
-	
+	cout << std::setprecision(5) << Ax * By - Ay * Bx << ")" << endl;
+	//system("pause"); //Needed to use this again
 	return 0;
 }
