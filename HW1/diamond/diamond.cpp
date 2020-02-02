@@ -24,8 +24,11 @@ int main() {
 		}
 	}
 	cout << "You entered: " << n << endl;
-	for (int i = 0; i <= n; i=i+2) {
-		cout << "#";
+	for (int i = 0; i <= n; i=i++) {
+		for (int i = n; i >= 0; i=i-1) {
+			cout << " ";
+		}
+			cout << "#";
 	}
 	return 0;
 }
