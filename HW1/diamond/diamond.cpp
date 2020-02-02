@@ -13,7 +13,7 @@ int main() {
 	int n = 0;
 	int k = 0;
 
-	while (n < 1) {
+	while (n < 1) {//This while loop asks for the input
 
 		cout << "Please enter a positive integer ";
 		cin >> n;
@@ -21,8 +21,8 @@ int main() {
 			cout << n << " needs to be a positive integer" << endl;
 		}
 	}
-	cout << "You entered: " << n << endl;
-	for (int i = 1; i <= n; i++ , k++) {
+	cout << "You entered: " << n << endl; //This line reports the entered integer
+	for (int i = 1; i <= n; i++ , k++) { //creates top half of diamond
 
 		for (int j = n - 1; j >= k; j = j - 1) { //This will put the spaces in
 
@@ -34,7 +34,7 @@ int main() {
 		}
 		cout << endl;
 	}
-	for (int g = n - 1; g >= 1; g--) {
+	for (int g = n - 1; g >= 1; g--) { //creates bottom half of diamond
 
 		for (int h = n; h >= g; h--) { //This will put the spaces in
 
