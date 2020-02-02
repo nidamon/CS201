@@ -15,7 +15,7 @@ int main() {
 	cout << "Enter a number of miles for kilometer conversion: ";
 	cin >> n;
 	cout << "Number of kilometers: " << n * 1.609 << endl;
-	system("pause"); //Had to use this again...
+	//system("pause"); //Had to use this again...
 
 	return 0;
 }
