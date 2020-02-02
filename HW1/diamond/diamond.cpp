@@ -46,6 +46,6 @@ int main() {
 		}
 		cout << endl;
 	}
-	system("pause"); //Was having issues with the console instantly closing on me. So I found this tempory solution.
+	//system("pause"); //Was having issues with the console instantly closing on me. So I found this tempory solution.
 	return 0;
 }
