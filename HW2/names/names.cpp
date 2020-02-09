@@ -17,13 +17,20 @@ using std::string;
 using std::vector;
 
 void InputNames(vector<string>& names);
-bool DoesNameExist(const string& anmeToFind, const vector<string>& names);
+bool DoesNameExist(const string& nameToFind, const vector<string>& names);
 void PrintNames(const vector<string>& names);
 
 int main(int argc, char** argv)
 {
 	vector<string> names;
 	InputNames(names);
+	
+	string nameToFind;
+	cout << "Enter a name to search for it: ";
+	cin >> nameToFind;
+
+	DoesNameExist(nameToFind, names);
+	
 	PrintNames(names);
 
 	int q; 
@@ -41,6 +48,19 @@ void InputNames(vector<string>& names) //Adds the inputted names to the vector "
 		std::getline(cin, name);
 		names.push_back(name);
 	}
+	cout << endl;
+}
+
+bool DoesNameExist(const string& nameToFind, const vector<string>& names) //Allows the user to search for items in the vector "names"
+{
+	for (int i = 0; i < names.size(); i++)
+	{
+		if (names[i] == nameToFind)
+		{
+			return true;
+		}
+	}
+	cout << "The name '" << nameToFind << "' does not exist." << endl;
 	cout << endl;
 }
 
