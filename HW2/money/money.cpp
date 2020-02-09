@@ -16,6 +16,7 @@ int nickels;
 int dimes;
 int quarters;
 int half_dollars;
+float total_money;
 
 int main()
 {
@@ -65,6 +66,9 @@ int main()
 	else{
 		cout << "You have " << half_dollars << " half dollars." << endl;
 	}
+
+	total_money = (pennies + nickels * 5 + dimes * 10 + quarters * 25 + half_dollars * 50);
+	cout << "The value of all your coins is $" << total_money / 100 << "." << endl;
 	cout << endl;
 	
 
