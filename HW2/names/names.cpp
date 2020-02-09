@@ -63,6 +63,8 @@ bool DoesNameExist(const string& nameToFind, const vector<string>& names) //Allo
 	{
 		if (names[i] == nameToFind)
 		{
+			cout << "The name '" << nameToFind << "' does exist." << endl;
+			cout << endl;
 			return true;
 		}
 	}
