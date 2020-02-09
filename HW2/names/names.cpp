@@ -2,7 +2,10 @@
 Nathan Damon
 CS 201
 2/5/2020
-This program will take 10 names as input from the user and do something interesting.
+This program will take 10 names as input from the user and will:
+	search for whether or not a name exists in the list,
+	print out a list of the names,
+	and will print out the names backwards.
 */
 
 #include <iostream>
@@ -19,6 +22,7 @@ using std::vector;
 void InputNames(vector<string>& names);
 bool DoesNameExist(const string& nameToFind, const vector<string>& names);
 void PrintNames(const vector<string>& names);
+void InterestingNames(const vector<string>& names);
 
 int main(int argc, char** argv)
 {
@@ -32,6 +36,8 @@ int main(int argc, char** argv)
 	DoesNameExist(nameToFind, names);
 	
 	PrintNames(names);
+
+	InterestingNames(names);
 
 	int q; 
 	cout << "Program has finished. Enter a character to return: ";
@@ -70,6 +76,20 @@ void PrintNames(const vector<string>& names) //Prints the contents of the vector
 	for (int i = 0; i < names.size(); i++)
 	{
 		cout << names[i] << " " << endl;
+	}
+	cout << endl;
+}
+
+void InterestingNames(const vector<string>& names) //Prints the names backwards.
+{
+	cout << "Below is the list of names in reverse." << endl;
+	for (int i = 0; i < names.size(); i++)
+	{
+		for (int j = names[i].size(); j >= 0; j--) //This is where the names are printed in reverse.
+		{
+			cout << (names[i])[j];
+		}
+		cout << " " << endl; //Adds a nice indent in the console.
 	}
 	cout << endl;
 }
