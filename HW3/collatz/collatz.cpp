@@ -21,18 +21,18 @@ int main()
 		cin >> n;
 	}
 
-	while (n > 1) {
+	while (n > 1) { // Produces the Collatz sequence until n = 1
 		cout << n << " ";
-		switch (n % 2) {
+		switch (n % 2) { // Determines if n is odd or even.
 			case 0:
-				n = n / 2;
+				n = n / 2; // if even
 				break;
 			case 1:
-				n = 3 * n + 1;
+				n = 3 * n + 1; // if odd
 				break;
 		}
 	}
-	cout << n << endl;
+	cout << n << endl; // outputs 1
 
 	int q;
 	cout << "Program has finished. Enter a character to return: ";
