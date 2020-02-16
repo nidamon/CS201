@@ -13,17 +13,7 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-double ctok(double c)
-{
-	while (c < -273.15)
-	{
-		cout << "Enter a value greater than -273.15: ";
-		cin >> c;
-	}
-		
-	double k = c + 273.15; // If k is an int then the 0.15 that is added to c will be lost.
-		return k; // We are returning k not a type.
-}
+double ctok(double c); // It's better to use a prototype at the top and have main be the top function.
 
 int main()
 {
@@ -38,4 +28,21 @@ int main()
 	cout << k - 273.15 << " degrees Celsius is equal to "; // This will make things easier to read/understand.
 	cout << k << " degrees Kelvin" << endl; /* /n should not be in single quotes and it's better to use endl here instead of /n.
 						Cout should be lower case cout. The units of k should be outputted with k.*/
+	int q;
+	cout << "Program has finished. Enter a character to return: ";
+	cin >> q; //Stops the console from closing after the program has run.
+	return 0;
 }
+
+double ctok(double c)
+{
+	while (c < -273.15)
+	{
+		cout << "Enter a value greater than -273.15: ";
+		cin >> c;
+	}
+		
+	double k = c + 273.15; // If k is an int then the 0.15 that is added to c will be lost.
+		return k; // We are returning k not a type.
+}
+
