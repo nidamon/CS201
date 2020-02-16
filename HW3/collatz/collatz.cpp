@@ -2,9 +2,13 @@
 Nathan Damon
 CS 201
 2/16/2020
-This program will take a string and integer input and output a box.
+This program will take a positive number input and will output a series of numbers ending at one.
 */
 
+#include <iostream>
+using std::cin;
+using std::cout;
+using std::endl;
 
 int n;
 
@@ -17,5 +21,21 @@ int main()
 		cin >> n;
 	}
 
+	while (n > 1) {
+		cout << n << " ";
+		switch (n % 2) {
+			case 0:
+				n = n / 2;
+				break;
+			case 1:
+				n = 3 * n + 1;
+				break;
+		}
+	}
+	cout << n << endl;
+
+	int q;
+	cout << "Program has finished. Enter a character to return: ";
+	cin >> q; //Stops the console from closing after the program has run.
 	return 0;
 }
