@@ -9,6 +9,6 @@ This header will declare the boxer.cpp as a function.
 #ifndef BOXER_H
 #define BOXER_H
 
-void boxer(std::string s, int n);
+std::string boxer(std::string str, int n);
 
 #endif

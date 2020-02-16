@@ -13,10 +13,20 @@ using std::cout;
 using std::endl;
 using std::string;
 
-void boxer(
-	string s,
+string boxer(
+	string str,
 	int n
 )
 {
-
+	for (int i = 0; i < 3 + 2 * n; i++) 
+	{
+		cout << "*";
+	}
+	cout << str;
+	for (int i = 0; i < 3 + 2 * n; i++)
+	{
+		cout << "*";
+	}
+	cout << endl;
+	return str;
 }
