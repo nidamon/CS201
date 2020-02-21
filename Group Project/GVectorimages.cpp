@@ -22,6 +22,14 @@ string empty =            "|             |";
 string outside_barrier =  "|-------------|";
 string inside_barrier =   "|#############|";
 
+string player_model_1_0 = "|   !     !   |";
+string player_model_1_1 = "| ! ! .-. ! ! |";  // Temporary gingerbread man
+string player_model_1_2 = "| ! _( \" )_ ! |";
+string player_model_1_3 = "|  (_  :  _)  |";
+string player_model_1_4 = "|    / ' \\    |";
+string player_model_1_5 = "|   (_/^\\_)   |";
+string player_model_1_6 = "|             |";
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -39,6 +47,14 @@ int main()
 		empty_cell.push_back(empty);
 	}
 
+    player_cell.push_back(player_model_1_0);
+	player_cell.push_back(player_model_1_1);
+	player_cell.push_back(player_model_1_2);
+	player_cell.push_back(player_model_1_3);
+	player_cell.push_back(player_model_1_4);
+	player_cell.push_back(player_model_1_5);
+	
+
 	barrier_cell.push_back(outside_barrier);
 	barrier_cell.push_back(inside_barrier);
 	barrier_cell.push_back(outside_barrier);
@@ -55,11 +71,6 @@ int main()
 
 	cout << endl;
 	cout << endl;
-
-	srand(time(0));
-	Vrandom[0] = (rand() % 2);
-	Vrandom[1] = (rand() % 2);
-	Vrandom[2] = (rand() % 2);
 
 	/*for (int i = 0; i < 1; i++) {                   // All commented below is a work in progress
 		//while (barrier_count > max_barrier_count) {
@@ -83,13 +94,37 @@ int main()
 
 	cout << endl;
 	cout << endl;
-	for (int j = 0; j < 3; j++) {
+
+	int yes = 1;
+
+	while (yes == 1){
+		srand(time(0));
+		Vrandom[0] = ((rand() % 3) % 2);
+		Vrandom[1] = ((rand() % 5) % 2);
+		Vrandom[2] = ((rand() % 7) % 2);
+
 		for (int i = 0; i < 6; i++) {
 			cout << barrier_section[Vrandom[0]][i] << barrier_section[Vrandom[1]][i] << barrier_section[Vrandom[2]][i] << endl;
 		}
-	}
-	cout << endl;
 
+		for (int i = 0; i < 6; i++) {
+			cout << empty_cell[i] << player_cell[i] << empty_cell[i] << endl;
+		}
+
+		srand(time(0));
+		Vrandom[0] = ((rand() % 13) % 2);
+		Vrandom[1] = ((rand() % 11) % 2);
+		Vrandom[2] = ((rand() % 9) % 2);
+
+		for (int i = 0; i < 6; i++) {
+			cout << barrier_section[Vrandom[0]][i] << barrier_section[Vrandom[1]][i] << barrier_section[Vrandom[2]][i] << endl;
+		}
+
+		yes = 0;
+		cout << endl;
+		cout << "If want more samples, type 1: ";
+		cin >> yes;
+	}
 	
 	cout << endl;
 	cout << "To stop, type something: ";
