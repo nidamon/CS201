@@ -6,6 +6,7 @@ This header will declare tokenizer.cpp as a function.
 */
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -19,8 +20,8 @@ using std::endl;
 #ifndef tokenizer_H
 #define tokenizer_H
 
-bool ReadLine(std::string& str);
-
+bool ReadLine(string& str);
+unsigned StringToTokenWS(const string& input, vector<string>& tokens);
 
 
 #endif

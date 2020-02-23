@@ -9,9 +9,26 @@ This program will test the tokenizer program.
 
 int main()
 {
-	string str;
+	int finish = 1;
 	cout << "Please type in some text. When you are done, type \"End\", \"end\" or \"END\":" << endl;
-	ReadLine(str);
+	string str;
+	vector<string> tokens;
+	while (finish != 0) // Continues to allow the user to enter text until they enter one of the three ends.
+	{
+		ReadLine(str);
+		StringToTokenWS(str, tokens);
+
+		if (str == "end")
+			finish = 0;
+		if (str == "End")
+			finish = 0;
+		if (str == "END")
+			finish = 0;
+	}
+		
+	for (int i = 0; i < tokens.size() ; i++) { // prints tokens for testing
+		cout << tokens[i] << endl;
+	}
 
 	int q;
 	cout << endl;
