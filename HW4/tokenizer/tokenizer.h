@@ -22,6 +22,6 @@ using std::endl;
 
 bool ReadLine(string& str);
 unsigned StringToTokenWS(const string& input, vector<string>& tokens);
-
+void AnalyzeTokens(const vector<string>& tokens);
 
 #endif

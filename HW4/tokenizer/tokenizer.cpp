@@ -30,3 +30,35 @@ unsigned StringToTokenWS(const string& str, vector<string>& tokens) // Takes the
 	tokens.push_back("");
 	return 0;
 }
+
+void AnalyzeTokens(const vector<string>& tokens)
+{
+	for (int i = 0; i < tokens.size(); i++)
+	{
+		int notint = 0;
+		string::size_type pos1 = tokens[i].find_first_of("0123456789"); // pos will be really large if 0-9 is not in the string.
+		string::size_type pos2 = tokens[i].substr(0, 1).find_first_of("_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"); 
+									// pos will be really large if any of these characters are not in the string.
+		string::size_type pos3 = tokens[i].find_first_of("\"");
+		if (pos1 > 1000)
+			notint++;
+		else
+			for (int j = 0; j < tokens[i].size(); j++) // if a number 0-9 is found somewhere, check if all chars are 0-9.
+			{
+			
+				if (tokens[i].substr(j, 1).find_first_of("0123456789") > 1)
+					notint++;
+			}
+		if (notint == 0)
+			cout << "[integer]          \"" << tokens[i] << "\"" << endl;
+		else if (tokens[i].size() == 0)
+			cout << "[whitespace]       \"\"" << endl;
+		else if (pos3 < 10)
+				cout << "[string]           \"\\" << tokens[i] << "\\\"" << endl;
+		else if (pos2 < 10)  
+			cout << "[identifier]       \"" << tokens[i] << "\"" << endl;
+		else
+			cout << "[other]            \"" << tokens[i] << "\"" << endl;
+	}
+	
+}

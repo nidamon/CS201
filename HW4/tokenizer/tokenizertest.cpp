@@ -25,10 +25,9 @@ int main()
 		if (str == "END")
 			finish = 0;
 	}
-		
-	for (int i = 0; i < tokens.size() ; i++) { // prints tokens for testing
-		cout << tokens[i] << endl;
-	}
+	tokens.pop_back();
+
+	AnalyzeTokens(tokens);
 
 	int q;
 	cout << endl;
