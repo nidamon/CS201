@@ -153,7 +153,7 @@ int main()
 						break;
 					}
 					cout << "Your last item was: ";
-					//LifoPop(container, item);
+					LifoPop(container, item);
 				}
 			}
 
@@ -204,7 +204,11 @@ void LifoPush(vector<string>& container, const string& item) // Just need a simp
 {
 	container.push_back(item);
 }
-void LifoPop(vector<string>& container, string& item);
+void LifoPop(vector<string>& container, string& item)
+{
+	cout << container.back() << endl;
+	container.pop_back();
+}
 
 // Shared functionality
 bool IsContainerEmpty(const vector<string>& container);
