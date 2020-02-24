@@ -21,6 +21,7 @@ int finish = 1;
 string str;
 int not_Fifo_or_Lifo_count;
 int Fifo_item_add_count;
+int Lifo_item_add_count;
 int yes_no = 1;
 
 // First-In First-Out
@@ -74,9 +75,14 @@ int main()
 
 		cout << endl;
 
+
+		// Fifo section
+
+
 		if (str == "Fifo") // If user picks Fifo in previous selection.
 		{
 			cout << "You have chosen Fifo. Enter what you would like to place in your container: ";
+			yes_no = 1;
 			while (yes_no != 0)
 			{
 				if (Fifo_item_add_count > 0)
@@ -91,6 +97,7 @@ int main()
 				Fifo_item_add_count++;
 			}
 
+			yes_no = 1;
 			while (yes_no != 0)
 			{
 				cout << endl;
@@ -98,10 +105,59 @@ int main()
 				cin >> yes_no;
 				if (yes_no == 1)
 				{
-					cout << "Your last item was ";
+					if (container.size() == 0)
+					{
+						cout << "Your container is empty.";
+						break;
+					}
+					cout << "Your last item was: ";
 					FifoPop(container, item);
 				}
+				
 			}
+		}
+
+
+		// Lifo section
+
+
+		else if (str == "Lifo") // If user picks Lifo in previous selection.
+		{
+			cout << "You have chosen Lifo. Enter what you would like to place in your container: ";
+			yes_no = 1;
+			while (yes_no != 0)
+			{
+				if (Lifo_item_add_count > 0)
+					cout << "Enter another item to place in your container: ";
+
+				cin >> item;
+				LifoPush(container, item);
+
+				cout << "Would you like to add another item? Enter \"1\" for yes or \"0\" for no: ";
+				cin >> yes_no;
+
+				Lifo_item_add_count++;
+			}
+
+			yes_no = 1;
+			while (yes_no != 0)
+			{
+				cout << endl;
+				cout << "Would you like to \"Pop\" the last item in your container with Lifo pop? Enter \"1\" for yes or \"0\" for no: ";
+				cin >> yes_no;
+				if (yes_no == 1)
+				{
+					if (container.size() == 0)
+					{
+						cout << "Your container is empty.";
+						break;
+					}
+					cout << "Your last item was: ";
+					//LifoPop(container, item);
+				}
+			}
+
+
 		}
 
 
@@ -137,14 +193,17 @@ void FifoPush(vector<string>& container, const string& item) // Takes the user's
 	else
 		container.push_back(item);
 }
-void FifoPop(vector<string>& container, string& item)
+void FifoPop(vector<string>& container, string& item) // Outputs the last item in the container (the first item inputted by the user).
 {
 	cout << container.back() << endl;
 	container.pop_back();
 }
 
 // Last-In First-Out
-void LifoPush(vector<string>& container, const string& item);
+void LifoPush(vector<string>& container, const string& item) // Just need a simple push_back to fill the container.
+{
+	container.push_back(item);
+}
 void LifoPop(vector<string>& container, string& item);
 
 // Shared functionality
