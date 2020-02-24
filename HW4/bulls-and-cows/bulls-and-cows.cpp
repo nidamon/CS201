@@ -30,7 +30,7 @@ int main()
 	int trys = 0;
 
 	cout << "We are trying to pick a four digit number. This could take a moment or several." << endl;
-	
+	cout << "Loading Game"; // Added this just for fun.
 	for (int i = 0; i < 4; i++)
 	{
 		int n = -1;
@@ -42,7 +42,7 @@ int main()
 			n = Vrandom[i] = one_through_nine[random_num]; // The ith element of Vrandom is set to equal the random value.
 			one_through_nine[random_num] = -1; // The random value is set to -1 so as to not be chosen again.
 		}
-
+		cout << ".";
 	}
 	cout << endl;
 	
