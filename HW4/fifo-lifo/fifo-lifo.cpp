@@ -90,16 +90,28 @@ int main()
 
 				Fifo_item_add_count++;
 			}
+
+			while (yes_no != 0)
+			{
+				cout << endl;
+				cout << "Would you like to \"Pop\" the last item in your container with Fifo pop? Enter \"1\" for yes or \"0\" for no: ";
+				cin >> yes_no;
+				if (yes_no == 1)
+				{
+					cout << "Your last item was ";
+					FifoPop(container, item);
+				}
+			}
 		}
 
 
 		for (int i = 0; i < container.size(); i++)
 			cout << container[i] << endl;
 
-
-
-
 	}
+
+
+
 
 	int q;
 	cout << endl;
@@ -125,7 +137,11 @@ void FifoPush(vector<string>& container, const string& item) // Takes the user's
 	else
 		container.push_back(item);
 }
-void FifoPop(vector<string>& container, string& item);
+void FifoPop(vector<string>& container, string& item)
+{
+	cout << container.back() << endl;
+	container.pop_back();
+}
 
 // Last-In First-Out
 void LifoPush(vector<string>& container, const string& item);
