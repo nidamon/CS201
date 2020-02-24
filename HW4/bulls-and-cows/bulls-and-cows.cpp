@@ -24,12 +24,13 @@ int main()
 	int guess; // Holds the user's 4-digit guess.
 	std::string str; // The string guess of the user.
 	int done = 1; // For the while loop that continues to prompt for an integer input.
-	vector <int> Vguess;
+	vector <int> Vguess(4);
 	int bulls = 0;
 	int cows = 0;
+	int trys = 0;
 
-	cout << "We are trying to pick a four digit number. This could take a moment." << endl;
-
+	cout << "We are trying to pick a four digit number. This could take a moment or several." << endl;
+	
 	for (int i = 0; i < 4; i++)
 	{
 		int n = -1;
@@ -44,56 +45,63 @@ int main()
 
 	}
 	cout << endl;
-
-	for (int i = 0; i < Vrandom.size(); i++) // Outputs the answer for testing.
-		cout << Vrandom[i];
-	cout << endl;
-
 	
 	cout << "Enter your guess for what the four-digit number is: ";
-	
-	while (done != 0)
+	while (bulls < 4) // Runs until the user has gotten all the bulls.
 	{
-		std::getline(cin, str);
-		istringstream instream(str);
-		instream >> guess;
-		if (!instream)
-			cout << "You need to enter an integer." << endl;
-		else
-			done = 0;
+		if (trys > 0) // This message is displayed after the first guess.
+			cout << "Enter another guess for what you think the four-digit number is: ";
+
+		done = 1;
+		while (done != 0)
+		{
+			std::getline(cin, str);
+			istringstream instream(str);
+			instream >> guess;
+			if (!instream)
+				cout << "You need to enter an integer." << endl;
+			else
+				done = 0;
+		}
+
+		if (guess < 0) // Outputs the answer if the user enters a negative number.
+			for (int i = 0; i < Vrandom.size(); i++) 
+				cout << Vrandom[i];
+
+		int digit1;
+		int digit2;
+		int digit3;
+		int digit4;
+
+		digit1 = (guess / 1000); // These expressions below are used to grab the digits of the user's geuss.
+		Vguess[0] = (digit1);
+		digit2 = ((guess - digit1 * 1000) / 100);
+		Vguess[1] = (digit2);
+		digit3 = ((guess - digit1 * 1000 - digit2 * 100) / 10);
+		Vguess[2] = (digit3);
+		digit4 = (guess - digit1 * 1000 - digit2 * 100 - digit3 * 10);
+		Vguess[3] = (digit4);
+
+		bulls = 0; // Resets the number of bulls and cows after each guess.
+		cows = 0; 
+
+		for (int i = 0; i < Vrandom.size(); i++)
+		{
+			if (Vguess[i] == Vrandom[i]) // Determines if bull.
+				bulls++;
+			else
+				for (int j = 0; j < Vrandom.size(); j++)
+					if (Vguess[j] == Vrandom[i]) // Determines if cow.
+						cows++;
+		}
+		cout << endl;
+
+		cout << bulls << " bull and " << cows << " cow." << endl;
+		trys++;
+		cout << endl;
 	}
 
-	int digit1;
-	int digit2; 
-	int digit3;
-	int digit4;
-
-	digit1 = (guess / 1000); // These expressions below are used to grab the digits of the user's geuss.
-	Vguess.push_back(digit1);
-	digit2 = ((guess - digit1 * 1000) / 100);
-	Vguess.push_back(digit2);
-	digit3 = ((guess - digit1 * 1000 - digit2 * 100) / 10);
-	Vguess.push_back(digit3);
-	digit4 = (guess - digit1 * 1000 - digit2 * 100 - digit3 * 10);
-	Vguess.push_back(digit4);
-
-	for (int i = 0; i < Vguess.size(); i++) // Outputs the answer for testing.
-		cout << Vguess[i] << endl;
-
-	for (int i = 0; i < Vrandom.size(); i++)
-	{
-		if (Vguess[i] == Vrandom[i])
-			bulls++;
-		else
-			for (int j = 0; j < Vrandom.size(); j++)
-				if (Vguess[j] == Vrandom[i])
-					cows++;
-	}
-	cout << endl;
-
-	cout << bulls << " bull and " << cows << " cow." << endl;
-
-	cout << endl;
+	cout << "Congratulations! You did it!" << endl;
 
 	int q;
 	cout << endl;
