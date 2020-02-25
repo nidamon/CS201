@@ -24,6 +24,8 @@ int Fifo_item_add_count;
 int Lifo_item_add_count;
 int yes_no = 1;
 bool b;
+vector<string> test{ "A" , "B" , "C" , "D" };
+int confirm_test;
 
 // First-In First-Out
 void FifoPush(vector<string>& container, const string& item);
@@ -44,7 +46,7 @@ bool TestLifo();
 
 int main()
 {
-	cout << "Would you like to fill a container? Type \"Yes\" if you do. ";
+	cout << "Would you like to fill a container? Type \"Yes\" if you do. Or type \"test\" to access the testing functions. ";
 	cin >> answer;
 	if (answer == "yes")
 		finish = 0;
@@ -52,6 +54,8 @@ int main()
 		finish = 0;
 	else if (answer == "YES")
 		finish = 0;
+	else if (answer == "test")
+		finish = 2;
 	else
 		cout << "Goodbye."; // If the user doesn't want to enter "yes".
 
@@ -198,6 +202,36 @@ int main()
 
 	}
 
+	if (finish == 2) // Contains the testing functions
+	{
+		not_Fifo_or_Lifo_count = 0;
+		cout << "Enter \"Fifo\" to test Fifo or \"Lifo\" to test Lifo: ";
+		while (true)
+		{
+			b = false;
+			yes_no = 0;
+			if (not_Fifo_or_Lifo_count > 0) // Notifies the user of what they need to enter.
+				cout << "Please enter \"Fifo\" or \"Lifo\"." << endl;
+			cin >> str;
+			if (str == "Fifo")
+				b = TestFifo();
+			//if (str == "Lifo")	
+			//	b = testLifo()
+			if (b)
+				cout << "The container was filled and emptied properly." << endl; // If true ---> it works.
+			else
+				cout << "There was a problem. " << endl; // If false ---> problem.
+
+			cout << endl;
+				
+			cout << "If you want to test the other one, enter \"1\" for yes or \"0\" for no: ";
+			cin >> yes_no;
+			if (yes_no == 0)
+				break;
+			not_Fifo_or_Lifo_count++;
+		}
+		
+	}
 
 
 
@@ -256,5 +290,28 @@ void PrintContainer(const vector<string>& container) // Prints out the contents 
 		cout << container[i] << endl;
 }
 
-bool TestFifo();
+bool TestFifo()
+{
+	confirm_test = 0;
+	// test = { "A" , "B" , "C" , "D" }
+	for (int i = 0; i < test.size(); i++)
+	{
+		item = test[i];
+		FifoPush(container, item);
+		
+	}
+
+	if (container[3] == test[0])
+		confirm_test++;
+	if (container[2] == test[1])
+		confirm_test++;
+	if (container[1] == test[2])
+		confirm_test++;
+	if (container[0] == test[3])
+		confirm_test++;
+	if (confirm_test == 4)
+		return true;
+	else
+		return false;
+}
 bool TestLifo();
