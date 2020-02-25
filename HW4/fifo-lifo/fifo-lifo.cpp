@@ -165,7 +165,7 @@ int main()
 
 		}
 
-		finish = 1;
+		finish = 3; // What's in the container.
 		cout << "Do want to know what is in your container? Type: yes or no: ";
 		while (finish != 0)
 		{
@@ -177,29 +177,39 @@ int main()
 			else if (answer == "YES")
 				finish = 0;
 			else if (answer == "no")
+			{
 				finish = 1;
+				break;
+			}
 			else if (answer == "No")
+			{
 				finish = 1;
+				break;
+			}
 			else if (answer == "NO")
+			{
 				finish = 1;
+				break;
+			}
 			else
 				cout << "You need to type: yes or no: ";
-		}
 
-		if (finish == 1) // Checks container if the user indicates to do so.
-			b = IsContainerEmpty(container);
-			if (b)
-				cout << "Your container is empty." << endl; // If true ---> empty.
-			else
+			if (finish == 0) // Checks container if the user indicates to do so.
 			{
-				cout << "These are the items in your container: " << endl; // If false ---> has items.
-				PrintContainer(container);
+				b = IsContainerEmpty(container);
+				if (b)
+					cout << "Your container is empty." << endl; // If true ---> empty.
+				else
+				{
+					cout << "These are the items in your container: " << endl; // If false ---> has items.
+					PrintContainer(container);
+				}
+				break;
 			}
 
+		}
 
-
-
-
+		
 	}
 
 	if (finish == 2) // Contains the testing functions
@@ -215,8 +225,8 @@ int main()
 			cin >> str;
 			if (str == "Fifo")
 				b = TestFifo();
-			//if (str == "Lifo")	
-			//	b = testLifo()
+			if (str == "Lifo")
+				b = TestLifo();
 			if (b)
 				cout << "The container was filled and emptied properly." << endl; // If true ---> it works.
 			else
@@ -290,7 +300,7 @@ void PrintContainer(const vector<string>& container) // Prints out the contents 
 		cout << container[i] << endl;
 }
 
-bool TestFifo()
+bool TestFifo() // Tests the functionality of FifoPush and FifoPop.
 {
 	confirm_test = 0;
 	// test = { "A" , "B" , "C" , "D" }
@@ -298,7 +308,6 @@ bool TestFifo()
 	{
 		item = test[i];
 		FifoPush(container, item);
-		
 	}
 
 	if (container[3] == test[0])
@@ -309,9 +318,47 @@ bool TestFifo()
 		confirm_test++;
 	if (container[0] == test[3])
 		confirm_test++;
+
+	for (int i = 0; i < test.size(); i++)
+	{
+		FifoPop(container, item);
+	}
+	if (container.size() > 0) // If the container is not emptied once for every item put in then something is wrong.
+		confirm_test = 0;
+
 	if (confirm_test == 4)
 		return true;
 	else
 		return false;
 }
-bool TestLifo();
+bool TestLifo() // Tests the functionality of LifoPush and LifoPop.
+{
+	confirm_test = 0;
+	// test = { "A" , "B" , "C" , "D" }
+	for (int i = 0; i < test.size(); i++)
+	{
+		item = test[i];
+		LifoPush(container, item);
+	}
+
+	if (container[0] == test[0])
+		confirm_test++;
+	if (container[1] == test[1])
+		confirm_test++;
+	if (container[2] == test[2])
+		confirm_test++;
+	if (container[3] == test[3])
+		confirm_test++;
+
+	for (int i = 0; i < test.size(); i++)
+	{
+		LifoPop(container, item);
+	}
+	if (container.size() > 0) // If the container is not emptied once for every item put in then something is wrong.
+		confirm_test = 0;
+
+	if (confirm_test == 4)
+		return true;
+	else
+		return false;
+}
