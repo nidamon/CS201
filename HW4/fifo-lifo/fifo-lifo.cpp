@@ -187,12 +187,14 @@ int main()
 			if (b)
 				cout << "Your container is empty." << endl; // If true ---> empty.
 			else
-				cout << "Your container has items in it." << endl; // If false ---> has items.
+			{
+				cout << "These are the items in your container: " << endl; // If false ---> has items.
+				PrintContainer(container);
+			}
 
 
 
-		for (int i = 0; i < container.size(); i++)
-			cout << container[i] << endl;
+
 
 	}
 
@@ -223,7 +225,7 @@ void FifoPush(vector<string>& container, const string& item) // Takes the user's
 	else
 		container.push_back(item);
 }
-void FifoPop(vector<string>& container, string& item) // Outputs the last item in the container (the first item inputted by the user).
+void FifoPop(vector<string>& container, string& item) // Outputs the last item in the container (the FIRST item inputted by the user).
 {
 	cout << container.back() << endl;
 	container.pop_back();
@@ -234,7 +236,7 @@ void LifoPush(vector<string>& container, const string& item) // Just need a simp
 {
 	container.push_back(item);
 }
-void LifoPop(vector<string>& container, string& item)
+void LifoPop(vector<string>& container, string& item) // Outputs the last item in the container (the LAST item inputted by the user).
 {
 	cout << container.back() << endl;
 	container.pop_back();
@@ -248,7 +250,11 @@ bool IsContainerEmpty(const vector<string>& container) // Determines if the cont
 	else
 		return false;
 }
-void PrintContainer(const vector<string>& container);
+void PrintContainer(const vector<string>& container) // Prints out the contents of the container.
+{
+	for (int i = 0; i < container.size(); i++)
+		cout << container[i] << endl;
+}
 
 bool TestFifo();
 bool TestLifo();
