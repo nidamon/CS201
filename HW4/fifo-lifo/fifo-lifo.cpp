@@ -23,6 +23,7 @@ int not_Fifo_or_Lifo_count;
 int Fifo_item_add_count;
 int Lifo_item_add_count;
 int yes_no = 1;
+bool b;
 
 // First-In First-Out
 void FifoPush(vector<string>& container, const string& item);
@@ -160,6 +161,35 @@ int main()
 
 		}
 
+		finish = 1;
+		cout << "Do want to know what is in your container? Type: yes or no: ";
+		while (finish != 0)
+		{
+			cin >> answer;
+			if (answer == "yes")
+				finish = 0;
+			else if (answer == "Yes")
+				finish = 0;
+			else if (answer == "YES")
+				finish = 0;
+			else if (answer == "no")
+				finish = 1;
+			else if (answer == "No")
+				finish = 1;
+			else if (answer == "NO")
+				finish = 1;
+			else
+				cout << "You need to type: yes or no: ";
+		}
+
+		if (finish == 1) // Checks container if the user indicates to do so.
+			b = IsContainerEmpty(container);
+			if (b)
+				cout << "Your container is empty." << endl; // If true ---> empty.
+			else
+				cout << "Your container has items in it." << endl; // If false ---> has items.
+
+
 
 		for (int i = 0; i < container.size(); i++)
 			cout << container[i] << endl;
@@ -211,7 +241,13 @@ void LifoPop(vector<string>& container, string& item)
 }
 
 // Shared functionality
-bool IsContainerEmpty(const vector<string>& container);
+bool IsContainerEmpty(const vector<string>& container) // Determines if the container is empty.
+{
+	if (container.size() == 0)
+		return true;
+	else
+		return false;
+}
 void PrintContainer(const vector<string>& container);
 
 bool TestFifo();
