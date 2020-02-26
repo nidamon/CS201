@@ -12,28 +12,52 @@ using std::vector;
 using std::cout;
 using std::cin;
 using std::endl;
+using std::string;
 
+int binary_search(int key, vector <int> keys);
 
 int main()
 {
-	int num;
-	cout << "Give a size for a vector (less then 100, final element will be (size - 1)): ";
-	cin >> num;
-	vector <int> keys(num);
-	for (int i = 0; i < keys.size(); i++) 
+	string answer = "yes";
+	while (answer == "yes")
 	{
-		keys[i] = i;
-	}
-	int key;
-	int first = 0;
-	int last = int(keys.size());
-	cout << "Give a value to search for: ";
-	cin >> key;
+		vector <int> keys;
+		int num;
+		cout << "Pick a test vector 1, 2, or 3): ";
+		cin >> num;
+		if (num == 1)
+			keys = { 1, 2, 5, 7, 8, 10, 14, 15, 16, 18, 19, 20 };
+		else if (num == 2)
+			keys = { 4, 5, 9, 15, 18, 19, 25, 35, 42, 43, 48, 71 };
+		else if (num == 3)
+			keys = { 1, 2, 3, 4, 8, 14, 18, 24, 25, 26, 27, 29 };
 
+		for (int i = 0; i < keys.size(); i++)
+		{
+			cout << keys[i] << " ";
+		}
 
-	for (int i = 0; i < keys.size(); i++)
-	{
-		cout << keys[i] << " ";
+		cout << endl;
+		
+		int key;
+		cout << "Give a value to search for: ";
+		cin >> key;
+
+		int was_there;
+		was_there = binary_search(key, keys);
+		if (was_there > -1)
+			cout << "It is item number " << was_there << ", with a value of " << keys[was_there] << "." << endl;
+		else if (was_there < 0)
+			cout << "Item was not found.";
+
+		cout << "Would you like to search another test vector? yes/no: ";
+		cin >> answer;
+		if (answer == "yes")
+			cout << "Type away!" << endl;
+		else if (answer == "no")
+			break;
+		else
+			cout << "You need to type: yes or no: ";
 	}
 
 	int q;
@@ -41,4 +65,36 @@ int main()
 	cout << "Program has finished. Enter a character to return: ";
 	cin >> q; //Stops the console from closing after the program has run.
 	return 0;
+}
+
+
+int binary_search(int key, vector <int> keys) // Searches through a given vector for a value.
+{
+	int first = 0;
+	int last = keys.size();
+	int middle, size;
+
+	while (true)
+	{
+		size = last - first;
+		middle = first + size / 2;
+		cout << first << " " << middle << " " << last << endl;
+
+		if (size == 0)
+			return -2;
+		if (size == 1)
+		{
+			if (keys[middle] == key)
+				return middle; // Give the locationin the vector where the item was found.
+			return -1;
+		}
+
+		if (keys[middle] == key) {
+			return middle;
+		}
+		if (keys[middle] > key)
+			last = middle;
+		else
+			first = middle;
+	}
 }
