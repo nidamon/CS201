@@ -23,14 +23,18 @@ int main()
 	{
 		vector <int> keys;
 		int num;
-		cout << "Pick a test vector 1, 2, or 3): ";
+		cout << "Pick a test vector 1, 2, 3, 4, 5): ";
 		cin >> num;
 		if (num == 1)
-			keys = { 1, 2, 5, 7, 8, 10, 14, 15, 16, 18, 19, 20 };
+			keys = { 1, 2, 5, 7, 8, 10, 14, 15, 16, 18, 19, 20, 24 }; // 13 ints
 		else if (num == 2)
-			keys = { 4, 5, 9, 15, 18, 19, 25, 35, 42, 43, 48, 71 };
+			keys = { 4, 5, 9, 15, 18, 19, 25, 35, 42, 43, 48, 71 }; // 12 ints
 		else if (num == 3)
-			keys = { 1, 2, 3, 4, 8, 14, 18, 24, 25, 26, 27, 29 };
+			keys = { 1, 2, 3, 4, 8, 14, 18, 24, 25, 26, 27, 29, 31 }; // 13 ints
+		else if (num == 4)
+			keys = { 1, 2, 8, 9, 10, 11, 13, 14, 18, 24, 25, 26, 27, 29, 32, 37, 52, 61, 65, 67, 73, 74 }; // 22 ints
+		else if (num == 5)
+			keys = { 1, 2, 3, 4, 8, 14, 18, 24, 25, 26, 27, 29, 48, 71, 72, 81, 92, 93, 94, 96, 99 }; // 21 ints
 
 		for (int i = 0; i < keys.size(); i++)
 		{
@@ -43,12 +47,16 @@ int main()
 		cout << "Give a value to search for: ";
 		cin >> key;
 
+		cout << endl;
+
 		int was_there;
 		was_there = binary_search(key, keys);
 		if (was_there > -1)
 			cout << "It is item number " << was_there << ", with a value of " << keys[was_there] << "." << endl;
 		else if (was_there < 0)
-			cout << "Item was not found.";
+			cout << "Item was not found." << endl;
+
+		cout << endl;
 
 		cout << "Would you like to search another test vector? yes/no: ";
 		cin >> answer;
@@ -58,6 +66,8 @@ int main()
 			break;
 		else
 			cout << "You need to type: yes or no: ";
+
+		cout << endl;
 	}
 
 	int q;
@@ -78,7 +88,7 @@ int binary_search(int key, vector <int> keys) // Searches through a given vector
 	{
 		size = last - first;
 		middle = first + size / 2;
-		cout << first << " " << middle << " " << last << endl;
+		cout << "Key between " << first << " and " << last << ". Checking " << middle << " for comparison." << endl;
 
 		if (size == 0)
 			return -2;
