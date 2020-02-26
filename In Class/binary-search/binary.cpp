@@ -7,6 +7,8 @@ This program will search through a vector for a given value.
 
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 using std::vector;
 using std::cout;
@@ -19,11 +21,12 @@ int binary_search(int key, vector <int> keys);
 int main()
 {
 	string answer = "yes";
+	int vector_key_size;
 	while (answer == "yes")
 	{
 		vector <int> keys;
 		int num;
-		cout << "Pick a test vector 1, 2, 3, 4, 5): ";
+		cout << "Pick a test vector 1, 2, 3, 4, 5: ";
 		cin >> num;
 		if (num == 1)
 			keys = { 1, 2, 5, 7, 8, 10, 14, 15, 16, 18, 19, 20, 24 }; // 13 ints
@@ -35,6 +38,22 @@ int main()
 			keys = { 1, 2, 8, 9, 10, 11, 13, 14, 18, 24, 25, 26, 27, 29, 32, 37, 52, 61, 65, 67, 73, 74 }; // 22 ints
 		else if (num == 5)
 			keys = { 1, 2, 3, 4, 8, 14, 18, 24, 25, 26, 27, 29, 48, 71, 72, 81, 92, 93, 94, 96, 99 }; // 21 ints
+		
+		/*else if (num == 6)
+		{
+			srand(time(0));
+			vector_key_size = 20; // (rand() % 50);
+			cout << "Creating vector";
+			for (int i = 0; i < vector_key_size; i++)
+			{
+				if (i = 0)
+					keys[i] = (rand() % 10);
+				else if (i > 0)
+					keys[i] = keys[i - 1] + (rand() % 3);
+				cout << i; // ".";
+			}
+		}
+		*/
 
 		for (int i = 0; i < keys.size(); i++)
 		{
