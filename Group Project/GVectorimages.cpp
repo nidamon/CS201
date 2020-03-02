@@ -35,11 +35,13 @@ using std::cin;
 using std::endl;
 
 vector <int> Vrandom(3, 3);
+vector <int> Vlast_generated(3, 0);
 
 int main()
 {
 	int stop;
 	int max_barrier_count = 2;
+	int min_barrier_count = 1;
 	int barrier_count = 0;
 	int randvalue = 0;
 
@@ -60,72 +62,66 @@ int main()
 	barrier_cell.push_back(outside_barrier);
 	barrier_cell.resize(barrier_cell.size() + 3, empty);
 
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 6; i++) {  // For testing the output of the cells.
 		cout << empty_cell[i] << endl;
 	}
-
-	cout << empty.size() << endl;
 
 	barrier_section.push_back(empty_cell);
 	barrier_section.push_back(barrier_cell);
 
-	cout << endl;
-	cout << endl;
-
-	/*for (int i = 0; i < 1; i++) {                   // All commented below is a work in progress
-		//while (barrier_count > max_barrier_count) {
-		//	barrier_count = 0;
-			for (int j = 0; j < 3; j++) {
-				srand(time(0));
-				randvalue = rand() % 2;
-				Vrandom[j] = (randvalue);
-		//		if (randvalue == 1)
-		//			barrier_count++;
-		//	}
-		}
-		cout << endl;
-
-		for (int j = 0; j < 3; j++) {
-			cout << Vrandom[j] << endl;
-			//Vrandom.pop_back();
-		}
-		cout << endl;
-	}*/
-
-	cout << endl;
-	cout << endl;
-
 	int yes = 1;
-
+	int repititions = 0;
 	while (yes == 1){
 		srand(time(0));
-		Vrandom[0] = ((rand() % 3) % 2);
-		Vrandom[1] = ((rand() % 5) % 2);
-		Vrandom[2] = ((rand() % 7) % 2);
-
-		for (int i = 0; i < 6; i++) {
-			cout << barrier_section[Vrandom[0]][i] << barrier_section[Vrandom[1]][i] << barrier_section[Vrandom[2]][i] << endl;
+		randvalue = (((rand()) + repititions) % 5);
+		switch (randvalue)
+		{
+		case 0:
+			Vrandom = { 1 , 0 , 0 };
+			break;
+		case 1:
+			Vrandom = { 1 , 1 , 0 };
+			break;
+		case 2:
+			Vrandom = { 1 , 0 , 1 };
+			break;
+		case 3:
+			Vrandom = { 0 , 1 , 0 };
+			break;
+		case 4:
+			Vrandom = { 0 , 1 , 1 };
+			break;
+		case 5:
+			Vrandom = { 0 , 0 , 1 };
+			break;
 		}
-
+	// repeats the previous bottom layer.
+		for (int i = 0; i < 6; i++) {
+			cout << barrier_section[Vlast_generated[0]][i] << barrier_section[Vlast_generated[1]][i] << barrier_section[Vlast_generated[2]][i] << endl;
+		}
+	// Generates the middle layer with the player model.
 		for (int i = 0; i < 6; i++) {
 			cout << empty_cell[i] << player_cell[i] << empty_cell[i] << endl;
 		}
-
-		srand(time(0));
-		Vrandom[0] = ((rand() % 13) % 2);
-		Vrandom[1] = ((rand() % 11) % 2);
-		Vrandom[2] = ((rand() % 9) % 2);
-
+	// Generates the bottom layer.
 		for (int i = 0; i < 6; i++) {
 			cout << barrier_section[Vrandom[0]][i] << barrier_section[Vrandom[1]][i] << barrier_section[Vrandom[2]][i] << endl;
 		}
+	// Sets Vlast_generated to the current Vrandom's values.
+		for (int i = 0; i < 3; i++)
+			Vlast_generated[i] = Vrandom[i];
+		
+		repititions++;
 
 		yes = 0;
 		cout << endl;
 		cout << "If want more samples, type 1: ";
 		cin >> yes;
+
+		system("cls");
 	}
 	
+
 	cout << endl;
 	cout << "To stop, type something: ";
 	cin >> stop;
