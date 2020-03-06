@@ -12,6 +12,10 @@ This program will contain a set of vectors that hold strings for a game.
 
 #include <Windows.h>
 
+//void Movement(/*const& Vrandom, const& Vlast_generated,*/ &Move); // CHANGE
+
+
+
 using std::vector;
 using std::string;
 
@@ -25,7 +29,7 @@ string inside_barrier =   "|############################|"; // Similarly not bei
 
 
 vector <string> barrier_model_1 = { // Rabbit box
- "|                            |",
+ "|                        1   |",
  "|   H>==================<H   |",
  "|   Y \\                / Y   |",
  "|   |  \\ ____________ /  |   |",
@@ -39,32 +43,32 @@ vector <string> barrier_model_1 = { // Rabbit box
  "|                            |",
 };
 
-vector <string> barrier_model_2 = { // Rabbit box 2
- "|                            |",
+vector <string> barrier_model_2 = { // Empty box 2
+ "|                        2   |",
  "|   H>==================<H   |",
  "|   Y \\                / Y   |",
  "|   |  \\ ____________ /  |   |",
  "|   |   |            |   |   |",
  "|   |   |            |   |   |",
- "|   |   |     2      |   |   |",
- "|   |   |(\\___/)     |   |   |",
- "|   |   |(=\'.\'=)_____|   |   |",
- "|   | _- (\")_(\")      -_ |   |",
+ "|   |   |            |   |   |",
+ "|   |   |            |   |   |",
+ "|   |   |____________|   |   |",
+ "|   | _-              -_ |   |",
  "|   I>==================<I   |",
  "|                            |",
 };
 
-vector <string> barrier_model_3 = { // Rabbit box 3
- "|                            |",
+vector <string> barrier_model_3 = { // "Person A" box 3
+ "|                        3   |",
  "|   H>==================<H   |",
  "|   Y \\                / Y   |",
  "|   |  \\ ____________ /  |   |",
- "|   |   |            |   |   |",
- "|   |   |            |   |   |",
- "|   |   |       3    |   |   |",
- "|   |   |(\\___/)     |   |   |",
- "|   |   |(=\'.\'=)_____|   |   |",
- "|   | _- (\")_(\")      -_ |   |",
+ "|   |   |    ,,,     |   |   |",
+ "|   |   |   (o.o)    |   |   |",
+ "|   |   |  /^\\#/^\\   |   |   |",
+ "|   |   |  ^  #  ^   |   |   |",
+ "|   |   |____/_\\_____|   |   |",
+ "|   | _-              -_ |   |",
  "|   I>==================<I   |",
  "|                            |",
 };
@@ -108,8 +112,11 @@ using std::endl;
 vector <int> Vrandom(3, 0); // Used for barrier randomization.
 vector <int> Vlast_generated(3, 0); // Copies down the barrier model for printing the previous set of barriers.
 
+int Move;
+
 int main()
 {
+	
 	int stop; // Is used at the end of the program to prevent the console from closing.
 	int max_barrier_count = 2;
 	int min_barrier_count = 1;
@@ -173,30 +180,40 @@ int main()
 			for (int i = image_movement; i < 12; i++) {
 				cout << empty_cell[i] << empty_cell[i] << empty_cell[i] << endl;
 			}
+
+
+		// Sets Vlast_generated to the current Vrandom's values.
+			Vlast_generated[0] = random_barrier_1;
+			Vlast_generated[1] = random_barrier_2;
+			Vlast_generated[2] = random_barrier_3;
+
 		// repeats the previous bottom layer.
 			for (int i = 0; i < 12; i++) {
 				cout << barrier_section[Vlast_generated[0]][i] << barrier_section[Vlast_generated[1]][i] << barrier_section[Vlast_generated[2]][i] << endl;
 			}
+
+
 		// Generates the middle layer with the player model.
 			for (int i = 0; i < 12; i++) {
 				cout << empty_cell[i] << player_cell[i] << empty_cell[i] << endl;
 			}
-			
+		
+
 
 			if (Vrandom[0] == 1) // Picks a random barrier model.
-				random_barrier_1 = ((((rand()) + repititions) % 5) % 4); // Will need changing when more than 3 barrier models are made.
+				random_barrier_1 = (((((rand()) + repititions) % 5) % 3) + 1); // Will need to change the 3 when more than 3 barrier models are made.
 			else
 				random_barrier_1 = 0;
 
 
 			if (Vrandom[1] == 1) // Picks a random barrier model.
-				random_barrier_2 = ((((rand()) + repititions) % 7) % 4); // Will need changing when more than 3 barrier models are made.
+				random_barrier_2 = (((((rand()) + repititions) % 7) % 3) + 1); // Will need to change the 3 when more than 3 barrier models are made.
 			else
 				random_barrier_2 = 0;
 
 
 			if (Vrandom[2] == 1) // Picks a random barrier model.
-				random_barrier_3 = ((((rand()) + repititions) % 9) % 4); // Will need changing when more than 3 barrier models are made.
+				random_barrier_3 = (((((rand()) + repititions) % 11) % 3) + 1); // Will need to change the 3 when more than 3 barrier models are made.
 			else
 				random_barrier_3 = 0;
 
@@ -209,6 +226,7 @@ int main()
 
 			}
 
+
 		// Generates a new layer with empty cells that increases in size.
 			for (int i = 0; i < image_movement; i++) {
 				cout << empty_cell[i] << empty_cell[i] << empty_cell[i] << endl;
@@ -217,11 +235,12 @@ int main()
 			image_movement = image_movement + 2; // Determines how many times the overall image makes small shifts.
 		}
 
-	// Sets Vlast_generated to the current Vrandom's values.
-			Vlast_generated[0] = random_barrier_1;
-			Vlast_generated[1] = random_barrier_2;
-			Vlast_generated[2] = random_barrier_3;
-		
+
+
+		// Where movement needs to go.
+
+
+
 		repititions++;
 	// Prompts for a continuation of repetitions
 		yes = 0;
@@ -229,12 +248,12 @@ int main()
 		cout << "If want more samples, type 1: ";
 		cin >> yes;
 
-		system("cls"); // refreshes the console screen.
+		system("cls"); // Refreshes the console screen.
 	}
 	
 
 
-	// Small test movement test below
+	// Small movement test below
 
 	vector<string> S_a = { "_" , "|" , "_" , "_" , "|" , "_" , "|" , "_" };
 	vector<string> S_b = { "_" , "_" , "_" , "_" , "|" , "_" , "_" , "_" };
@@ -244,7 +263,6 @@ int main()
 	repititions = 0;
 	while (yes == 1) {
 
-		// repeats the previous bottom layer.
 		for (int i = (repititions); i < (repititions + 4); i++) {
 			cout << S_a[i % 7] << " ";
 		}
@@ -280,3 +298,33 @@ int main()
 
 	return 0;
 }
+
+
+
+
+
+
+/*
+void Movement(const& Vrandom, const& Vlast_generated, &Move, const& player_cell, const& empty_cell)
+{
+	cout << "Choose column 1, 2, or 3 to move to it: ";
+	cin >> Move;
+
+	for (int i = 0; i < 5; i++)
+	{
+
+	}
+
+}*/
+
+/*
+void New_Vectors(
+	const& Vrandom,
+	const& repititions,
+	const& vector <vector <string>> barrier_section,
+	random_barrier_1,
+	random_barrier_2,
+	random_barrier_3,
+
+	)
+*/
