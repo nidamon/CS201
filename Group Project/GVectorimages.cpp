@@ -17,30 +17,32 @@ using std::string;
 
 //void Movement(/*const& Vrandom, const& Vlast_generated,*/ &Move); // CHANGE
 
+// Old_Layer outputs the previous new layer.
 void Old_Layer(
-	const vector<vector<string>>& barrier_section,
-	const vector <int>& Vlast_generated);
+	const vector<vector<string>>& barrier_models,
+	const vector <int>& Vlast_generated_barrier_set);
 
+// New_Layer outputs a new randomized layer.
 void New_Layer(
-	const vector <vector <string>> & barrier_section,
-	const vector <int>& Vrandom,
+	const vector <vector <string>> & barrier_models,
+	const vector <int>& Vrandom_barrier_set,
 	const int& repititions,
 	const int& types_of_barriers,
-	int& random_barrier_1,
-	int& random_barrier_2,
-	int& random_barrier_3);
+	vector <int>& random_barrier_model);
 
+// Layers contains the functions and code to output all the visuals.
 void Layers(
-	const vector<vector<string>>& barrier_section,
+	const vector<vector<string>>& barrier_models,
 	const vector <string>& empty_cell,
 	const vector <string>& player_cell,
 	const int& repetitions,
 	const int& types_of_barriers,
-	vector <int>& Vlast_generated,
-	vector <int>& Vrandom);
+	vector <int>& Vlast_generated_barrier_set,
+	vector <int>& Vrandom_barrier_set,
+	vector <int>& random_barrier_model);
 
 
-vector <vector <string>> barrier_section; // Need to change
+vector <vector <string>> barrier_models; // Need to change
 vector <string> empty_cell;
 vector <string> player_cell; // Will hold a specified player model.
 
@@ -130,25 +132,25 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-vector <int> Vrandom(3, 0); // Used for barrier randomization.
-vector <int> Vlast_generated(3, 0); // Copies down the barrier model for printing the previous set of barriers.
+vector <int> Vrandom_barrier_set(3, 0); // Used to hold one of six different sets of barriers
+vector <int> Vlast_generated_barrier_set(3, 0); // Copies down the barrier model for printing the previous set of barriers.
+vector <int> random_barrier_model(3, 0); // Used for barrier randomization.
 
 int Move;
-
+int stop; // Is used at the end of the program to prevent the console from closing.
 int main()
 {
-	int stop; // Is used at the end of the program to prevent the console from closing.
-
 	for (int i = 0; i < 12; i++) { // Creates the empty cell
 		empty_cell.push_back(empty);
 	}
 
 	player_cell = player_model_1; 
 
-	barrier_section.push_back(empty_cell); // Needs refinement.
-	barrier_section.push_back(barrier_model_1);
-	barrier_section.push_back(barrier_model_2);
-	barrier_section.push_back(barrier_model_3);
+	barrier_models.push_back(empty_cell); // Needs refinement.
+	barrier_models.push_back(barrier_model_1);
+	barrier_models.push_back(barrier_model_2);
+	barrier_models.push_back(barrier_model_3);
+
 
 	// Main while loop for displaying the models
 
@@ -158,13 +160,14 @@ int main()
 	
 	while (lives == 1){
 		Layers(
-			barrier_section,
+			barrier_models,
 			empty_cell,
 			player_cell,
 			repetitions,
 			types_of_barriers,
-			Vlast_generated,
-			Vrandom);
+			Vlast_generated_barrier_set,
+			Vrandom_barrier_set,
+			random_barrier_model);
 	
 		// Where movement needs to go.
 
@@ -189,7 +192,7 @@ int main()
 }
 
 /*
-void Movement(const& Vrandom, const& Vlast_generated, &Move, const& player_cell, const& empty_cell)
+void Movement(const& Vrandom_barrier_set, const& Vlast_generated, &Move, const& player_cell, const& empty_cell)
 {
 	cout << "Choose column 1, 2, or 3 to move to it: ";
 	cin >> Move;
@@ -202,84 +205,80 @@ void Movement(const& Vrandom, const& Vlast_generated, &Move, const& player_cell,
 }*/
 
 
+// New_Layer outputs a new randomized layer.
 void New_Layer(
-	const vector<vector<string>>& barrier_section,
-	const vector <int>& Vrandom,
+	const vector<vector<string>>& barrier_models,
+	const vector <int>& Vrandom_barrier_set,
 	const int& repetitions,
 	const int& types_of_barriers,
-	int& random_barrier_1,
-	int& random_barrier_2,
-	int& random_barrier_3)
+	vector <int>& random_barrier_model)
 {
-	if (Vrandom[0] == 1) // Picks a random barrier model.
-		random_barrier_1 = (((((rand()) + repetitions) % 5) % types_of_barriers) + 1); // Will need to change the 3 when more than 3 barrier models are made.
-	else
-		random_barrier_1 = 0;
-
-	if (Vrandom[1] == 1) // Picks a random barrier model.
-		random_barrier_2 = (((((rand()) + repetitions) % 7) % types_of_barriers) + 1); // Will need to change the 3 when more than 3 barrier models are made.
-	else
-		random_barrier_2 = 0;
-
-	if (Vrandom[2] == 1) // Picks a random barrier model.
-		random_barrier_3 = (((((rand()) + repetitions) % 11) % types_of_barriers) + 1); // Will need to change the 3 when more than 3 barrier models are made.
-	else
-		random_barrier_3 = 0;
-
+	for (int i = 0; i < 3; i++)
+	{
+		if (Vrandom_barrier_set[i] == 1) // Picks a random barrier model.
+			random_barrier_model[i] = (((((rand()) + repetitions) % (11 + 2 * i)) % types_of_barriers) + 1); // Will need to change the 3 when more than 3 barrier models are made.
+		else
+			random_barrier_model[i] = 0;
+	}
+	
 // Generates the bottom layer.
 	for (int i = 0; i < 12; i++) {
-		cout << barrier_section[random_barrier_1][i];
-		cout << barrier_section[random_barrier_2][i];
-		cout << barrier_section[random_barrier_3][i] << endl;
+		cout << barrier_models[random_barrier_model[0]][i];
+		cout << barrier_models[random_barrier_model[1]][i];
+		cout << barrier_models[random_barrier_model[2]][i] << endl;
 	}
 }
 
+
+// Old_Layer outputs the previous new layer.
 void Old_Layer(
-	const vector<vector<string>>& barrier_section,
-	const vector <int>& Vlast_generated)
+	const vector<vector<string>>& barrier_models,
+	const vector <int>& Vlast_generated_barrier_set)
 {
 // repeats the previous bottom layer.
 	for (int i = 0; i < 12; i++) {
-		cout << barrier_section[Vlast_generated[0]][i] << barrier_section[Vlast_generated[1]][i] << barrier_section[Vlast_generated[2]][i] << endl;
+		cout << barrier_models[Vlast_generated_barrier_set[0]][i];
+		cout << barrier_models[Vlast_generated_barrier_set[1]][i];
+		cout << barrier_models[Vlast_generated_barrier_set[2]][i] << endl;
 	}
 }
 
+
+// Layers contains the functions and code to output all the visuals
 void Layers(
-	const vector<vector<string>>& barrier_section,
+	const vector<vector<string>>& barrier_models,
 	const vector <string>& empty_cell,
 	const vector <string>& player_cell,
 	const int& repetitions,
 	const int& types_of_barriers,
-	vector <int>& Vlast_generated,
-	vector <int>& Vrandom)
+	vector <int>& Vlast_generated_barrier_set,
+	vector <int>& Vrandom_barrier_set,
+	vector <int>& random_barrier_model)
 {	
 	int randvalue = 0; 
-	int random_barrier_1 = 0;
-	int random_barrier_2 = 0;
-	int random_barrier_3 = 0;
 	int image_movement = 0;
 
 	srand(time(0));
-	randvalue = (((rand()) + repetitions) % 5); // Gets a random value between 0 and 5.
+	randvalue = (((rand()) + repetitions) % 6); // Gets a random value between 0 and 5.
 	switch (randvalue) // Picks between 6 different variations of barrier setups.
 	{
 	case 0:
-		Vrandom = { 1 , 0 , 0 };
+		Vrandom_barrier_set = { 1 , 0 , 0 };
 		break;
 	case 1:
-		Vrandom = { 1 , 1 , 0 };
+		Vrandom_barrier_set = { 1 , 1 , 0 };
 		break;
 	case 2:
-		Vrandom = { 1 , 0 , 1 };
+		Vrandom_barrier_set = { 1 , 0 , 1 };
 		break;
 	case 3:
-		Vrandom = { 0 , 1 , 0 };
+		Vrandom_barrier_set = { 0 , 1 , 0 };
 		break;
 	case 4:
-		Vrandom = { 0 , 1 , 1 };
+		Vrandom_barrier_set = { 0 , 1 , 1 };
 		break;
 	case 5:
-		Vrandom = { 0 , 0 , 1 };
+		Vrandom_barrier_set = { 0 , 0 , 1 };
 		break;
 	}	
 
@@ -295,22 +294,20 @@ void Layers(
 		}
 
 		Old_Layer(
-			barrier_section,
-			Vlast_generated);
+			barrier_models,
+			Vlast_generated_barrier_set);
 
-	// Generates the middle layer with the player model.
+	// Generates the middle layer with the player model. NEEDS function
 		for (int i = 0; i < 12; i++) {
 			cout << empty_cell[i] << player_cell[i] << empty_cell[i] << endl;
 		}
 
 		New_Layer(
-			barrier_section,
-			Vrandom,
+			barrier_models,
+			Vrandom_barrier_set,
 			repetitions,
 			types_of_barriers,
-			random_barrier_1,
-			random_barrier_2,
-			random_barrier_3);
+			random_barrier_model);
 
 	// Generates a new layer with empty cells that increases in size.
 		for (int i = 0; i < image_movement; i++) {
@@ -321,7 +318,6 @@ void Layers(
 	}	
 
 // Sets Vlast_generated to the current Vrandom's values.
-	Vlast_generated[0] = random_barrier_1;
-	Vlast_generated[1] = random_barrier_2;
-	Vlast_generated[2] = random_barrier_3;
+	for (int i = 0; i < 3; i++)
+		Vlast_generated_barrier_set[i] = random_barrier_model[i];
 }
