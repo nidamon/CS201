@@ -12,12 +12,33 @@ This program will contain a set of vectors that hold strings for a game.
 
 #include <Windows.h>
 
-//void Movement(/*const& Vrandom, const& Vlast_generated,*/ &Move); // CHANGE
-
-
-
 using std::vector;
 using std::string;
+
+//void Movement(/*const& Vrandom, const& Vlast_generated,*/ &Move); // CHANGE
+
+void Old_Layer(
+	const vector<vector<string>>& barrier_section,
+	const vector <int>& Vlast_generated);
+
+void New_Layer(
+	const vector <vector <string>> & barrier_section,
+	const vector <int>& Vrandom,
+	const int& repititions,
+	const int& types_of_barriers,
+	int& random_barrier_1,
+	int& random_barrier_2,
+	int& random_barrier_3);
+
+void Layers(
+	const vector<vector<string>>& barrier_section,
+	const vector <string>& empty_cell,
+	const vector <string>& player_cell,
+	const int& repetitions,
+	const int& types_of_barriers,
+	vector <int>& Vlast_generated,
+	vector <int>& Vrandom);
+
 
 vector <vector <string>> barrier_section; // Need to change
 vector <string> empty_cell;
@@ -116,22 +137,13 @@ int Move;
 
 int main()
 {
-	
 	int stop; // Is used at the end of the program to prevent the console from closing.
-	int max_barrier_count = 2;
-	int min_barrier_count = 1;
-	int barrier_count = 0;
-	int randvalue = 0;
 
 	for (int i = 0; i < 12; i++) { // Creates the empty cell
 		empty_cell.push_back(empty);
 	}
 
 	player_cell = player_model_1; 
-
-	for (int i = 0; i < 12; i++) {  // For testing the output of the cells.
-		cout << empty_cell[i] << endl;
-	}
 
 	barrier_section.push_back(empty_cell); // Needs refinement.
 	barrier_section.push_back(barrier_model_1);
@@ -140,157 +152,34 @@ int main()
 
 	// Main while loop for displaying the models
 
-	int yes = 1;
-	int repititions = 0;
-	while (yes == 1){
-		srand(time(0));
-		randvalue = (((rand()) + repititions) % 5); // Gets a random value between 0 and 5.
-		switch (randvalue) // Picks between 6 different variations of barrier setups.
-		{
-		case 0:
-			Vrandom = { 1 , 0 , 0 };
-			break;
-		case 1:
-			Vrandom = { 1 , 1 , 0 };
-			break;
-		case 2:
-			Vrandom = { 1 , 0 , 1 };
-			break;
-		case 3:
-			Vrandom = { 0 , 1 , 0 };
-			break;
-		case 4:
-			Vrandom = { 0 , 1 , 1 };
-			break;
-		case 5:
-			Vrandom = { 0 , 0 , 1 };
-			break;
-		}
-
-		int random_barrier_1 = 0;
-		int random_barrier_2 = 0;
-		int random_barrier_3 = 0;
-		int types_of_barriers = 3; // There are three rabbit boxes at the moment.
-		int image_movement = 0;
-		while (image_movement != 6)
-		{
-			system("cls"); // refreshes the console screen.
-
-		// Generates the top layer the rapidly shrinks.
-			for (int i = image_movement; i < 12; i++) {
-				cout << empty_cell[i] << empty_cell[i] << empty_cell[i] << endl;
-			}
-
-
-		// Sets Vlast_generated to the current Vrandom's values.
-			Vlast_generated[0] = random_barrier_1;
-			Vlast_generated[1] = random_barrier_2;
-			Vlast_generated[2] = random_barrier_3;
-
-		// repeats the previous bottom layer.
-			for (int i = 0; i < 12; i++) {
-				cout << barrier_section[Vlast_generated[0]][i] << barrier_section[Vlast_generated[1]][i] << barrier_section[Vlast_generated[2]][i] << endl;
-			}
-
-
-		// Generates the middle layer with the player model.
-			for (int i = 0; i < 12; i++) {
-				cout << empty_cell[i] << player_cell[i] << empty_cell[i] << endl;
-			}
-		
-
-
-			if (Vrandom[0] == 1) // Picks a random barrier model.
-				random_barrier_1 = (((((rand()) + repititions) % 5) % 3) + 1); // Will need to change the 3 when more than 3 barrier models are made.
-			else
-				random_barrier_1 = 0;
-
-
-			if (Vrandom[1] == 1) // Picks a random barrier model.
-				random_barrier_2 = (((((rand()) + repititions) % 7) % 3) + 1); // Will need to change the 3 when more than 3 barrier models are made.
-			else
-				random_barrier_2 = 0;
-
-
-			if (Vrandom[2] == 1) // Picks a random barrier model.
-				random_barrier_3 = (((((rand()) + repititions) % 11) % 3) + 1); // Will need to change the 3 when more than 3 barrier models are made.
-			else
-				random_barrier_3 = 0;
-
-
-		// Generates the bottom layer.
-			for (int i = 0; i < 12; i++) {
-				cout << barrier_section[random_barrier_1][i];
-				cout << barrier_section[random_barrier_2][i];
-				cout << barrier_section[random_barrier_3][i] << endl;
-
-			}
-
-
-		// Generates a new layer with empty cells that increases in size.
-			for (int i = 0; i < image_movement; i++) {
-				cout << empty_cell[i] << empty_cell[i] << empty_cell[i] << endl;
-			}
-
-			image_movement = image_movement + 2; // Determines how many times the overall image makes small shifts.
-		}
-
-
-
+	int lives = 1;
+	int repetitions = 0;
+	int types_of_barriers = 3; // There are three boxes at the moment.
+	
+	while (lives == 1){
+		Layers(
+			barrier_section,
+			empty_cell,
+			player_cell,
+			repetitions,
+			types_of_barriers,
+			Vlast_generated,
+			Vrandom);
+	
 		// Where movement needs to go.
 
 
+		repetitions++;
 
-		repititions++;
 	// Prompts for a continuation of repetitions
-		yes = 0;
+		lives = 0;
 		cout << endl;
 		cout << "If want more samples, type 1: ";
-		cin >> yes;
+		cin >> lives;
 
 		system("cls"); // Refreshes the console screen.
 	}
 	
-
-
-	// Small movement test below
-
-	vector<string> S_a = { "_" , "|" , "_" , "_" , "|" , "_" , "|" , "_" };
-	vector<string> S_b = { "_" , "_" , "_" , "_" , "|" , "_" , "_" , "_" };
-	vector<string> S_c = { "_" , "_" , "|" , "_" , "_" , "|" , "_" , "|" };
-
-	yes = 1;
-	repititions = 0;
-	while (yes == 1) {
-
-		for (int i = (repititions); i < (repititions + 4); i++) {
-			cout << S_a[i % 7] << " ";
-		}
-		cout << endl;
-		for (int i = (repititions); i < (repititions + 4); i++) {
-			cout << S_b[i % 7] << " ";
-		}
-		cout << endl;
-		for (int i = (repititions); i < (repititions + 4); i++) {
-			cout << S_c[i % 7] << " ";
-		}
-
-		cout << endl;
-
-		Sleep(0700);
-
-		repititions++;
-
-		/*yes = 0;
-		cout << endl;
-		cout << "If want more samples, type 1: ";
-		cin >> yes;*/
-
-		system("cls");
-	}
-
-
-
 
 	cout << endl;
 	cout << "To stop, type something: ";
@@ -298,11 +187,6 @@ int main()
 
 	return 0;
 }
-
-
-
-
-
 
 /*
 void Movement(const& Vrandom, const& Vlast_generated, &Move, const& player_cell, const& empty_cell)
@@ -317,14 +201,127 @@ void Movement(const& Vrandom, const& Vlast_generated, &Move, const& player_cell,
 
 }*/
 
-/*
-void New_Vectors(
-	const& Vrandom,
-	const& repititions,
-	const& vector <vector <string>> barrier_section,
-	random_barrier_1,
-	random_barrier_2,
-	random_barrier_3,
 
-	)
-*/
+void New_Layer(
+	const vector<vector<string>>& barrier_section,
+	const vector <int>& Vrandom,
+	const int& repetitions,
+	const int& types_of_barriers,
+	int& random_barrier_1,
+	int& random_barrier_2,
+	int& random_barrier_3)
+{
+	if (Vrandom[0] == 1) // Picks a random barrier model.
+		random_barrier_1 = (((((rand()) + repetitions) % 5) % types_of_barriers) + 1); // Will need to change the 3 when more than 3 barrier models are made.
+	else
+		random_barrier_1 = 0;
+
+	if (Vrandom[1] == 1) // Picks a random barrier model.
+		random_barrier_2 = (((((rand()) + repetitions) % 7) % types_of_barriers) + 1); // Will need to change the 3 when more than 3 barrier models are made.
+	else
+		random_barrier_2 = 0;
+
+	if (Vrandom[2] == 1) // Picks a random barrier model.
+		random_barrier_3 = (((((rand()) + repetitions) % 11) % types_of_barriers) + 1); // Will need to change the 3 when more than 3 barrier models are made.
+	else
+		random_barrier_3 = 0;
+
+// Generates the bottom layer.
+	for (int i = 0; i < 12; i++) {
+		cout << barrier_section[random_barrier_1][i];
+		cout << barrier_section[random_barrier_2][i];
+		cout << barrier_section[random_barrier_3][i] << endl;
+	}
+}
+
+void Old_Layer(
+	const vector<vector<string>>& barrier_section,
+	const vector <int>& Vlast_generated)
+{
+// repeats the previous bottom layer.
+	for (int i = 0; i < 12; i++) {
+		cout << barrier_section[Vlast_generated[0]][i] << barrier_section[Vlast_generated[1]][i] << barrier_section[Vlast_generated[2]][i] << endl;
+	}
+}
+
+void Layers(
+	const vector<vector<string>>& barrier_section,
+	const vector <string>& empty_cell,
+	const vector <string>& player_cell,
+	const int& repetitions,
+	const int& types_of_barriers,
+	vector <int>& Vlast_generated,
+	vector <int>& Vrandom)
+{	
+	int randvalue = 0; 
+	int random_barrier_1 = 0;
+	int random_barrier_2 = 0;
+	int random_barrier_3 = 0;
+	int image_movement = 0;
+
+	srand(time(0));
+	randvalue = (((rand()) + repetitions) % 5); // Gets a random value between 0 and 5.
+	switch (randvalue) // Picks between 6 different variations of barrier setups.
+	{
+	case 0:
+		Vrandom = { 1 , 0 , 0 };
+		break;
+	case 1:
+		Vrandom = { 1 , 1 , 0 };
+		break;
+	case 2:
+		Vrandom = { 1 , 0 , 1 };
+		break;
+	case 3:
+		Vrandom = { 0 , 1 , 0 };
+		break;
+	case 4:
+		Vrandom = { 0 , 1 , 1 };
+		break;
+	case 5:
+		Vrandom = { 0 , 0 , 1 };
+		break;
+	}	
+
+	//vector <int> random_barrier_model(3, 0);
+
+	while (image_movement != 6)
+	{
+		system("cls"); // refreshes the console screen.
+
+	// Generates the top layer the rapidly shrinks.
+		for (int i = image_movement; i < 12; i++) {
+			cout << empty_cell[i] << empty_cell[i] << empty_cell[i] << endl;
+		}
+
+		Old_Layer(
+			barrier_section,
+			Vlast_generated);
+
+	// Generates the middle layer with the player model.
+		for (int i = 0; i < 12; i++) {
+			cout << empty_cell[i] << player_cell[i] << empty_cell[i] << endl;
+		}
+
+		New_Layer(
+			barrier_section,
+			Vrandom,
+			repetitions,
+			types_of_barriers,
+			random_barrier_1,
+			random_barrier_2,
+			random_barrier_3);
+
+	// Generates a new layer with empty cells that increases in size.
+		for (int i = 0; i < image_movement; i++) {
+			cout << empty_cell[i] << empty_cell[i] << empty_cell[i] << endl;
+		}
+
+		image_movement = image_movement + 2; // Determines how many times the overall image makes small shifts.
+	}	
+
+// Sets Vlast_generated to the current Vrandom's values.
+	Vlast_generated[0] = random_barrier_1;
+	Vlast_generated[1] = random_barrier_2;
+	Vlast_generated[2] = random_barrier_3;
+}
