@@ -9,11 +9,13 @@ This program will contain a set of vectors that hold strings for a game.
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-
 #include <Windows.h>
 
 using std::vector;
 using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
 
 // Asks the user where the want to move to and then displays a short movement animation
 void Movement(
@@ -24,18 +26,20 @@ void Movement(
 	vector <int>& random_barrier_model,
 	vector <int>& Player_posistion);
 
+
 // Old_Layer outputs the previous new layer.
 void Old_Layer(
 	const vector<vector<string>>& barrier_models,
 	const vector <int>& Vlast_generated_barrier_set);
+
 
 // New_Layer outputs a new randomized layer.
 void New_Layer(
 	const vector <vector <string>> & barrier_models,
 	const vector <int>& Vrandom_barrier_set,
 	const int& repititions,
-	const int& types_of_barriers,
 	vector <int>& random_barrier_model);
+
 
 // Layers contains the functions and code to output all the visuals.
 void Layers(
@@ -44,20 +48,29 @@ void Layers(
 	const vector <string>& player_cell,
 	const vector <int>& Player_posistion,
 	const int& repetitions,
-	const int& types_of_barriers,
 	vector <int>& Vlast_generated_barrier_set,
 	vector <int>& Vrandom_barrier_set,
 	vector <int>& random_barrier_model);
 
 
-vector <vector <string>> barrier_models; // Need to change
-vector <string> empty_cell;
-vector <string> player_cell; // Will hold a specified player model.
 
-string empty =            "|                            |";
-string outside_barrier =  "|----------------------------|"; // Not using at the moment.
-string inside_barrier =   "|############################|"; // Similarly not being used.
 
+// Below is the empty cell and the barrier models.
+
+vector <string> empty_cell = { // This is the empty cell
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+};
 
 vector <string> barrier_model_1 = { // Rabbit box
  "|                        1   |",
@@ -74,7 +87,7 @@ vector <string> barrier_model_1 = { // Rabbit box
  "|                            |",
 };
 
-vector <string> barrier_model_2 = { // Empty box 2
+vector <string> barrier_model_2 = { // Empty box
  "|                        2   |",
  "|   H>==================<H   |",
  "|   Y \\                / Y   |",
@@ -89,7 +102,7 @@ vector <string> barrier_model_2 = { // Empty box 2
  "|                            |",
 };
 
-vector <string> barrier_model_3 = { // "Person A" box 3
+vector <string> barrier_model_3 = { // "Person A" box
  "|                        3   |",
  "|   H>==================<H   |",
  "|   Y \\                / Y   |",
@@ -104,9 +117,20 @@ vector <string> barrier_model_3 = { // "Person A" box 3
  "|                            |",
 };
 
+vector <vector <string>> barrier_models = { 
+	empty_cell, // This is the empty cell
+	barrier_model_1, // Rabbit box
+	barrier_model_2, // Empty box
+	barrier_model_3, // "Person A" box
+};
+
+
+
 // Player Models below.
 
-vector <string> player_model_1 = { // Temporary gingerbread man
+
+
+vector <string> player_model_1 = { // Gingerbread man
  "|                            |",
  "|                            |",  
  "|                            |",
@@ -136,35 +160,21 @@ vector <string> player_model_2 = { // The Bat
  "|                            |",
 };
 
-using std::cout;
-using std::cin;
-using std::endl;
+
 
 vector <int> Vrandom_barrier_set(3, 0); // Used to hold one of six different sets of barriers
 vector <int> Vlast_generated_barrier_set(3, 0); // Copies down the barrier model for printing the previous set of barriers.
 vector <int> random_barrier_model(3, 0); // Used for barrier randomization.
-vector <int> Player_posistion = { 0, 1, 0 };
+vector <int> Player_posistion = { 0, 1, 0 }; // Starts the player in the center and is used in the movement function.
+vector <string> player_cell; // Will hold a specified player model.
 
-int stop; // Is used at the end of the program to prevent the console from closing.
+
 int main()
 {
-	for (int i = 0; i < 12; i++) { // Creates the empty cell
-		empty_cell.push_back(empty);
-	}
-
 	player_cell = player_model_1; 
-
-	barrier_models.push_back(empty_cell); // Needs refinement.
-	barrier_models.push_back(barrier_model_1);
-	barrier_models.push_back(barrier_model_2);
-	barrier_models.push_back(barrier_model_3);
-
-
-	// Main while loop for displaying the models
 
 	int lives = 1;
 	int repetitions = 0;
-	int types_of_barriers = 3; // There are three boxes at the moment.
 	
 	while (lives == 1){
 		Layers(
@@ -173,12 +183,10 @@ int main()
 			player_cell,
 			Player_posistion,
 			repetitions,
-			types_of_barriers,
 			Vlast_generated_barrier_set,
 			Vrandom_barrier_set,
 			random_barrier_model);
 	
-		
 		Movement(
 			barrier_models,
 			player_cell,
@@ -187,22 +195,8 @@ int main()
 			random_barrier_model,
 			Player_posistion);
 
-
 		repetitions++;
-
-	//// Prompts for a continuation of repetitions
-	//	lives = 0;
-	//	cout << endl;
-	//	cout << "If want more samples, type 1: ";
-	//	cin >> lives;
-
-		system("cls"); // Refreshes the console screen.
 	}
-	
-
-	cout << endl;
-	cout << "To stop, type something: ";
-	cin >> stop;
 
 	return 0;
 }
@@ -241,10 +235,7 @@ void Movement(
 	cin >> Move_to;
 
 	int distance_of_move = (Move_to - 1) - Move_from;
-
-	if (distance_of_move == 0) // If not moving
-		return;
-	else if (distance_of_move > 0) // If moving right
+	if (distance_of_move > 0) // If moving right
 	{
 		for (int q = 0; q < distance_of_move; q++)
 		{
@@ -339,13 +330,12 @@ void New_Layer(
 	const vector<vector<string>>& barrier_models,
 	const vector <int>& Vrandom_barrier_set,
 	const int& repetitions,
-	const int& types_of_barriers,
 	vector <int>& random_barrier_model)
 {
 	for (int i = 0; i < 3; i++)
 	{
 		if (Vrandom_barrier_set[i] == 1) // Picks a random barrier model.
-			random_barrier_model[i] = (((((rand()) + repetitions) % (11 + 2 * i)) % types_of_barriers) + 1); // Will need to change the 3 when more than 3 barrier models are made.
+			random_barrier_model[i] = (((((rand()) + repetitions) % (11 + 2 * i)) % (barrier_models.size() - 1)) + 1); // Will need to change the 3 when more than 3 barrier models are made.
 		else
 			random_barrier_model[i] = 0;
 	}
@@ -388,7 +378,6 @@ void Layers(
 	const vector <string>& player_cell,
 	const vector <int>& Player_posistion,
 	const int& repetitions,
-	const int& types_of_barriers,
 	vector <int>& Vlast_generated_barrier_set,
 	vector <int>& Vrandom_barrier_set,
 	vector <int>& random_barrier_model)
@@ -446,7 +435,7 @@ void Layers(
 			cout << endl;
 		}
 
-		New_Layer(barrier_models, Vrandom_barrier_set, repetitions, types_of_barriers, random_barrier_model);
+		New_Layer(barrier_models, Vrandom_barrier_set, repetitions, random_barrier_model);
 
 	// Generates a new layer with empty cells that increases in size.
 		for (int i = 0; i < image_movement; i++) {
