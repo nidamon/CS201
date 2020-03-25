@@ -141,6 +141,9 @@
     <ClCompile Include="GMain.cpp" />
     <ClCompile Include="GVectorimages.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Gproject.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

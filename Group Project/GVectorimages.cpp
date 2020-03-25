@@ -5,55 +5,7 @@ CS 201
 This program will contain a set of vectors that hold strings for a game.
 */
 
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <Windows.h>
-
-using std::vector;
-using std::string;
-using std::cout;
-using std::cin;
-using std::endl;
-
-// Asks the user where the want to move to and then displays a short movement animation
-void Movement(
-	const vector<vector<string>>& barrier_models, 
-	const vector <string>& player_cell,
-	const vector <string>& empty_cell,
-	vector <int>& Vlast_generated_barrier_set,
-	vector <int>& random_barrier_model,
-	vector <int>& Player_posistion);
-
-
-// Old_Layer outputs the previous new layer.
-void Old_Layer(
-	const vector<vector<string>>& barrier_models,
-	const vector <int>& Vlast_generated_barrier_set);
-
-
-// New_Layer outputs a new randomized layer.
-void New_Layer(
-	const vector <vector <string>> & barrier_models,
-	const vector <int>& Vrandom_barrier_set,
-	const int& repititions,
-	vector <int>& random_barrier_model);
-
-
-// Layers contains the functions and code to output all the visuals.
-void Layers(
-	const vector<vector<string>>& barrier_models,
-	const vector <string>& empty_cell,
-	const vector <string>& player_cell,
-	const vector <int>& Player_posistion,
-	const int& repetitions,
-	vector <int>& Vlast_generated_barrier_set,
-	vector <int>& Vrandom_barrier_set,
-	vector <int>& random_barrier_model);
-
-
-
+#include "Gproject.h"
 
 // Below is the empty cell and the barrier models.
 
@@ -218,7 +170,7 @@ void Movement(
 	// The vector Player_cell_and_empty_cell makes picking between the cells easier within this function.
 	vector<vector<string>> Player_cell_and_empty_cell = { empty_cell , player_cell };
 
-	int Move_from;
+	int Move_from = 0;
 	int Move_to;
 	int Position_hold; // Temporarily holds a value from Player_posistion during movement
 
