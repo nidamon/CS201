@@ -174,7 +174,7 @@ void Movement(
 	int Move_to;
 	int Position_hold; // Temporarily holds a value from Player_posistion during movement
 
-	for (int i = 0; i < Player_posistion.size(); i++)
+	for (size_t i = 0; i < Player_posistion.size(); i++)
 	{
 		if (Player_posistion[i] != 0)
 		{
@@ -192,7 +192,7 @@ void Movement(
 		for (int q = 0; q < distance_of_move; q++)
 		{
 
-			for (int j = 0; j < empty_cell[0].size(); j = j + 6)
+			for (size_t j = 0; j < empty_cell[0].size(); j = j + 6)
 			{
 				system("cls"); // refreshes the console screen.
 
@@ -232,7 +232,7 @@ void Movement(
 		for (int q = 0; q > distance_of_move; q--)
 		{
 
-			for (int j = 0; j < empty_cell[0].size(); j = j + 6)
+			for (size_t j = 0; j < empty_cell[0].size(); j = j + 6)
 			{
 				system("cls"); // refreshes the console screen.
 
@@ -377,7 +377,7 @@ void Layers(
 	// Generates the middle layer with the player model.
 		for (int i = 0; i < 12; i++) 
 		{
-			for (int k = 0; k < Player_posistion.size(); k++)
+			for (size_t k = 0; k < Player_posistion.size(); k++)
 			{
 				if (Player_posistion[k] != 1)
 					cout << empty_cell[i];

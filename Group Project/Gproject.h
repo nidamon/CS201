@@ -14,6 +14,7 @@ This header will declare all of the functions from the used in Gmain.
 #include <ctime>
 #include <Windows.h>
 
+using std::size_t;
 using std::vector;
 using std::string;
 using std::cout;
