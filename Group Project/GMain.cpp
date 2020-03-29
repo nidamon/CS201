@@ -17,10 +17,12 @@ int main()
 {
     player_cell = player_model_1;
 
-    int lives = 1;
+    int score = 0;
+    int lives = 3;
     int repetitions = 0;
+    int barriers_dodged_in_a_row = 0;
 
-    while (lives == 1) {
+    while (lives != 0) {
         Layers(
             barrier_models,
             empty_cell,
@@ -31,6 +33,10 @@ int main()
             Vrandom_barrier_set,
             random_barrier_model);
 
+        cout << endl;
+        cout << "Lives left: " << lives << "   Score: " << score << "   Dodge streak: " << barriers_dodged_in_a_row << endl;
+        cout << endl;
+
         Movement(
             barrier_models,
             player_cell,
@@ -38,6 +44,14 @@ int main()
             Vlast_generated_barrier_set,
             random_barrier_model,
             Player_posistion);
+
+        Crash(
+            Player_posistion,
+            Vrandom_barrier_set,
+            repetitions,
+            barriers_dodged_in_a_row,
+            lives,
+            score);
 
         repetitions++;
     }

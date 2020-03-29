@@ -252,3 +252,38 @@ void Layers(
 		image_movement = image_movement + 2; // Determines how many times the overall image makes small shifts.
 	}	
 }
+
+
+
+
+
+
+// Crash determines whether or not the player has hit an obsticle
+void Crash(
+	const vector <int>& Player_posistion,
+	const vector <int>& Vrandom_barrier_set,
+	const int& repetitions,
+	int& barriers_dodged_in_a_row,
+	int& lives,
+	int& score)
+{
+	int lives_hold = lives;
+
+	for (size_t i = 0; i < Player_posistion.size(); i++)
+	{
+		if (Player_posistion[i] == 1)
+		{
+			if (Vrandom_barrier_set[i] == 1)
+			{
+				lives--;
+				barriers_dodged_in_a_row = 0;
+			}
+		}
+	}
+
+	if (lives_hold == lives)
+	{
+		score = score + 10 * ((barriers_dodged_in_a_row * 2) + (repetitions / 4) + 1);
+		barriers_dodged_in_a_row++;
+	}
+}

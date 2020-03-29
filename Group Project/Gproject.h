@@ -163,4 +163,13 @@ void Layers(
 	vector <int>& Vrandom_barrier_set,
 	vector <int>& random_barrier_model);
 
+// Crash determines whether or not the player has hit an obsticle
+void Crash(
+    const vector <int>& Player_posistion,
+    const vector <int>& Vrandom_barrier_set,
+    const int& repetitions,
+    int& barriers_dodged_in_a_row,
+    int& lives,
+    int& score);
+
 #endif
