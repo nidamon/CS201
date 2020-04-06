@@ -12,6 +12,7 @@ using std::endl;
 #include <iomanip>
 #include <string>
 #include <map>
+using std::map;
 #include <random>
 using std::random_device;
 using std::mt19937;
@@ -34,6 +35,10 @@ int RandomBetween(
     const int& first,
     const int& last);
 
+void PrintDistribution(
+    const map<int, int>& numbers,
+    const int& star);
+
 int main()
 {
     // Seed with a real random value, if available
@@ -52,44 +57,37 @@ int main()
     cout << "Last: ";
     cin >> last;
 
+    while ((last - first) < 4)
+    {
+        cout << "The difference between first and last needs to be at least 4." << endl;
+        cout << "Last: ";
+        cin >> last;
+    }
+
+
     int mean = (first + last) / 2;
+    int star = (1000/(last - first));
 
-    cout << "U: " << RandomBetweenU(first, last, r); 
-    cout << endl;
-    cout << "N: " << RandomBetweenN(first, last, mean, e2);
-    cout << endl;
-    cout << "R: " << RandomBetween(first, last);
-    cout << endl;
-
-    std::map<int, int> hist1;
+    map<int, int> hist1;
     for (int n = 0; n < 10000; ++n) {
         ++hist1[std::round(RandomBetweenU(first, last, r))];
     }
-    cout << "Uniform distribution between " << first << " and " << last << ":\n";
-    for (auto p : hist1) {
-        cout << std::fixed << std::setprecision(1) << std::setw(2)
-            << p.first << ' ' << std::string(p.second / 200, '*') << '\n';
-    }
-
-    std::map<int, int> hist2;
+    map<int, int> hist2;
     for (int n = 0; n < 10000; ++n) {
-        ++hist2[std::round(RandomBetweenN(first, last, mean, e2))];
+        ++hist2[std::round(1 + RandomBetweenN(first, last, mean, e2))];
     }
-    cout << "Normal distribution around " << mean << ":\n";
-    for (auto p : hist2) {
-        cout << std::fixed << std::setprecision(1) << std::setw(2)
-            << p.first << ' ' << std::string(p.second / 200, '*') << '\n';
-    }
-
-    std::map<int, int> hist3;
+    map<int, int> hist3;
     for (int n = 0; n < 10000; ++n) {
         ++hist3[std::round(RandomBetween(first, last))];
     }
+
+
+    cout << "Uniform distribution between " << first << " and " << last << ":\n";
+    PrintDistribution(hist1, star);
+    cout << "Normal distribution around " << mean << ":\n";
+    PrintDistribution(hist2, star);
     cout << "Random distribution between " << first << " and " << last << ":\n";
-    for (auto p : hist3) {
-        cout << std::fixed << std::setprecision(1) << std::setw(2)
-            << p.first << ' ' << std::string(p.second / 200, '*') << '\n';
-    }
+    PrintDistribution(hist3, star);
 
     cin >> last;
 }
@@ -116,7 +114,8 @@ int RandomBetweenN(
     const int& mean,
     mt19937& e2)
 { 
-    std::normal_distribution<> normal_dist(mean, ((last - first) / 4));
+    // Spreads out the numbers around the mean
+    std::normal_distribution<> normal_dist(mean, ((last - first) / 4)); 
     return normal_dist(e2);
 }
 
@@ -127,6 +126,20 @@ int RandomBetween(
     const int& first,
     const int& last)
 {
-    int random_number = first + (rand() % (last - first));
+    int random_number = first + (rand() % (last - first + 1));
     return random_number;
+}
+
+
+
+// Prints a list of the random numbers showing normal or uniform distribution
+void PrintDistribution(
+    const map<int, int>& numbers,
+    const int& star)
+{
+    for (auto p : numbers) {
+    cout << std::fixed << std::setprecision(1) << std::setw(2)
+        // Replaced the 200 with a variable that changes with the difference between first and last.
+         << p.first << ' ' << std::string(p.second / star, '*') << '\n';
+    }
 }
