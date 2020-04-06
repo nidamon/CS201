@@ -16,16 +16,23 @@ using std::endl;
 using std::random_device;
 using std::mt19937;
 #include <cmath>
+#include <stdlib.h>
 
 
 int RandomBetweenU(
-    int first,
-    int last,
+    const int& first,
+    const int& last,
     random_device& r);
 
 int RandomBetweenN(
+    const int& first,
+    const int& last,
     const int& mean,
     mt19937& e2);
+
+int RandomBetween(
+    const int& first,
+    const int& last);
 
 int main()
 {
@@ -35,6 +42,8 @@ int main()
     std::seed_seq seed2{ r(), r(), r(), r(), r(), r(), r(), r() };
     mt19937 e2(seed2);
 
+    std::srand(std::time(nullptr));
+
     int first;
     cout << "First: ";
     cin >> first;
@@ -43,11 +52,13 @@ int main()
     cout << "Last: ";
     cin >> last;
 
-    int mean = first + ((last - first) / 2);
+    int mean = (first + last) / 2;
 
     cout << "U: " << RandomBetweenU(first, last, r); 
     cout << endl;
-    cout << "N: " << RandomBetweenN(mean, e2);
+    cout << "N: " << RandomBetweenN(first, last, mean, e2);
+    cout << endl;
+    cout << "R: " << RandomBetween(first, last);
     cout << endl;
 
     std::map<int, int> hist1;
@@ -62,10 +73,20 @@ int main()
 
     std::map<int, int> hist2;
     for (int n = 0; n < 10000; ++n) {
-        ++hist2[std::round(RandomBetweenN(mean, e2))];
+        ++hist2[std::round(RandomBetweenN(first, last, mean, e2))];
     }
     cout << "Normal distribution around " << mean << ":\n";
     for (auto p : hist2) {
+        cout << std::fixed << std::setprecision(1) << std::setw(2)
+            << p.first << ' ' << std::string(p.second / 200, '*') << '\n';
+    }
+
+    std::map<int, int> hist3;
+    for (int n = 0; n < 10000; ++n) {
+        ++hist3[std::round(RandomBetween(first, last))];
+    }
+    cout << "Random distribution between " << first << " and " << last << ":\n";
+    for (auto p : hist3) {
         cout << std::fixed << std::setprecision(1) << std::setw(2)
             << p.first << ' ' << std::string(p.second / 200, '*') << '\n';
     }
@@ -77,8 +98,8 @@ int main()
 
 // Returns a uniform random number between first and last
 int RandomBetweenU(
-    int first, 
-    int last, 
+    const int& first,
+    const int& last, 
     random_device& r)
 {
     std::default_random_engine e1(r());
@@ -90,9 +111,22 @@ int RandomBetweenU(
 
 // Returns a normally distributed random number between first and last
 int RandomBetweenN(
+    const int& first,
+    const int& last,
     const int& mean,
     mt19937& e2)
 { 
-    std::normal_distribution<> normal_dist(mean, 2);
+    std::normal_distribution<> normal_dist(mean, ((last - first) / 4));
     return normal_dist(e2);
+}
+
+
+
+// Returns a random number between first and last using rand() varies with time
+int RandomBetween(
+    const int& first,
+    const int& last)
+{
+    int random_number = first + (rand() % (last - first));
+    return random_number;
 }
