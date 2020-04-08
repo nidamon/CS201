@@ -56,12 +56,11 @@ int main()
 	for (size_t i = 0; i < Current_word.size(); i++)
 		Current_word_blank += "_ ";
 
-	cout << Current_word << endl;
-
-
 	// Counts the number of incorrect guesses.
 	int wrong_guess = 0;
 	char letter;
+
+
 
 	// Checks if the letter entered is in the word.
 	auto check_word = [](char letter, string& Current_word)
@@ -71,6 +70,7 @@ int main()
 		else
 			return false;
 	};
+
 
 
 	// Determines the letters used.
@@ -93,6 +93,8 @@ int main()
 			used_letters[letter] = 1;
 		}
 	};
+
+
 
 	// Prints the used letters.
 	auto print_used_letters = [](const map<char, int>& used_letters)
@@ -120,7 +122,18 @@ int main()
 	};
 
 
+
+	// Checks is the game has been won.
+	auto check_if_win = [](const string& Current_word_blank)
+	{
+		if (Current_word_blank.find('_') < Current_word_blank.size())
+			return false;
+		else
+			return true;
+	};
+
 	
+
 	while (wrong_guess < 10)
 	{
 		cout << Current_word_blank << endl;
@@ -134,6 +147,13 @@ int main()
 		blank_to_letter(letter, Current_word, Current_word_blank);
 		cout << "Incorrect guesses left: " << (10 - wrong_guess) << endl;
 		print_used_letters(used_letters);
+		if (check_if_win(Current_word_blank))
+		{
+			cout << "Yay! You win!" << endl;
+			break;
+		}
+		if (wrong_guess > 9)
+			cout << "GAME OVER";
 	}
 
 	
@@ -141,7 +161,6 @@ int main()
 	// Stops the console from closing.
 	cout << endl;
 	int q;
-	cout << "GAME OVER";
 	cin >> q;
 }
 
