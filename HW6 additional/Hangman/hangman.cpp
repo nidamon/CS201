@@ -13,14 +13,12 @@ using std::endl;
 using std::map;
 #include <string>
 using std::string;
-#include <iomanip>
-using std::setw;
-#include <ios>
-using std::left;
 #include <random>
 using std::random_device;
 #include <algorithm>
 using std::find;
+#include <Windows.h>
+
 
 // Words for word search.
 map<int, string> Words = {
@@ -47,7 +45,7 @@ int main()
 
 	random_device r;
 	std::default_random_engine e1(r());
-	std::uniform_int_distribution<int> uniform_dist(0, number_of_words);
+	std::uniform_int_distribution<int> uniform_dist(0, number_of_words-1);
 
 	// Picks a random word.
 	string Current_word = Words[uniform_dist(e1)];
@@ -56,57 +54,16 @@ int main()
 	string Current_word_blank = "";
 	// Map for the letters.
 	map<string, int> Current_words_letters;
-	for (int i = 0; i < Current_word.size(); i++)
-	{
-		// Puts the letters of the current word into the map and sets their value to 0.
-		Current_words_letters[Current_word.substr(i, 1)] = 0;
+	for (size_t i = 0; i < Current_word.size(); i++)
 		// Creates the blanks for the word.
 		Current_word_blank += "_ ";
-	}
-	
 
-	// Gives the letters in the word for testing.
-	for (const auto& p : Current_words_letters)
-	{
-		auto k = p.first;
-		auto v = p.second;
-		cout << "Person A: " << setw(12) << left << k << "Person B: " << v;
-		cout << endl;;
-	}
-
+	cout << Current_word << endl;
 
 
 	// Counts the number of incorrect guesses.
 	int wrong_guess = 0;
-
 	string letter;
-	// Determines the letters used.
-	auto letter_used = [](string letter, map<string, int>& Current_words_letters, int& wrong_guess)
-	{
-		int item_count = Current_words_letters.count(letter);
-		if (item_count != 0)
-		{
-			if (Current_words_letters[letter] == 1)
-			{
-				cout << "That letter has already been used." << endl;
-				return;
-			}
-			else
-			{
-				Current_words_letters[letter] = 1;
-				cout << "That \"" << letter << "\" is in the word!" << endl;
-			}
-
-		}
-		else
-		{
-			Current_words_letters[letter] = 1;
-			cout << "There are no " << letter << "'s in the word." << endl;
-			wrong_guess++;
-		}	
-	};
-
-
 
 	// Checks if the letter entered is in the word.
 	auto check_word = [](string letter, string& Current_word)
@@ -118,11 +75,44 @@ int main()
 	};
 
 
+	// Determines the letters used.
+	auto is_letter_used = [](string letter, map<string, int>& Current_words_letters, int& wrong_guess, string& Current_word, auto check_word)
+	{
+		int item_count = Current_words_letters.count(letter);
+		if (item_count != 0)
+			cout << "That letter has already been used." << endl;
+		else
+		{
+			if (check_word(letter, Current_word))
+			{
+				cout << "That \"" << letter << "\" is in the word!" << endl;
+			}
+			else
+			{
+				cout << "There are no " << letter << "'s in the word." << endl;
+				wrong_guess++;
+			}
+			Current_words_letters[letter] = 1;
+		}
+	};
+
+	// Prints the used letters.
+	auto print_used_letters = [](const map<string, int>& Current_words_letters)
+	{
+		cout << "Letters used" << endl;
+		for (const auto& p : Current_words_letters)
+		{
+			auto k = p.first;
+			auto v = p.second;
+			cout << k << " ";
+		}
+		cout << endl;
+	};
 
 
 
 	// Changes the appropriate blank to its corresponding letter.
-	auto blank_to_letter = [](string letter, string Current_word)
+	auto blank_to_letter = [](string letter, string Current_word, string& Current_word_blank)
 	{
 
 	};
@@ -135,14 +125,20 @@ int main()
 		cout << endl;
 		cout << "Enter a letter: ";
 		cin >> letter;
-		letter_used(letter, Current_words_letters, wrong_guess);
-		cout << wrong_guess << endl;
+
+		system("cls"); // refreshes the console screen.
+
+		is_letter_used(letter, Current_words_letters, wrong_guess, Current_word, check_word);
+		cout << "Incorrect guesses left: " << (10 - wrong_guess) << endl;
+		print_used_letters(Current_words_letters);
 	}
 
 	
 
 	// Stops the console from closing.
+	cout << endl;
 	int q;
+	cout << "GAME OVER";
 	cin >> q;
 }
 
