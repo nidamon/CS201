@@ -132,7 +132,126 @@ int main()
 			return true;
 	};
 
+
+	// Shows the hanged man.
+	auto hanged_man = [](const int& wrong_guess)
+	{
+		switch (wrong_guess) // Picks the appropriate hanged man.
+		{
+		case 0:
+			cout << "     |>----+" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 1:
+			cout << "     |>----+" <<endl;
+			cout << "    ()     |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 2:
+			cout << "     |>----+" << endl;
+			cout << "    ()     |" << endl;
+			cout << "   [  ]    |" << endl;
+			cout << "   \\__/    |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 3:
+			cout << "     |>----+" << endl;
+			cout << "    ()     |" << endl;
+			cout << " /+[  ]    |" << endl;
+			cout << " | \\__/    |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 4:
+			cout << "     |>----+" << endl;
+			cout << "    ()     |" << endl;
+			cout << " /+[  ]+\\  |" << endl;
+			cout << " | \\__/ |  |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << "           |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 5:
+			cout << "     |>----+" << endl;
+			cout << "    ()     |" << endl;
+			cout << " /+[  ]+\\  |" << endl;
+			cout << " | \\__/ |  |" << endl;
+			cout << "   /       |" << endl;
+			cout << "   |       |" << endl;
+			cout << "           |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 6:
+			cout << "     |>----+" << endl;
+			cout << "    ()     |" << endl;
+			cout << " /+[  ]+\\  |" << endl;
+			cout << " | \\__/ |  |" << endl;
+			cout << "   /  \\    |" << endl;
+			cout << "   |  |    |" << endl;
+			cout << "           |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 7:
+			cout << "     |>----+" << endl;
+			cout << "    ()     |" << endl;
+			cout << " /+[  ]+\\  |" << endl;
+			cout << " | \\__/ |  |" << endl;
+			cout << " ^ /  \\    |" << endl;
+			cout << "   |  |    |" << endl;
+			cout << "           |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 8:
+			cout << "     |>----+" << endl;
+			cout << "    ()     |" << endl;
+			cout << " /+[  ]+\\  |" << endl;
+			cout << " | \\__/ |  |" << endl;
+			cout << " ^ /  \\ ^  |" << endl;
+			cout << "   |  |    |" << endl;
+			cout << "           |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 9:
+			cout << "     |>----+" << endl;
+			cout << "    ()     |" << endl;
+			cout << " /+[  ]+\\  |" << endl;
+			cout << " | \\__/ |  |" << endl;
+			cout << " ^ /  \\ ^  |" << endl;
+			cout << "   |  |    |" << endl;
+			cout << "   ^       |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		case 10:
+			cout << "     |>----+" << endl;
+			cout << "    ()     |" << endl;
+			cout << " /+[  ]+\\  |" << endl;
+			cout << " | \\__/ |  |" << endl;
+			cout << " ^ /  \\ ^  |" << endl;
+			cout << "   |  |    |" << endl;
+			cout << "   ^  ^    |" << endl;
+			cout << " ==========|" << endl;
+			break;
+		}
+	};
 	
+
 
 	while (wrong_guess < 10)
 	{
@@ -145,8 +264,8 @@ int main()
 
 		is_letter_used(letter, used_letters, wrong_guess, Current_word, check_word);
 		blank_to_letter(letter, Current_word, Current_word_blank);
-		cout << "Incorrect guesses left: " << (10 - wrong_guess) << endl;
 		print_used_letters(used_letters);
+		hanged_man(wrong_guess);
 		if (check_if_win(Current_word_blank))
 		{
 			cout << "Yay! You win!" << endl;
