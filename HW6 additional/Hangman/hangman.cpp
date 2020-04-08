@@ -74,7 +74,8 @@ int main()
 
 
 	// Determines the letters used.
-	auto is_letter_used = [](char letter, map<char, int>& used_letters, int& wrong_guess, string& Current_word, auto check_word)
+	auto is_letter_used = [](char letter, map<char, int>& used_letters, 
+		int& wrong_guess, string& Current_word, auto check_word)
 	{
 		int item_count = used_letters.count(letter);
 		if (item_count != 0)
@@ -100,12 +101,9 @@ int main()
 	auto print_used_letters = [](const map<char, int>& used_letters)
 	{
 		cout << "Letters used: ";
-		for (const auto& p : used_letters)
-		{
-			auto k = p.first;
-			auto v = p.second;
-			cout << k << " ";
-		}
+		std::for_each(used_letters.begin(), used_letters.end(), [](const auto& used_letters_Pair) {
+			cout << used_letters_Pair.first << " ";
+			});
 		cout << endl;
 	};
 
@@ -114,10 +112,23 @@ int main()
 	// Changes the appropriate blank to its corresponding letter.
 	auto blank_to_letter = [](char letter, string& Current_word, string& Current_word_blank)
 	{
-		for (size_t i = 0; i < Current_word.size(); i++)
+
+		string letter_str(1, letter);
+		
+		auto iter1 = Current_word.begin();
+		auto iter2 = Current_word.end();
+
+		auto result = iter1;
+		while (result != iter2)
 		{
-			if (Current_word[i] == letter)
-				Current_word_blank[i*2] = letter;
+			auto result = std::find_first_of(iter1, iter2, letter_str.begin(), letter_str.end());
+			if (result != iter2)
+			{
+				Current_word_blank[(std::distance(Current_word.begin(), result)) * 2] = letter;
+				iter1 = next(result, 1);
+			}
+			else
+				break;
 		}
 	};
 
@@ -252,11 +263,11 @@ int main()
 	};
 	
 
-
+	cout << Current_word_blank << endl;
+	cout << endl;
 	while (wrong_guess < 10)
 	{
-		cout << Current_word_blank << endl;
-		cout << endl;
+		
 		cout << "Enter a letter: ";
 		cin >> letter;
 
@@ -266,6 +277,8 @@ int main()
 		blank_to_letter(letter, Current_word, Current_word_blank);
 		print_used_letters(used_letters);
 		hanged_man(wrong_guess);
+		cout << Current_word_blank << endl;
+		cout << endl;
 		if (check_if_win(Current_word_blank))
 		{
 			cout << "Yay! You win!" << endl;
