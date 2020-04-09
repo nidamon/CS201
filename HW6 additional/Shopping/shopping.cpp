@@ -125,7 +125,7 @@ int main()
 			{
 				if (amount > max_take)
 					amount = max_take;
-				User_cart[item_id[id]].units = amount;
+				User_cart[item_id[id]].units += amount;
 				Shop_items[item_id[id]].units -= amount;
 			}
 			if (amount < 0)
