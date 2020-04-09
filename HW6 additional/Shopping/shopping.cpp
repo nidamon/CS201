@@ -18,6 +18,7 @@ using std::setw;
 #include <ios>
 using std::left;
 using std::right;
+#include <Windows.h>
 
 struct Record {
 	double unitPrice;
@@ -34,21 +35,68 @@ map<string, Record> Shop_items = {
 	{ "Cake", { 8.99 , 2 } }
 };
 
-map<string, Record> User_cart;
+map<string, Record> User_cart = {};
+map<int, string> item_id = {};
 
 int main()
 {
-	cout <<  setw(15) << left << "Item: " << "Price:" << "  Units left: " << endl;
-	for (const auto& p : Shop_items)
+	int id = 1;
+	while (id != 0)
 	{
-		auto k = p.first;
-		auto v = p.second;
-		cout << setw(15) << left << k << "$" << v.unitPrice << setw(13) << right << v.units;
-		cout << endl;;
+		int i = 1;
+		cout << "Id: " << setw(15) << left << "Item: " << "Price:" << "  Units left: " << endl;
+		for (const auto& p : Shop_items)
+		{
+			auto k = p.first;
+			auto g = item_id[i];
+			item_id[i] = k;
+			auto v = p.second;
+			cout << " " << setw(3) << left << i << setw(15) << left << k << "$" << v.unitPrice << setw(4) << right << v.units << endl;
+			i++;
+		}
+
+		cout << endl;
+		cout << endl;
+		cout << "Shoping Cart:" << endl;
+		if (User_cart.empty())
+			cout << "Your cart is empty." << endl;
+		else
+		{
+			cout << "Id: " << setw(15) << left << "Item: " << "Price:" << "  Units left: " << endl;
+			for (const auto& p : User_cart)
+			{
+				auto k = p.first;
+				auto v = p.second;
+				cout << " " << setw(3) << left << i << setw(15) << left << k << "$" << v.unitPrice << setw(4) << right << v.units << endl;
+			}
+		}
+
+		cout << endl;
+		cout << "What would you like to buy?" << endl;
+
+		int id;
+		int item_count = 0;
+		while (item_count == 0)
+		{
+			cout << "Enter an id or 0 if you are done: ";
+			cin >> id;
+
+			if (id == 0)
+				break;
+
+			int item_count = item_id.count(id);
+			if (item_count != 0)
+				cout << "There is no item with that id." << endl;
+		}
+		if (id == 0)
+			break;
+
+
+		system("cls"); // refreshes the console screen.
 	}
 
 	// Stops the console from closing.
-	cout << endl;
+	cout << "Done" << endl;
 	int q;
 	cin >> q;
 }
