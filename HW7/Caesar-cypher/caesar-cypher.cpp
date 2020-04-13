@@ -20,7 +20,6 @@ unsigned StringToTokenWS(const string& user_string, vector<string>& tokens);
 
 int main()
 {
-	vector<string> tokens;
 	string user_string;
 	string cypher_shift_str;
 	int cypher_shift_val;
@@ -28,6 +27,7 @@ int main()
 	cout << endl;
 	while (true)
 	{
+		vector<string> tokens;
 		// Takes users line
 		cout << "Enter a message to cypher (blank line to end): ";
 		std::getline(cin, user_string);
@@ -35,9 +35,6 @@ int main()
 			break;
 		else
 			StringToTokenWS(user_string, tokens);
-
-		for (size_t i = 0; i < tokens.size(); i++)
-			cout << tokens[i] << endl;
 
 		// Asks for an amount to shift the characters over
 		cout << "Enter an integer to use as the shift: ";
@@ -51,27 +48,36 @@ int main()
 			else
 				cout << "You need to enter an integer: ";
 		}
-		cout << cypher_shift_val << endl;
+
+		// Makes cypher_shift_val positive to prevent problems when changing char values
+		while (cypher_shift_val < 0)
+			cypher_shift_val += 26;
 
 		// Divides the tokens into chars and outputs them onto the console
 		char c;
+		cout << "Result: ";
 		for (size_t i = 0; i < tokens.size(); i++)
 		{
 			istringstream instream(tokens[i]);
 			for (size_t j = 0; j < tokens[i].size(); j++)
 			{
 				instream >> c;
-				cout << c << " ";
+				if (c > 96)
+					if (c < 123)
+						c = 97 + ((c - 97 + cypher_shift_val) % 26);
+				if (c < 91)
+					if (c > 64)
+						c = 65 + ((c - 65 + cypher_shift_val) % 26);
+				cout << c;
 			}
-			cout << endl;
+			cout << " ";
 		}
-
+		cout << endl;
 	}
-
 
 	int q;
 	cout << endl;
-	cout << "Program has finished. Enter a character to return: ";
+	cout << "Program Complete";
 	cin >> q; //Stops the console from closing after the program has run.
 }
 
