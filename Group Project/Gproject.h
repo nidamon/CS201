@@ -9,17 +9,69 @@ This header will declare all of the functions used in Gmain and will contain a s
 #define Gproject_H
 
 #include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <Windows.h>
-
-using std::size_t;
-using std::vector;
-using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
+#include <vector>
+using std::vector;
+#include <cstdlib>
+#include <ctime>
+#include <Windows.h>
+#include <random>
+using std::random_device;
+#include <string>
+using std::string;
+#include <iomanip>
+using std::setw;
+using std::right;
+#include <sstream>
+using std::istringstream;
+
+using std::size_t;
+
+
+
+
+
+const vector <string> Title1 = {
+ " //////   /////    //////   //////      //////      ////   //       //",
+ " //       //  //   //       //          //        //  //   //       //",
+ " /////    /////    //////   //////      /////    //////    //       //",
+ " //       //  //   //       //          //      //  //     //       //",
+ " //       //  //   //////   //////      //     //  //      //////   //////"
+};
+
+const vector <string> Title2 = {
+ "     //////   /////    //////   //////      //////    ////       //       //",
+ "    //       //  //   //       //          //       //  //      //       //",
+ "   /////    /////    //////   //////      /////    //////      //       //",
+ "  //       //  //   //       //          //       //  //      //       //",
+ " //       //  //   //////   //////      //       //  //      //////   //////"
+};
+
+const vector <string> Title3 = {
+ " //////   /////    //////   //////      //////   ////    //       //",
+ " //       //  //   //       //          //      //  //   //       //",
+ " /////    /////    //////   //////      /////   //////   //       //",
+ " //       //  //   //       //          //      //  //   //       //",
+ " //       //  //   //////   //////      //      //  //   //////   //////"
+};
+
+
+const vector < vector <string>> Titles = {
+    Title1,
+    Title2,
+    Title3
+};
+
+// Displayed for game over
+const vector <string> Game_over = {
+ "    //////     ////    //      //   //////       //////    //    //   //////   /////",
+ "  //          //  //   ///    ///   //          //    //   //    //   //       //  //",
+ "  //   ////   //////   ////  ////   //////      //    //   //    //   //////   /////",
+ "  //     //   //  //   // //// //   //          //    //    //  //    //       //  //",
+ "   //////     //  //   //  //  //   //////       //////       //      //////   //  //"
+};
 
 
 // Below is the empty cell and the barrier models.
@@ -128,6 +180,11 @@ const vector <string> player_model_2 = { // The Bat
 };
 
 
+// Menu for picking skins(unavailable atm), playing, saving (unavailable atm), or quiting
+int Menu(
+    const vector < vector <string>>& Titles);
+
+
 // Asks the user where the want to move to and then displays a short movement animation
 void Movement(
 	const vector<vector<string>>& barrier_models,
@@ -163,6 +220,7 @@ void Layers(
 	vector <int>& Vrandom_barrier_set,
 	vector <int>& random_barrier_model);
 
+
 // Crash determines whether or not the player has hit an obsticle
 void Crash(
     const vector <int>& Player_posistion,
@@ -171,5 +229,12 @@ void Crash(
     int& barriers_dodged_in_a_row,
     int& lives,
     int& score);
+
+
+// Displays Game over and updates the high score if needed.
+void Game_over_display(
+    const vector <string>& Game_over,
+    const int& score,
+    int& High_score);
 
 #endif

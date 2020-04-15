@@ -17,45 +17,72 @@ int main()
 {
     player_cell = player_model_1;
 
+    int High_score = 0;
     int score = 0;
-    int lives = 3;
+    int lives = 0;
     int repetitions = 0;
     int barriers_dodged_in_a_row = 0;
 
-    while (lives != 0) {
-        Layers(
-            barrier_models,
-            empty_cell,
-            player_cell,
-            Player_posistion,
-            repetitions,
-            Vlast_generated_barrier_set,
-            Vrandom_barrier_set,
-            random_barrier_model);
 
-        cout << endl;
-        cout << "Lives left: " << lives << "   Score: " << score << "   Dodge streak: " << barriers_dodged_in_a_row << endl;
-        cout << endl;
+    // Menu loops over everything --> backout brings to menu
+    while (true)
+    {
+        int select = 0;
+        select = Menu(Titles);
 
-        Movement(
-            barrier_models,
-            player_cell,
-            empty_cell,
-            Vlast_generated_barrier_set,
-            random_barrier_model,
-            Player_posistion);
+ 
+        if (select == 1) // Play if 1
+        {
+            lives += 3;
+            score = 0;
+            repetitions = 0;
+            while (lives != 0) {
+                Layers(
+                    barrier_models,
+                    empty_cell,
+                    player_cell,
+                    Player_posistion,
+                    repetitions,
+                    Vlast_generated_barrier_set,
+                    Vrandom_barrier_set,
+                    random_barrier_model);
 
-        Crash(
-            Player_posistion,
-            Vrandom_barrier_set,
-            repetitions,
-            barriers_dodged_in_a_row,
-            lives,
-            score);
+                cout << endl;
+                cout << "Lives left: " << lives << "   Score: " << score << "   Dodge streak: " << barriers_dodged_in_a_row << endl;
+                cout << endl;
 
-        repetitions++;
+                Movement(
+                    barrier_models,
+                    player_cell,
+                    empty_cell,
+                    Vlast_generated_barrier_set,
+                    random_barrier_model,
+                    Player_posistion);
+
+                Crash(
+                    Player_posistion,
+                    Vrandom_barrier_set,
+                    repetitions,
+                    barriers_dodged_in_a_row,
+                    lives,
+                    score);
+
+                repetitions++;
+            }
+            Game_over_display(Game_over, score, High_score);
+        }
+
+        else if (select == 5) // Quit if 5
+        {
+            cout << endl;
+            cout << "     Come Again!";
+            Sleep(2000);
+            break;
+        }
+
+
+
     }
-
     return 0;
 }
 
