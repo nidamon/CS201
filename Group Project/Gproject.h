@@ -26,6 +26,16 @@ using std::setw;
 using std::right;
 #include <sstream>
 using std::istringstream;
+#include <fstream>
+using std::ofstream;
+using std::ifstream;
+using std::ios;
+#include <map>
+using std::map;
+#include <utility>
+using std::pair;
+#include <ios>
+using std::left;
 
 using std::size_t;
 
@@ -180,6 +190,9 @@ const vector <string> player_model_2 = { // The Bat
 };
 
 
+
+
+
 // Menu for picking skins(unavailable atm), playing, saving (unavailable atm), or quiting
 int Menu(
     const vector < vector <string>>& Titles);
@@ -235,6 +248,13 @@ void Crash(
 void Game_over_display(
     const vector <string>& Game_over,
     const int& score,
+    int& High_score);
+
+
+// Alows for the saving and loading of the games.
+int Save_Load_game(
+    vector<pair <string, int>>& saves_premap,
+    map<int, pair <string, int>>& player_saves,
     int& High_score);
 
 #endif

@@ -13,6 +13,13 @@ vector <int> random_barrier_model(3, 0); // Used for barrier randomization.
 vector <int> Player_posistion = { 0, 1, 0 }; // Starts the player in the center and is used in the movement function.
 vector <string> player_cell; // Will hold a specified player model.
 
+// Map for file I/O
+map<int, pair <string, int>> player_saves;
+
+// Vector for file I/O
+vector<pair <string, int>> saves_premap;
+
+
 int main()
 {
     player_cell = player_model_1;
@@ -70,6 +77,13 @@ int main()
                 repetitions++;
             }
             Game_over_display(Game_over, score, High_score);
+        }
+        else if (select == 3)
+        {
+            Save_Load_game(saves_premap, player_saves, High_score);
+            Sleep(2000);
+            cout << "Closing soon!";
+            Sleep(2000);
         }
 
         else if (select == 5) // Quit if 5

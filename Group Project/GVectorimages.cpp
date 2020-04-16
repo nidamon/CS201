@@ -315,7 +315,7 @@ int Menu(
 	cout << setw(9) << right << "3) " << "Save your high score" << endl;
 	cout << setw(9) << right << "4) " << "Instructions/about" << endl;
 	cout << setw(9) << right << "5) " << "Quit" << endl;
-	cout << setw(7) << right << "E" << "nter a number to select an option:";
+	cout << setw(7) << right << "E" << "nter a number to select an option: ";
 	
 	string select_str; 
 	int select;
@@ -366,4 +366,176 @@ void Game_over_display(
 		cout << "The curent High Score: " << High_score << endl;
 	}
 	Sleep(5000);
+}
+
+
+
+
+
+
+// Alows for the saving and loading of the games.
+int Save_Load_game(
+	vector<pair <string, int>>& saves_premap,
+	map<int, pair <string, int>>& player_saves,
+	int& High_score)
+{
+	if (false) // File write
+	{
+		ofstream fout("Freefall.txt", ios::app);
+		if (!fout)
+		{
+			cout << "Error opening file" << endl;
+			return 0;
+		}
+		else
+		{
+			//for (int i = 0; i < 10; i++)
+			fout << "Testdummy 850" << endl;
+			fout << "test 25" << endl;
+			fout << "HelloWorld 1001" << endl;
+			fout << "Fallendown 12" << endl;
+			fout << "Down 357" << endl;
+
+			fout << endl;
+			if (!fout)
+			{
+				cout << "Error writing to file" << endl;
+				return 0;
+			}
+			cout << "Text inputted" << endl;
+		}
+	}
+
+
+
+
+
+	pair <string, int> short_use;
+
+	if (true) // File read
+	{
+		ifstream fin("Freefall.txt");
+		if (!fin)
+		{
+			cout << "Error opening file" << endl;
+			return 0;
+		}
+		else
+		{
+			while (true)
+			{
+				string line;
+				getline(fin, line);
+				if (!fin)
+				{
+					if (fin.eof())
+					{
+						cout << "Finished reading file" << endl;
+						break;
+					}
+					else
+					{
+						cout << "Error during transmit." << endl;
+						break;
+					}
+				}
+
+				istringstream instream(line);
+				string name;
+				int saved_score;
+				instream >> name >> saved_score;
+				if (!instream)
+					break;
+
+				//cout << line << endl; // If need to check file reading
+
+				short_use.first = name;
+				short_use.second = saved_score;
+				saves_premap.push_back(short_use);
+			}
+		}
+	}
+
+	auto iter1 = saves_premap.begin();
+	auto iter2 = saves_premap.end();
+	sort(iter1, iter2);
+
+	short_use.first = "zzzz";
+	short_use.second = 0;
+	saves_premap.push_back(short_use);
+
+	size_t i = 0;
+	int j = 1;
+	while (i < saves_premap.size()-1)
+	{
+		if (saves_premap[i].first != saves_premap[i + 1].first)
+		{
+			player_saves[j].first = saves_premap[i].first;
+			player_saves[j].second = saves_premap[i].second;
+			j++;
+		}
+		i++;
+	}
+
+
+
+
+
+	system("cls"); // refreshes the console screen.
+
+	cout << "  Saves:" << endl;
+
+	cout << "    Id: " << setw(15) << left << "Name: " << "Score:" << endl;
+	for (const auto& p : player_saves)
+	{
+		auto k = p.first;
+		auto v = p.second;
+		cout << "     " << setw(3) << left << k
+			<< setw(15) << left << v.first << " "
+			<< setw(4) << left << v.second << endl;
+	}
+
+
+
+	if (false) // File write
+	{
+		ofstream fout("Freefall.txt", ios::app);
+		if (!fout)
+		{
+			cout << "Error opening file" << endl;
+			return 0;
+		}
+		else
+		{
+			//for (int i = 0; i < 10; i++)
+			fout << "Testdummy 850" << endl;
+			fout << "test 25" << endl;
+			fout << "HelloWorld 1001" << endl;
+			fout << "Fallendown 12" << endl;
+			fout << "Down 357" << endl;
+
+			fout << endl;
+			if (!fout)
+			{
+				cout << "Error writing to file" << endl;
+				return 0;
+			}
+			cout << "Text inputted" << endl;
+		}
+	}
+
+	string select_str;
+	int select;
+	while (true) // Gets the users selection
+	{
+		std::getline(cin, select_str);
+		istringstream instream(select_str);
+		instream >> select;
+		if (instream) // Confirms if there is an int value in cypher_shift_str
+			if (select > 0)
+				if (select < 6)
+					break;
+		cout << "You need to enter an integer: ";
+	}
+	return 0;
 }
