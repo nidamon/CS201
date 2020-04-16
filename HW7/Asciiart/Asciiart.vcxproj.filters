@@ -21,6 +21,9 @@
     <ClCompile Include="Image3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="asciiart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image3.h">
