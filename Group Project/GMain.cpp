@@ -25,19 +25,21 @@ int main()
     player_cell = player_model_1;
 
     int High_score = 0;
+    int Highest_score = 0;
     int score = 0;
     int lives = 0;
     int repetitions = 0;
     int barriers_dodged_in_a_row = 0;
 
+    Pre_load_saves(saves_premap, player_saves, Highest_score);
+    system("cls"); // refreshes the console screen.
+
 
     // Menu loops over everything --> backout brings to menu
     while (true)
     {
-        int select = 0;
-        select = Menu(Titles);
+        int select = Menu(Titles);
 
- 
         if (select == 1) // Play if 1
         {
             lives += 3;
@@ -76,14 +78,28 @@ int main()
 
                 repetitions++;
             }
-            Game_over_display(Game_over, score, High_score);
+            Game_over_display(Game_over, score, High_score, Highest_score);
         }
         else if (select == 3)
         {
-            Save_Load_game(saves_premap, player_saves, High_score);
-            Sleep(2000);
+            while (true)
+            {
+                int sub_select = Save_load_Menu();
+                if (sub_select == 1)
+                {
+                    Pre_load_saves(saves_premap, player_saves, Highest_score);
+                    Load_game(player_saves, High_score, Highest_score);
+                }
+                if (sub_select == 2)
+                    Save_game(player_saves, High_score);
+                if (sub_select == 3)
+                    break;
+            }
+
+            //Save_Load_game(saves_premap, player_saves, High_score);
+            
             cout << "Closing soon!";
-            Sleep(2000);
+            
         }
 
         else if (select == 5) // Quit if 5

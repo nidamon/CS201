@@ -34,7 +34,18 @@ void Movement(
 	}
 
 	cout << "Choose column 1, 2, or 3 to move to it: ";
-	cin >> Move_to;
+	string select_str;
+	while (true) // Gets the users selection
+	{
+		std::getline(cin, select_str);
+		istringstream instream(select_str);
+		instream >> Move_to;
+		if (instream)
+			if (Move_to > 0)
+				if (Move_to < 4)
+					break;
+		cout << "You need to enter 1, 2, or 3: ";
+	}
 
 	int distance_of_move = (Move_to - 1) - Move_from;
 	if (distance_of_move > 0) // If moving right
@@ -293,7 +304,7 @@ void Crash(
 
 
 
-// Menu for picking skins(unavailable atm), playing, saving (unavailable atm), or quiting
+// Menu for picking skins, playing, saving, or quiting
 int Menu(
 	const vector < vector <string>>& Titles)
 {
@@ -311,9 +322,9 @@ int Menu(
 	cout << endl;
 	cout << endl;
 	cout << setw(9) << right << "1) " << "Play" << endl;
-	cout << setw(9) << right << "2) " << "Skins" << endl;
-	cout << setw(9) << right << "3) " << "Save your high score" << endl;
-	cout << setw(9) << right << "4) " << "Instructions/about" << endl;
+	cout << setw(9) << right << "2) " << "Skins (unavailable atm)" << endl;
+	cout << setw(9) << right << "3) " << "Saves" << endl;
+	cout << setw(9) << right << "4) " << "Instructions/about (unavailable atm)" << endl;
 	cout << setw(9) << right << "5) " << "Quit" << endl;
 	cout << setw(7) << right << "E" << "nter a number to select an option: ";
 	
@@ -324,7 +335,7 @@ int Menu(
 		std::getline(cin, select_str);
 		istringstream instream(select_str);
 		instream >> select;
-		if (instream) // Confirms if there is an int value in cypher_shift_str
+		if (instream)
 			if (select > 0)
 				if (select < 6)
 					break;
@@ -342,7 +353,8 @@ int Menu(
 void Game_over_display(
 	const vector <string>& Game_over,
 	const int& score,
-	int& High_score)
+	int& High_score,
+	int& Highest_score)
 {
 	system("cls"); // refreshes the console screen.
 	// Game over display here
@@ -355,15 +367,27 @@ void Game_over_display(
 
 	if (score > High_score)
 	{
-		cout << setw(9) << right << "" << "NEW High Score!!!" << endl;
-		cout << setw(9) << right << "" << "Prvious High Score: " << High_score << endl;
-		cout << setw(9) << right << "" << "Your Score: " << score << endl;
-		High_score = score;
+		if (score > Highest_score)
+		{
+			cout << setw(9) << right << "" << "NEW Highest Score!!!" << endl;
+			cout << setw(9) << right << "" << "Your Previous High Score: " << High_score << endl;
+			cout << setw(9) << right << "" << "The Previous Highest Score: " << Highest_score << endl;
+			cout << setw(9) << right << "" << "Your Score: " << score << endl;
+			Highest_score = score;
+		}
+		else
+		{
+			cout << setw(9) << right << "" << "NEW High Score!!!" << endl;
+			cout << setw(9) << right << "" << "Previous High Score: " << High_score << endl;
+			cout << setw(9) << right << "" << "Your Score: " << score << endl;
+			High_score = score;
+		}
 	}
 	else
 	{
-		cout << "Your Score was: " << score << endl;
-		cout << "The curent High Score: " << High_score << endl;
+		cout << "Your Score: " << score << endl;
+		cout << "Your Highest Score: " << High_score << endl;
+		cout << "The curent Highest Score: " << Highest_score << endl;
 	}
 	Sleep(5000);
 }
@@ -372,52 +396,53 @@ void Game_over_display(
 
 
 
+// Sub menu for saving or loading.
+int Save_load_Menu()
+{
+	system("cls"); // refreshes the console screen.
 
-// Alows for the saving and loading of the games.
-int Save_Load_game(
+	cout << endl;
+	cout << "    Saved Games" << endl;
+	cout << setw(9) << right << "1) " << "Load" << endl;
+	cout << setw(9) << right << "2) " << "Save" << endl;
+	cout << setw(9) << right << "3) " << "Back" << endl;
+	cout << setw(7) << right << "E" << "nter a number to select an option: ";
+
+	string select_str;
+	int sub_select;
+	while (true) // Gets the users selection
+	{
+		std::getline(cin, select_str);
+		istringstream instream(select_str);
+		instream >> sub_select;
+		if (instream)
+			if (sub_select > 0)
+				if (sub_select < 4)
+					break;
+		cout << "You need to enter an integer: ";
+	}
+	return sub_select;
+}
+
+
+
+
+
+
+// Loads the saves of the games.
+int Pre_load_saves(
 	vector<pair <string, int>>& saves_premap,
 	map<int, pair <string, int>>& player_saves,
-	int& High_score)
+	int& Highest_score)
 {
-	if (false) // File write
-	{
-		ofstream fout("Freefall.txt", ios::app);
-		if (!fout)
-		{
-			cout << "Error opening file" << endl;
-			return 0;
-		}
-		else
-		{
-			//for (int i = 0; i < 10; i++)
-			fout << "Testdummy 850" << endl;
-			fout << "test 25" << endl;
-			fout << "HelloWorld 1001" << endl;
-			fout << "Fallendown 12" << endl;
-			fout << "Down 357" << endl;
-
-			fout << endl;
-			if (!fout)
-			{
-				cout << "Error writing to file" << endl;
-				return 0;
-			}
-			cout << "Text inputted" << endl;
-		}
-	}
-
-
-
-
-
 	pair <string, int> short_use;
-
 	if (true) // File read
 	{
 		ifstream fin("Freefall.txt");
 		if (!fin)
 		{
-			cout << "Error opening file" << endl;
+			cout << "Error opening saves file" << endl;
+			Sleep(3000);
 			return 0;
 		}
 		else
@@ -430,12 +455,14 @@ int Save_Load_game(
 				{
 					if (fin.eof())
 					{
-						cout << "Finished reading file" << endl;
+						cout << "Saves loaded" << endl;
+						Sleep(0500);
 						break;
 					}
 					else
 					{
-						cout << "Error during transmit." << endl;
+						cout << "Error loading saves." << endl;
+						Sleep(3000);
 						break;
 					}
 				}
@@ -446,8 +473,6 @@ int Save_Load_game(
 				instream >> name >> saved_score;
 				if (!instream)
 					break;
-
-				//cout << line << endl; // If need to check file reading
 
 				short_use.first = name;
 				short_use.second = saved_score;
@@ -460,13 +485,13 @@ int Save_Load_game(
 	auto iter2 = saves_premap.end();
 	sort(iter1, iter2);
 
-	short_use.first = "zzzz";
+	short_use.first = "zzzzzzzzzzzzzz";
 	short_use.second = 0;
 	saves_premap.push_back(short_use);
 
 	size_t i = 0;
 	int j = 1;
-	while (i < saves_premap.size()-1)
+	while (i < saves_premap.size() - 1)
 	{
 		if (saves_premap[i].first != saves_premap[i + 1].first)
 		{
@@ -477,15 +502,33 @@ int Save_Load_game(
 		i++;
 	}
 
+	size_t selections = player_saves.size();
+	Highest_score = player_saves[1].second; // Determines the highest score among the saves
+	for (auto i = 1; i < selections-1; i++)
+	{
+		if (Highest_score < player_saves[i].second)
+			Highest_score = player_saves[i].second;
+	}
+	return 0;
+}
 
 
 
 
+
+
+// Allows for the loading of the games.
+int Load_game(
+	map<int, pair <string, int>>& player_saves,
+	int& High_score,
+	int& Highest_score)
+{
 	system("cls"); // refreshes the console screen.
 
-	cout << "  Saves:" << endl;
+	size_t selections = player_saves.size();
 
-	cout << "    Id: " << setw(15) << left << "Name: " << "Score:" << endl;
+	cout << "  Saves:" << endl; // Outputs the saves
+	cout << "    Id: " << setw(15) << left << "Name: " << "High score:" << endl;
 	for (const auto& p : player_saves)
 	{
 		auto k = p.first;
@@ -495,9 +538,102 @@ int Save_Load_game(
 			<< setw(4) << left << v.second << endl;
 	}
 
+	cout << "   Highest score: " << Highest_score << endl;
+	cout << endl;
+	cout << "   Select a save: ";
+	string select_str;
+	int select;
+	while (true) // Gets the users selection
+	{
+		std::getline(cin, select_str);
+		istringstream instream(select_str);
+		instream >> select;
+		if (instream)
+			if (select > 0)
+				if (select < selections + 1)
+					break;
+		cout << "You need to enter an integer: ";
+	}
+	cout << endl;
+	High_score = player_saves[select].second;
+	cout << "Welcome back, " << player_saves[select].first << "!" << endl;
+	Sleep(1300);
+	return 0;
+}
 
 
-	if (false) // File write
+
+
+
+
+// Alows for the saving of the games.
+int Save_game(
+	map<int, pair <string, int>>& player_saves,
+	int& High_score)
+{
+	system("cls"); // refreshes the console screen.
+
+	cout << "  Saves:" << endl; // Outputs the saves
+	cout << "    Id: " << setw(15) << left << "Name: " << "High score:" << endl;
+	for (const auto& p : player_saves)
+	{
+		auto k = p.first;
+		auto v = p.second;
+		cout << "     " << setw(3) << left << k
+			<< setw(15) << left << v.first << " "
+			<< setw(4) << left << v.second << endl;
+	}
+
+	cout << endl;
+	cout << "   Select a save or make a new one by entering 0: ";
+	size_t selections = player_saves.size();
+	string select_str;
+	int select;
+	while (true) // Gets the users selection
+	{
+		std::getline(cin, select_str);
+		istringstream instream(select_str);
+		instream >> select;
+		if (instream)
+			if (select > -1)
+				if (select < selections + 1)
+					break;
+		cout << "You need to enter an integer: ";
+	}
+
+	if (select == 0)
+	{
+		string name;
+		cout << endl;
+		cout << "Enter a name (no spaces or the part after the space will not be recorded): ";
+		while (true) // Gets the users selection
+		{
+			std::getline(cin, select_str);
+			istringstream instream(select_str);
+			instream >> name;
+			if (instream)
+			{
+				ofstream fout("Freefall.txt", ios::app);
+				if (!fout)
+				{
+					cout << "Error opening file" << endl;
+					return 0;
+				}
+				else
+				{
+					fout << name << " " << High_score << endl;
+					if (!fout)
+					{
+						cout << "Error writing to file" << endl;
+						return 0;
+					}
+					cout << "Game data saved." << endl;
+				}
+				break;
+			}
+		}
+	}
+	else
 	{
 		ofstream fout("Freefall.txt", ios::app);
 		if (!fout)
@@ -507,35 +643,14 @@ int Save_Load_game(
 		}
 		else
 		{
-			//for (int i = 0; i < 10; i++)
-			fout << "Testdummy 850" << endl;
-			fout << "test 25" << endl;
-			fout << "HelloWorld 1001" << endl;
-			fout << "Fallendown 12" << endl;
-			fout << "Down 357" << endl;
-
-			fout << endl;
+			fout << player_saves[select].first << " " << High_score << endl;
 			if (!fout)
 			{
 				cout << "Error writing to file" << endl;
 				return 0;
 			}
-			cout << "Text inputted" << endl;
+			cout << "Game data saved." << endl;
 		}
-	}
-
-	string select_str;
-	int select;
-	while (true) // Gets the users selection
-	{
-		std::getline(cin, select_str);
-		istringstream instream(select_str);
-		instream >> select;
-		if (instream) // Confirms if there is an int value in cypher_shift_str
-			if (select > 0)
-				if (select < 6)
-					break;
-		cout << "You need to enter an integer: ";
 	}
 	return 0;
 }

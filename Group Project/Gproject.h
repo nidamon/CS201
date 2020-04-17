@@ -248,12 +248,30 @@ void Crash(
 void Game_over_display(
     const vector <string>& Game_over,
     const int& score,
-    int& High_score);
+    int& High_score,
+    int& Highest_score);
 
 
-// Alows for the saving and loading of the games.
-int Save_Load_game(
+// Sub menu for saving or loading.
+int Save_load_Menu();
+
+
+// Loads the saves of the games.
+int Pre_load_saves(
     vector<pair <string, int>>& saves_premap,
+    map<int, pair <string, int>>& player_saves,
+    int& Highest_score);
+
+
+// Alows for the loading of the games.
+int Load_game(
+    map<int, pair <string, int>>& player_saves,
+    int& High_score,
+    int& Highest_score);
+
+
+// Alows for the saving of the games.
+int Save_game(
     map<int, pair <string, int>>& player_saves,
     int& High_score);
 
