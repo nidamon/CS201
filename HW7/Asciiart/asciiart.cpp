@@ -109,16 +109,28 @@ int main()
 			}		
 		}
 	}
-	cout << Total_data.size() << endl;
-	for (size_t i = 0; i < (Total_data.size()); i++)
-	{
-		cout << Total_data[i].R << " " << Total_data[i].G << " " << Total_data[i].B << endl;
-	}
-
 	cout << "Width: " << width << endl;
 	cout << "Height: " << height << endl;
 	cout << "Set size: " << set_size << endl;
 	cout << "Max RGB value: " << max << endl;
+	int Y = 0;
+	unsigned darkness = 0;
+	const char values[] =  "#80kbha;oc*\",-. "; //"MNmdhysso+/:-.`.";
+	cout << endl;
+
+
+	for (int i = 0; i < 80; i++)
+	{
+		for (int j = 0; j < 80; j++)
+		{
+			Y = 0.2126 * Total_data[((i* width) + j)].R + 0.7152 * Total_data[(i * width + j)].G + 0.0722 * Total_data[(i * width + j)].B;
+			darkness = 16 -(Y / 16);
+			cout << values[darkness] << " "; // Needed a space to make it not seem squished.
+		}
+		cout << endl;
+	}
+
+
 	// Stops the console from closing.
 	cout << "Program end" << endl;
 	int q;
