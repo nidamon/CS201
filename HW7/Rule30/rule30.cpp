@@ -47,7 +47,43 @@ int main()
     vector<int> rule_30 = { 0, 0, 0, 1, 1, 1, 1, 0 };
     int rows = 20;
     int columns = 40;
+    int temp = 0;
     string str;
+
+    cout << "Enter 0 to use rule 30 or 1 for custom ruleset: ";
+    int select;
+    while (true) // Gets the users selection
+    {
+        std::getline(cin, str);
+        istringstream instream(str);
+        instream >> select;
+        if (instream)
+            if (select == 1 || select == 0)
+                break;
+        cout << "You need to enter 0 or 1: ";
+    }
+    if (select == 1)
+    {
+        // Input for a ruleset
+        for (int i = 0; i < 8; i++)
+        {
+            cout << "Enter a number (0 or 1) in slot " << (i + 1) << " for the custom ruleset (8 in total): ";
+            while (true)
+            {
+                std::getline(cin, str);
+                istringstream instream(str);
+                instream >> temp;
+                if (instream)
+                    if (temp == 1 || temp == 0)
+                    {
+                        rule_30[i] = temp;
+                        break;
+                    }
+                cout << "You need to enter 0 or 1: ";
+            }
+
+        }
+    }
 
     // Input for the number of columns
     cout << "Enter a number for columns (minimum of 40, 400 recommended): ";
