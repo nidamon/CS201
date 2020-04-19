@@ -5,9 +5,9 @@
 #ifndef IMAGE3_H
 #define IMAGE3_Cpp
 
-#include <iostream>
-#include <vector>
 #include "Color3.h"
+
+
 
 class Image3
 {

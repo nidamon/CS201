@@ -5,39 +5,25 @@ CS 201
 This program will read a PPM image and then output an ASCII Art version of that image.
 */
 
-#include <iostream>
-using std::cout;
-using std::cin;
-using std::endl;
-#include <vector>
-using std::vector;
-#include <string>
-using std::string;
-#include <iomanip>
-using std::setw;
-using std::right;
-#include <sstream>
-using std::istringstream;
-#include <fstream>
-//using std::ofstream;
-using std::ifstream;
-//using std::ios;
-#include <Windows.h>
+#include "Image3.h"
 
+struct RGB {
+	int R = 0;
+	int G = 0;
+	int B = 0;
+};
+vector <RGB> Total_data;
 
 int main()
 {
-	struct RGB {
-		int R = 0;
-		int G = 0;
-		int B = 0;
-	};
-	vector <RGB> Total_data;
 	int max = 0;
 	int set_size = 0;
 	int width = 0;
 	int height = 0;
 	int RGB_color = 0;
+	int R = 0;
+	int G = 0;
+	int B = 0;
 	ifstream fin("Parrot.txt");
 	if (!fin)
 	{
@@ -79,7 +65,7 @@ int main()
 				{
 					istringstream instream(line);
 					instream >> width >> height;
-					Total_data.resize(width * height);
+					//Total_data.resize(width * height);
 					repeat = -1;
 					cout << Total_data.size() << endl;
 				}
@@ -92,43 +78,54 @@ int main()
 					instream >> max;
 					repeat = 0;
 					cout << line << endl;
-					cout << Total_data.size() << endl;
+					//cout << Total_data.size() << endl;
 				}
 			}
-			else if (repeat > -1)
+			else if ((repeat % 3) == 2) ///////////////////////////////////////////////////////////
 			{
-				istringstream instream(line);
+				string RGBline = line;
+				getline(fin, line);
+				RGBline += (" " + line);
+				getline(fin, line);
+				RGBline += (" " + line);
+				cout << RGBline;
+				/*istringstream instream(line);
 				instream >> RGB_color;
 				if ((repeat % 3) == 0)
-					Total_data[(repeat / 3)].R = RGB_color;
+					R = RGB_color;
 				if ((repeat % 3) == 1)
-					Total_data[(repeat / 3)].G = RGB_color;
+					G = RGB_color;
 				if ((repeat % 3) == 2)
-					Total_data[(repeat / 3)].B = RGB_color;
+					B = RGB_color;*/
+
+				printASCII(std::ostream & operator<<(std::ostream & ostr, const Color3 & color));
 				repeat++;
 			}		
 		}
 	}
-	cout << "Width: " << width << endl;
-	cout << "Height: " << height << endl;
-	cout << "Set size: " << set_size << endl;
-	cout << "Max RGB value: " << max << endl;
-	int Y = 0;
-	unsigned darkness = 0;
-	const char values[] =  "#80kbha;oc*\",-. "; //"MNmdhysso+/:-.`.";
-	cout << endl;
+	//cout << "Width: " << width << endl;
+	//cout << "Height: " << height << endl;
+	//cout << "Set size: " << set_size << endl;
+	//cout << "Max RGB value: " << max << endl;
+	//int Y = 0;
+	//unsigned darkness = 0;
+	//const char values[] =  "#80kbha;oc*\",-. "; //"MNmdhysso+/:-.`.";
+	//cout << endl;
 
 
-	for (int i = 0; i < 80; i++)
-	{
-		for (int j = 0; j < 80; j++)
-		{
-			Y = 0.2126 * Total_data[((i* width) + j)].R + 0.7152 * Total_data[(i * width + j)].G + 0.0722 * Total_data[(i * width + j)].B;
-			darkness = 16 -(Y / 16);
-			cout << values[darkness] << " "; // Needed a space to make it not seem squished.
-		}
-		cout << endl;
-	}
+	//for (int i = 0; i < height; i++)
+	//{
+	//	for (int j = 0; j < width; j++)
+	//	{
+	//		Y = 0.2126 * Total_data[((i* width) + j)].R + 0.7152 * Total_data[(i * width + j)].G + 0.0722 * Total_data[(i * width + j)].B;
+	//		darkness = 16 -(Y / 16);
+	//		cout << values[darkness] << " "; // Needed a space to make it not seem squished.
+	//	}
+	//	cout << endl;
+	//}
+
+
+
 
 
 	// Stops the console from closing.

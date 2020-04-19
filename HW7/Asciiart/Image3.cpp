@@ -8,6 +8,7 @@
 Image3::Image3(unsigned width, unsigned height) {
 	// TODO: resize the pixels array
 	// TODO: initialize the internal w and h members
+	//Total_data.resize(width * height);
 }
 
 // Return a pixel from the image
@@ -38,6 +39,15 @@ bool Image3::loadPPM(const std::string& path) {
 
 void Image3::printASCII(std::ostream& ostr) const {
 	// TODO: Print an ASCII version of this image
+	int R = 0;
+	int G = 0;
+	int B = 0;
+	string line;
+	getline(cin, ostr);
+	istringstream instream(line);
+	instream >> R >> G >> B;
+	Color3(R, G, B);
+	cout << Color3::asciiValue();
 }
 
 // STREAM OPERATORS for IMAGE3 class

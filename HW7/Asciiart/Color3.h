@@ -6,6 +6,21 @@
 #define COLOR3_H
 
 #include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
+#include <vector>
+using std::vector;
+#include <string>
+using std::string;
+#include <iomanip>
+using std::setw;
+using std::right;
+#include <sstream>
+using std::istringstream;
+#include <fstream>
+using std::ifstream;
+#include <Windows.h>
 
 class Color3
 {
