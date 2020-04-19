@@ -3,6 +3,8 @@ Nathan Damon
 CS 201
 4/19/2020
 This program will output a cellular automata.
+Lots of help from The Coding Train and his video:
+        "7.2: Wolfram Elementary Cellular Automata - The Nature of Code"
 */
 
 #include<windows.h>
@@ -43,11 +45,13 @@ int main()
     int columns = 40;
     rule30.set_gen_size(columns);
     rule30.ruleset = rule_30; // Sets the ruleset in the class to rule 30
+    for (int i = 0; i < (rows / 15); i++)
+        cout << endl;
     for (int i = 0; i < rows; i++)
         rule30.output();
 
     // Stops the console from closing.
-    cout << "Program end" << endl;
+    cout << "Don't Scroll or the pixels will be lost!" << endl;
     int q;
     cin >> q;
 
