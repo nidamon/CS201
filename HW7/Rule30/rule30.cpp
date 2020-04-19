@@ -15,6 +15,10 @@ using std::endl;
 #include <cmath>
 #include <vector>
 using std::vector;
+#include <sstream>
+using std::istringstream;
+#include <string>
+using std::string;
 
 class RuleWolfram
 {
@@ -43,6 +47,35 @@ int main()
     vector<int> rule_30 = { 0, 0, 0, 1, 1, 1, 1, 0 };
     int rows = 20;
     int columns = 40;
+    string str;
+
+    // Input for the number of columns
+    cout << "Enter a number for columns (minimum of 40, 400 recommended): ";
+    while (true)
+    {
+        std::getline(cin, str);
+        istringstream instream(str);
+        instream >> columns;
+        if (instream)
+            if (columns > 39)
+                break;
+        cout << "You need to enter a number for columns (minimum of 40, 400 recommended): ";
+    }
+
+    //  Input for the number of rows
+    cout << "Enter a number for rows (minimum of 20, half the value of columns is recommended): ";
+    while (true)
+    {
+        std::getline(cin, str);
+        istringstream instream(str);
+        instream >> rows;
+        if (instream)
+            if (rows > 19)
+                break;
+        cout << "You need to enter a number for rows (minimum of 20, 200 recommended): ";
+    }
+    system("cls"); // refreshes the console screen.
+
     rule30.set_gen_size(columns);
     rule30.ruleset = rule_30; // Sets the ruleset in the class to rule 30
     for (int i = 0; i < (rows / 15); i++)
