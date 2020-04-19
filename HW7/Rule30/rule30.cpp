@@ -7,39 +7,7 @@ Lots of help from The Coding Train and his video:
         "7.2: Wolfram Elementary Cellular Automata - The Nature of Code"
 */
 
-#include<windows.h>
-#include<iostream>
-using std::cin;
-using std::cout;
-using std::endl;
-#include <cmath>
-#include <vector>
-using std::vector;
-#include <sstream>
-using std::istringstream;
-#include <string>
-using std::string;
-
-class RuleWolfram
-{
-public:
-    int rules(int a, int b, int c); // Rules for RuleWolfram
-
-    void set_gen_size(int columns); // Sets the size of each row
-    void generate(); // Creates the new generation based on the previous one
-    void output(); // Displays the row of the current generation
-
-    int a = 0;
-    int b = 0;
-    int c = 0;
-    int gen_count = 0; // Counts the number of generations as generated
-    vector<int> ruleset = {}; // Blank ruleset
-    vector<int> current_generation = {};
-    vector<int> next_generation;
-
-};
-
-
+#include "RuleWolfram.h"
 
 int main()
 {
@@ -112,12 +80,35 @@ int main()
     }
     system("cls"); // refreshes the console screen.
 
+    int i = 0;
+    if (i == 0)
+    {
+        ofstream fout("rule30.txt");
+        if (!fout)
+        {
+            cout << "Error opening file" << endl;
+            return false;
+        }
+        else
+            cout << "File contents removed";
+    }
+
+    
     rule30.set_gen_size(columns);
     rule30.ruleset = rule_30; // Sets the ruleset in the class to rule 30
     for (int i = 0; i < (rows / 15); i++)
         cout << endl;
+
+
+    Image3 image;
+
+
     for (int i = 0; i < rows; i++)
+    {
+        image.savePPM("rule30.txt", rule30);
         rule30.output();
+    }
+ 
 
     // Stops the console from closing.
     cout << "Don't Scroll or the pixels will be lost!" << endl;
@@ -187,4 +178,34 @@ void RuleWolfram::output()
         SetPixel(mydc, i, gen_count, Color);
     }
     generate();
+}
+
+
+
+bool Image3::savePPM(const std::string& path, const RuleWolfram& rule) const {
+    // TODO: Save the image to the disk
+    // REQUIREMENT: Use the STREAM operators for the file contents
+    ofstream fout(path, ios::app);
+    if (!fout)
+    {
+        cout << "Error opening file" << endl;
+        return false;
+    }
+    else
+    {
+        for (int i = 0; i < rule.current_generation.size(); i++)
+        {
+            if (rule.current_generation[i] == 0)
+                fout << "W";
+            if (rule.current_generation[i] == 1)
+                fout << " ";
+            if (!fout)
+            {
+                cout << "Error writing to file" << endl;
+                return false;
+            }
+        }
+        fout << endl;
+    }
+    return false;
 }

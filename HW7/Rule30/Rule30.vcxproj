@@ -138,7 +138,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Asciiart\Color3.cpp" />
+    <ClCompile Include="..\Asciiart\Image3.cpp" />
     <ClCompile Include="rule30.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Asciiart\Color3.h" />
+    <ClInclude Include="..\Asciiart\Image3.h" />
+    <ClInclude Include="RuleWolfram.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
