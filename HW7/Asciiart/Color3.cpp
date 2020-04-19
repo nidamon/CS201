@@ -24,7 +24,7 @@ Color3::Color3(int R, int G, int B) {
 
 int Color3::weightedSum() const {
 	// Implement Y = 0.2126R + 0.7152G + 0.0722B
-	int Y = 0.2126*r + 0.7152*g + 0.0722*b;
+	int Y = 0.2126*R + 0.7152*G + 0.0722*B;
 	// Ensure values are inside the range 0 to 255
 	if (Y < 0)
 		Y = 0;
@@ -37,10 +37,13 @@ char Color3::asciiValue() const {
 	// Use at least 16 characters, sort these from dark to light
 	// or light to dark and then map the weightedSum() to the range
 	// 0 to 15. Please pick your own characters
-	const char values[] = "#80kbha;oc*\",-. ";
+
+	// For char values I'm using a set that I found on a site that converted images to ascii.
+	// It looks a little better than the set of chars I came up with (to the right).
+	const char values[] = "MNmdhysso+/:-.`.";// "#80kbha;oc*\",-. ";
 	unsigned darkness = 0;
 	int Wsum = weightedSum();
-	darkness = Wsum / 16;
+	darkness = 16 - (Wsum / 16); // Invertes the darkness levels (characters are brighter)
 	return values[darkness];
 }
 

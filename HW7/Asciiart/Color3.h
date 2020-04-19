@@ -38,6 +38,10 @@ public:
 	unsigned char r;
 	unsigned char g;
 	unsigned char b;
+
+	int R;
+	int G;
+	int B;
 };
 
 std::ostream& operator<<(std::ostream& ostr, const Color3& color);
