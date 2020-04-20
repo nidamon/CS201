@@ -382,7 +382,7 @@ const vector <vector <string>> player_models = {
 // Sub menu for Picking a diffent player model.
 void Skins_Menu(
     vector <string>& player_cell,
-    const vector <vector <string>> player_models,
+    const vector <vector <string>>& player_models,
     const int& High_score);
 
 
@@ -432,6 +432,7 @@ void Crash(
     const vector <int>& Player_posistion,
     const vector <int>& Vrandom_barrier_set,
     const int& repetitions,
+    int& most_barriers_dodged_in_a_row,
     int& barriers_dodged_in_a_row,
     int& lives,
     int& score);
@@ -441,6 +442,8 @@ void Crash(
 void Game_over_display(
     const vector <string>& Game_over,
     const int& score,
+    const int& most_barriers_dodged_in_a_row,
+    int& players_most_barriers_dodged_in_a_row,
     int& High_score,
     int& Highest_score);
 
@@ -452,21 +455,27 @@ int Save_load_Menu();
 // Loads the saves of the games.
 int Pre_load_saves(
     vector<pair <string, int>>& saves_premap,
+    vector<pair <string, int>>& player_dodge_saves_premap,
     map<int, pair <string, int>>& player_saves,
+    map<string, int>& player_dodge_saves,
     int& Highest_score);
 
 
 // Alows for the loading of the games.
 int Load_game(
     map<int, pair <string, int>>& player_saves,
+    map<string, int>& player_dodge_saves,
     int& High_score,
-    int& Highest_score);
+    int& Highest_score,
+    int& players_most_barriers_dodged_in_a_row);
 
 
 // Alows for the saving of the games.
 int Save_game(
     map<int, pair <string, int>>& player_saves,
-    const int& High_score);
+    map<string, int>& player_dodge_saves,
+    const int& High_score,
+    const int& players_most_barriers_dodged_in_a_row);
 
 
 // Outputs large digits for integer input

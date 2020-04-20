@@ -15,9 +15,11 @@ vector <string> player_cell; // Will hold a specified player model.
 
 // Map for file I/O
 map<int, pair <string, int>> player_saves;
+map<string, int> player_dodge_saves;
 
 // Vector for file I/O
 vector<pair <string, int>> saves_premap;
+vector<pair <string, int>> player_dodge_saves_premap;
 
 
 int main()
@@ -30,8 +32,10 @@ int main()
     int lives = 0;
     int repetitions = 0;
     int barriers_dodged_in_a_row = 0;
+    int most_barriers_dodged_in_a_row = 0;
+    int players_most_barriers_dodged_in_a_row = 0;
 
-    Pre_load_saves(saves_premap, player_saves, Highest_score);
+    Pre_load_saves(saves_premap, player_dodge_saves_premap, player_saves, player_dodge_saves, Highest_score);
     system("cls"); // refreshes the console screen.
 
 
@@ -44,6 +48,7 @@ int main()
         {
             lives += 3;
             score = 0;
+            most_barriers_dodged_in_a_row = 0;
             repetitions = 0;
             while (lives != 0) {
                 Layers(
@@ -77,13 +82,14 @@ int main()
                     Player_posistion,
                     Vrandom_barrier_set,
                     repetitions,
+                    most_barriers_dodged_in_a_row,
                     barriers_dodged_in_a_row,
                     lives,
                     score);
 
                 repetitions++;
             }
-            Game_over_display(Game_over, score, High_score, Highest_score);
+            Game_over_display(Game_over, score, most_barriers_dodged_in_a_row, players_most_barriers_dodged_in_a_row, High_score, Highest_score);
         }
         else if (select == 2)
         {
@@ -99,11 +105,11 @@ int main()
                 int sub_select = Save_load_Menu();
                 if (sub_select == 1)
                 {
-                    Pre_load_saves(saves_premap, player_saves, Highest_score);
-                    Load_game(player_saves, High_score, Highest_score);
+                    Pre_load_saves(saves_premap, player_dodge_saves_premap, player_saves, player_dodge_saves, Highest_score);
+                    Load_game(player_saves, player_dodge_saves, High_score, Highest_score, players_most_barriers_dodged_in_a_row);
                 }
                 if (sub_select == 2)
-                    Save_game(player_saves, High_score);
+                    Save_game(player_saves, player_dodge_saves, High_score, players_most_barriers_dodged_in_a_row);
                 if (sub_select == 3)
                     break;
             }
