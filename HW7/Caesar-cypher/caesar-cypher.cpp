@@ -55,6 +55,7 @@ int main()
 
 		// Divides the tokens into chars and outputs them onto the console
 		char c;
+		cout << endl;
 		cout << "Result: ";
 		for (size_t i = 0; i < tokens.size(); i++)
 		{
@@ -72,6 +73,7 @@ int main()
 			}
 			cout << " ";
 		}
+		cout << endl;
 		cout << endl;
 	}
 
