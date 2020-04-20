@@ -135,9 +135,6 @@ void Movement(
 }
 
 
-
-
-
 // New_Layer outputs a new randomized layer.
 void New_Layer(
 	const vector<vector<string>>& barrier_models,
@@ -162,10 +159,6 @@ void New_Layer(
 }
 
 
-
-
-
-
 // Old_Layer outputs the previous new layer.
 void Old_Layer(
 	const vector<vector<string>>& barrier_models,
@@ -178,10 +171,6 @@ void Old_Layer(
 		cout << barrier_models[Vlast_generated_barrier_set[2]][i] << endl;
 	}
 }
-
-
-
-
 
 
 // Layers contains the functions and code to output all the visuals
@@ -265,10 +254,6 @@ void Layers(
 }
 
 
-
-
-
-
 // Crash determines whether or not the player has hit an obsticle
 void Crash(
 	const vector <int>& Player_posistion,
@@ -298,10 +283,6 @@ void Crash(
 		barriers_dodged_in_a_row++;
 	}
 }
-
-
-
-
 
 
 // Menu for picking skins, playing, saving, or quiting
@@ -345,10 +326,6 @@ int Menu(
 }
 
 
-
-
-
-
 // Displays Game over and updates the high score if needed.
 void Game_over_display(
 	const vector <string>& Game_over,
@@ -380,8 +357,8 @@ void Game_over_display(
 			cout << setw(9) << right << "" << "NEW High Score!!!" << endl;
 			cout << setw(9) << right << "" << "Previous High Score: " << High_score << endl;
 			cout << setw(9) << right << "" << "Your Score: " << score << endl;
-			High_score = score;
 		}
+		High_score = score;
 	}
 	else
 	{
@@ -391,9 +368,6 @@ void Game_over_display(
 	}
 	Sleep(5000);
 }
-
-
-
 
 
 // Sub menu for saving or loading.
@@ -423,10 +397,6 @@ int Save_load_Menu()
 	}
 	return sub_select;
 }
-
-
-
-
 
 
 // Loads the saves of the games.
@@ -513,10 +483,6 @@ int Pre_load_saves(
 }
 
 
-
-
-
-
 // Allows for the loading of the games.
 int Load_game(
 	map<int, pair <string, int>>& player_saves,
@@ -560,10 +526,6 @@ int Load_game(
 	Sleep(1300);
 	return 0;
 }
-
-
-
-
 
 
 // Alows for the saving of the games.
@@ -653,4 +615,45 @@ int Save_game(
 		}
 	}
 	return 0;
+}
+
+
+// Outputs large digits for integer input
+void Big_output(
+	const int& lives,
+	const int& score,
+	const int& barriers_dodged_in_a_row,
+	const vector <vector <string>>& big_numbers)
+{
+	string str = "      |      ";
+	cout << " ";
+	for (size_t i = 0; i < big_numbers[0][0].size() * 11 + 30; i++)
+	{
+		cout << "-";
+	}
+
+	cout << endl;
+
+	for (size_t i = 0; i < big_numbers[0].size(); i++)
+	{
+		int temp = score;
+		cout << str.substr(5, 7 - i) << big_numbers[lives][i] << str.substr(5 - i, 7)
+			<< big_numbers[(score / 1000000) % 10][i] << " "
+			<< big_numbers[(score / 100000) % 10][i] << " "
+			<< big_numbers[(score / 10000) % 10][i] << " "
+			<< big_numbers[(score / 1000) % 10][i] << " "
+			<< big_numbers[(score / 100) % 10][i] << " "
+			<< big_numbers[(score / 10) % 10][i] << " "
+			<< big_numbers[score % 10][i] << str.substr(5 - i, 7)
+			<< big_numbers[(barriers_dodged_in_a_row / 100) % 10][i] << " "
+			<< big_numbers[(barriers_dodged_in_a_row / 10) % 10][i] << " "
+			<< big_numbers[barriers_dodged_in_a_row % 10][i] << str.substr(5 - i, 7) << endl;
+	}
+
+	cout << " ";
+	for (size_t i = 0; i < big_numbers[0][0].size() * 11 + 30; i++)
+	{
+		cout << "-";
+	}
+	cout << endl;
 }

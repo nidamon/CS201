@@ -58,6 +58,11 @@ int main()
 
                 cout << endl;
                 cout << "Lives left: " << lives << "   Score: " << score << "   Dodge streak: " << barriers_dodged_in_a_row << endl;
+                Big_output(
+                    lives,
+                    score,
+                    barriers_dodged_in_a_row,
+                    big_numbers);
                 cout << endl;
 
                 Movement(

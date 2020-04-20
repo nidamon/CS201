@@ -84,6 +84,101 @@ const vector <string> Game_over = {
 };
 
 
+// Below are the integers 0 - 9
+const vector <string> zero = {
+"/////", //     "/////"
+"/   /", //    "/   /"
+"/   /", //   "/   /"
+"/   /", //  "/   /"
+"/////"  // "/////" 
+};
+
+const vector <string> one = {
+"  /  ", //     "  /  "
+" //  ", //    " //  "
+"  /  ", //   "  /  "
+"  /  ", //  "  /  "
+" /// "  // " /// "
+};
+
+const vector <string> two = {
+"/////", //     "/////"
+"    /", //    "    /"
+"/////", //   "/////"
+"/    ", //  "/    "
+"/////"  // "/////"
+};
+
+const vector <string> three = {
+"/////", //     "/////"
+"    /", //    "    /"
+"/////", //   "/////"
+"    /", //  "    /"
+"/////"  // "/////"
+};
+
+const vector <string> four = {
+"/  / ", //     "/  / "
+"/  / ", //    "/  / "
+"/////", //   "/////"
+"   / ", //  "   / "
+"   / "  // "   / "
+};
+
+const vector <string> five = {
+"/////", //     "/////"
+"/    ", //    "/    "
+"/////", //   "/////"
+"    /", //  "    /"
+"/////"  // "/////"
+};
+
+const vector <string> six = {
+"/////", //     "/////"
+"/    ", //    "/    "
+"/////", //   "/////"
+"/   /", //  "/   /"
+"/////"  // "/////"
+};
+
+const vector <string> seven = {
+"/////", //     "/////"
+"    /", //    "    /"
+"    /", //   "    /"
+"    /", //  "    /"
+"    /"  // "    /"
+};
+
+const vector <string> eight = {
+"/////", //     "/////"
+"/   /", //    "/   /"
+"/////", //   "/////"
+"/   /", //  "/   /"
+"/////"  // "/////" 
+};
+
+const vector <string> nine = {
+"/////", //     "/////"
+"/   /", //    "/   /"
+"/////", //   "/////"
+"/   /", //  "    /"
+"/////"  // "/////" 
+};
+
+const vector <vector <string>> big_numbers = {
+    zero,
+    one,
+    two,
+    three,
+    four,
+    five,
+    six,
+    seven,
+    eight,
+    nine
+};
+
+
 // Below is the empty cell and the barrier models.
 
 const vector <string> empty_cell = { // This is the empty cell
@@ -102,7 +197,7 @@ const vector <string> empty_cell = { // This is the empty cell
 };
 
 const vector <string> barrier_model_1 = { // Rabbit box
- "|                        1   |",
+ "|                            |",
  "|   H>==================<H   |",
  "|   Y \\                / Y   |",
  "|   |  \\ ____________ /  |   |",
@@ -117,7 +212,7 @@ const vector <string> barrier_model_1 = { // Rabbit box
 };
 
 const vector <string> barrier_model_2 = { // Empty box
- "|                        2   |",
+ "|                            |",
  "|   H>==================<H   |",
  "|   Y \\                / Y   |",
  "|   |  \\ ____________ /  |   |",
@@ -132,7 +227,7 @@ const vector <string> barrier_model_2 = { // Empty box
 };
 
 const vector <string> barrier_model_3 = { // "Person A" box
- "|                        3   |",
+ "|                            |",
  "|   H>==================<H   |",
  "|   Y \\                / Y   |",
  "|   |  \\ ____________ /  |   |",
@@ -275,4 +370,11 @@ int Save_game(
     map<int, pair <string, int>>& player_saves,
     int& High_score);
 
+
+// Outputs large digits for integer input
+void Big_output(
+    const int& lives,
+    const int& score,
+    const int& barriers_dodged_in_a_row,
+    const vector <vector <string>>& big_numbers);
 #endif
