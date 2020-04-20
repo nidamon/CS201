@@ -303,7 +303,7 @@ int Menu(
 	cout << endl;
 	cout << endl;
 	cout << setw(9) << right << "1) " << "Play" << endl;
-	cout << setw(9) << right << "2) " << "Skins (unavailable atm)" << endl;
+	cout << setw(9) << right << "2) " << "Skins" << endl;
 	cout << setw(9) << right << "3) " << "Saves" << endl;
 	cout << setw(9) << right << "4) " << "Instructions/about (unavailable atm)" << endl;
 	cout << setw(9) << right << "5) " << "Quit" << endl;
@@ -362,9 +362,9 @@ void Game_over_display(
 	}
 	else
 	{
-		cout << "Your Score: " << score << endl;
-		cout << "Your Highest Score: " << High_score << endl;
-		cout << "The curent Highest Score: " << Highest_score << endl;
+		cout << setw(9) << right << "" << "Your Score: " << score << endl;
+		cout << setw(9) << right << "" << "Your Highest Score: " << High_score << endl;
+		cout << setw(9) << right << "" << "The curent Highest Score: " << Highest_score << endl;
 	}
 	Sleep(5000);
 }
@@ -531,7 +531,7 @@ int Load_game(
 // Alows for the saving of the games.
 int Save_game(
 	map<int, pair <string, int>>& player_saves,
-	int& High_score)
+	const int& High_score)
 {
 	system("cls"); // refreshes the console screen.
 
@@ -657,3 +657,75 @@ void Big_output(
 	}
 	cout << endl;
 }
+
+
+// Sub menu for Picking a diffent player model.
+void Skins_Menu(
+	vector <string>& player_cell,
+	const vector <vector <string>> player_models,
+	const int& High_score)
+{
+	vector<int> score_req = { 0, 2000, 3000, 5000, 10000, 50000, 500000 }; // High score required for the corresponding skins
+	int sub_select = -1;
+	int selected_skin = -1;
+	while (true)
+	{ 
+		if (sub_select > 0)
+			selected_skin = sub_select;
+
+		system("cls"); // refreshes the console screen.
+		cout << endl;
+		cout << "    Skins:" << setw(37) << right << "High score needed:" << endl;
+		for (size_t i = 1; i < player_models.size() + 1; i++)
+		{
+			cout << setw(9) << right << i << ") " << setw(19) << left << player_models[i - 1][12] << score_req[i - 1] << endl;
+			if (i == selected_skin)
+				for (size_t k = 0; k < player_models[i - 1].size() - 1; k++)
+					cout << setw(11) << right << " " << player_models[i - 1][k] << endl;
+			if (i == player_models.size())
+				cout << setw(9) << right << i + 1 << ") Back" << endl;
+		}
+
+		if (sub_select > -1)
+			cout << setw(7) << right << "E" << "nter 0 to pick the one displaying or choose another: ";
+		else
+			cout << setw(7) << right << "E" << "nter a number to display the skin: ";
+
+		string select_str;
+		
+		while (true) // Gets the users selection
+		{
+			std::getline(cin, select_str);
+			istringstream instream(select_str);
+			instream >> sub_select;
+			if (instream)
+				if (sub_select > -1)
+					if (sub_select < player_models.size() + 2)
+
+						break;
+			cout << "You need to enter an integer: ";
+		}
+		if (sub_select == 0)
+		{
+			if (High_score < score_req[selected_skin - 1])
+			{
+				cout << endl;
+				cout << setw(9) << right << "Y" << "ou do not have a high enough score." << endl;
+				Sleep(2400);
+			}
+			else if (High_score > (score_req[selected_skin - 1] - 1))
+			{
+				player_cell = player_models[selected_skin - 1];
+				cout << endl;
+				cout << setw(11) << right << " " << player_models[selected_skin - 1][12] << "!" << endl;
+				Sleep(1200);
+				break;
+			}
+		}
+		if (sub_select == player_models.size() + 1)
+			break;
+	}
+}
+
+
+

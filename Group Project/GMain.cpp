@@ -85,6 +85,13 @@ int main()
             }
             Game_over_display(Game_over, score, High_score, Highest_score);
         }
+        else if (select == 2)
+        {
+            Skins_Menu(
+                player_cell,
+                player_models,
+                High_score);
+        }
         else if (select == 3)
         {
             while (true)

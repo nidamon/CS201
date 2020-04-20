@@ -241,6 +241,7 @@ const vector <string> barrier_model_3 = { // "Person A" box
  "|                            |",
 };
 
+// Vector of barrier models
 const vector <vector <string>> barrier_models = {
     empty_cell, // This is the empty cell
     barrier_model_1, // Rabbit box
@@ -267,6 +268,7 @@ const vector <string> player_model_1 = { // Gingerbread man
  "|            / ' \\           |",
  "|           (_/^\\_)          |",
  "|                            |",
+ "Gingerbread Man"
 };
 
 const vector <string> player_model_2 = { // The Bat
@@ -282,10 +284,106 @@ const vector <string> player_model_2 = { // The Bat
  "|                            |",
  "|                            |",
  "|                            |",
+ "The Bat"
+};
+
+const vector <string> player_model_3 = { // That Pizza
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|       //\"\"--.._            |",
+ "|      ||  (_)  _\"-._        |",
+ "|      ||    _ (_)    '-.    |",
+ "|      ||   (_)   __..-'     |",
+ "|       \\\\__..--\"\"           |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "That Pizza"
+};
+
+const vector <string> player_model_4 = { // Fish outa Water
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|            ,--,_           |",
+ "|     __    _\\.---'-.        |",
+ "|     \\ '.-\"     // o\\       |",
+ "|     /_.'-._    \\\\  /       |",
+ "|            `\"--(/\"`        |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "Fish outa Water"
+};
+
+const vector <string> player_model_5 = { // Birds on a branch
+ "|                            |",
+ "|    __                      |",
+ "|   ( ->                     |",
+ "|   / )\\               __    |",
+ "|  <_/_/    __        <- )   |",
+ "| -=\"=\"--,_( ->       /( \\   |",
+ "|          / )\\--,__  \\_\\_>  |",
+ "|         <_/_/  ___)`\"=\"=-  |",
+ "|      ---=\"=\"-````\\\\        |",
+ "|                   \\\\       |",
+ "|                   //       |",
+ "|                   ``       |",
+ "Birds on a branch"
+};
+
+const vector <string> player_model_6 = { // The Spyder
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|            __              |",
+ "|         | /  \\ |           |",
+ "|        \\_\\\\  //_/          |",
+ "|          //()\\\\            |",
+ "|          \\\\  //            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "|                            |",
+ "The Spyder"
+};
+
+const vector <string> player_model_7 = { // Playing too much
+ "|                            |",
+ "|                            |",
+ "|     /______\\  /______\\     |",
+ "|      (~ o ~)  (~ o ~)      |",
+ "|     \\ '-=-'/  \\'-=-' /     |",
+ "|      '.__.'    '.__.'      |",
+ "|             ^^             |",
+ "|          ________          |",
+ "|         //======\\\\         |",
+ "|         \\\\      //         |",
+ "|          \\\\____//          |",
+ "|                            |",
+ "Playing too much"
+};
+
+// Vector of player models
+const vector <vector <string>> player_models = {
+    player_model_1, // Gingerbread man
+    player_model_2, // The Bat
+    player_model_3, // That Pizza
+    player_model_4, // Fish outa Water
+    player_model_5, // Birds on a branch
+    player_model_6, // The Spyder
+    player_model_7 // Playing too much
 };
 
 
-
+// Sub menu for Picking a diffent player model.
+void Skins_Menu(
+    vector <string>& player_cell,
+    const vector <vector <string>> player_models,
+    const int& High_score);
 
 
 // Menu for picking skins(unavailable atm), playing, saving (unavailable atm), or quiting
@@ -368,7 +466,7 @@ int Load_game(
 // Alows for the saving of the games.
 int Save_game(
     map<int, pair <string, int>>& player_saves,
-    int& High_score);
+    const int& High_score);
 
 
 // Outputs large digits for integer input
