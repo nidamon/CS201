@@ -24,7 +24,7 @@ vector<pair <string, int>> player_dodge_saves_premap;
 
 int main()
 {
-    player_cell = player_model_1;
+    player_cell = player_model_1; // Default model is the Gingerbread man
 
     int High_score = 0;
     int Highest_score = 0;
@@ -42,12 +42,14 @@ int main()
     // Menu loops over everything --> backout brings to menu
     while (true)
     {
-        int select = Menu(Titles);
+        int select = Menu(Titles); // Outputs the title
 
         if (select == 1) // Play if 1
         {
             lives += 3;
             score = 0;
+            Player_posistion = { 0, 1, 0 };
+            Vlast_generated_barrier_set = { 0, 1, 0 };
             most_barriers_dodged_in_a_row = 0;
             repetitions = 0;
             while (lives != 0) {
@@ -91,35 +93,32 @@ int main()
             }
             Game_over_display(Game_over, score, most_barriers_dodged_in_a_row, players_most_barriers_dodged_in_a_row, High_score, Highest_score);
         }
-        else if (select == 2)
+        else if (select == 2) // Skin menu if 2
         {
             Skins_Menu(
                 player_cell,
                 player_models,
                 High_score);
         }
-        else if (select == 3)
+        else if (select == 3) // Saves menu if 3
         {
             while (true)
             {
                 int sub_select = Save_load_Menu();
-                if (sub_select == 1)
+                if (sub_select == 1) // Load menu if 1
                 {
                     Pre_load_saves(saves_premap, player_dodge_saves_premap, player_saves, player_dodge_saves, Highest_score);
                     Load_game(player_saves, player_dodge_saves, High_score, Highest_score, players_most_barriers_dodged_in_a_row);
                 }
-                if (sub_select == 2)
+                if (sub_select == 2) // Save menu if 2
                     Save_game(player_saves, player_dodge_saves, High_score, players_most_barriers_dodged_in_a_row);
-                if (sub_select == 3)
+                if (sub_select == 3) // Quit if 3
                     break;
             }
-
-            //Save_Load_game(saves_premap, player_saves, High_score);
-            
             cout << "Closing soon!";
-            
         }
-
+        else if (select == 4) // About page if 4
+            About();
         else if (select == 5) // Quit if 5
         {
             cout << endl;
@@ -127,9 +126,6 @@ int main()
             Sleep(2000);
             break;
         }
-
-
-
     }
     return 0;
 }

@@ -484,4 +484,8 @@ void Big_output(
     const int& score,
     const int& barriers_dodged_in_a_row,
     const vector <vector <string>>& big_numbers);
+
+
+// About page.
+void About();
 #endif

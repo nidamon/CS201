@@ -308,7 +308,7 @@ int Menu(
 	cout << setw(9) << right << "1) " << "Play" << endl;
 	cout << setw(9) << right << "2) " << "Skins" << endl;
 	cout << setw(9) << right << "3) " << "Saves" << endl;
-	cout << setw(9) << right << "4) " << "Instructions/about (unavailable atm)" << endl;
+	cout << setw(9) << right << "4) " << "About" << endl;
 	cout << setw(9) << right << "5) " << "Quit" << endl;
 	cout << setw(7) << right << "E" << "nter a number to select an option: ";
 	
@@ -779,5 +779,50 @@ void Skins_Menu(
 	}
 }
 
+
+// About page.
+void About()
+{
+	system("cls"); // refreshes the console screen.
+	
+	cout << "     " << "Freefall was made as a project for CS201." << endl;
+	cout << "     " << "   Lead Developer: Nathan Damon" << endl;
+	cout << "     " << "   Co Developers: Me, Myself, and I" << endl;
+	cout << "     " << "   Game testers: Spaceman/Ginger/Owl, unamed(no save data recorded), and Mars + (all the other saved names)" << endl;
+	cout << "     " << "   First entry of code: February 19, 2020" << endl;
+	cout << "     " << "   Language: C++" << endl;
+	cout << "     " << "   Hours: 60+ (definitely more)" << endl;
+	cout << endl;
+	cout << endl;
+	cout << "     " << " Fun Fact: Freefall might have been called obstical avoidance instead of freefall." << endl;
+	cout << endl;
+	cout << "     " << " Fun Fact: Before limiting the movement values to 1, 2, 3 giving higher or lower" << endl;
+	cout << "     " << "           values would cause the player model to rotate around the central frame." << endl;
+	cout << endl;
+	cout << "     " << " Fun Fact: There was going to be an instructions page, but someone was too lazy..." << endl;
+	cout << endl;
+	cout << "     " << " Fun Fact: Freefall was inspired by... Falling! . . . DOWN!" << endl;
+	cout << "     " << "           Who would have thought, right?" << endl;
+	cout << endl;
+	cout << "     " << " Fun Fact: There were going to be collectibles in this game. I don't need to " << endl;
+	cout << "     " << "           say who was lazy right?  *whisper* His name is under the title *whisper*" << endl;
+	cout << endl;
+	cout << "     " << " Fun Fact: I actually put some effort into thinking of what to put in this about section." << endl;
+	cout << endl;
+	cout << "     " << " Fun Fact: The player was originally going to be timed for score. Procrastination gives you time!" << endl;
+	cout << endl;
+	cout << "     " << " Fun Fact: This is a game you can play forever. **NOT RECOMMENDED**" << endl;
+	cout << endl;
+	cout << "     " << " Fun Fact: The Lead developer considers himself somewhat funny.  Funny, right?" << endl;
+
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << setw(5) << right << "Hit" << " enter to return to the main menu: ";
+
+	string select_str;
+	std::getline(cin, select_str);
+}
 
 
