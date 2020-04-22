@@ -12,12 +12,24 @@ int main()
 	Environment Room;
 	Agent Thermo;
 	Simulator Neo;
-	for (int i = 0; i < 5; i++)
+	
+	//Neo.run(Room, Thermo);
+	bool proceed = false;
+	int i = 10;
+	while (i < 11)
+	{
+		if (i == 10)
+			proceed = Neo.askOwner();
+		if (proceed)
+			i = 0;
+		proceed = false;
 		Room.itteration();
-	cout << Room.get_temp();
-	cout << endl;
-	Neo.askOwner();
-	cout << "Range: " << Neo._lower << " - " << Neo._upper << endl;
+		Thermo.perceive(Room);
+		Thermo.get_range(Neo);
+		Thermo.think();
+		Thermo.act(Room);
+		i++;
+	}
 
 	// Stops the console from closing.
 	cout << "Program end" << endl;

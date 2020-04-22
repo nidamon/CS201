@@ -8,17 +8,29 @@ This header will define the class Agent's functions.
 #include "thermostat.h"
 
 // Gets the temperature from environment a
-void Agent::perceive (Environment location)
+void Agent::perceive (Environment& location)
 {
 	_current_temp = location.get_temp();
 }
 
-//void Agent::think()
-//{
-//
-//}
+// If the temperature is less than the upper bound, then 
+// heater is on until below lower range
+void Agent::think()
+{
+	if (_current_temp < _lower)
+		_act = true;
+	if (_current_temp > _upper)
+		_act = false;
+}
 
-//void Agent::get_range(int& a, int& b)
-//{
-//
-//}
+// Gets the upper and lower bounds from Simulator
+void Agent::get_range(Simulator& sim)
+{
+	_lower = sim._lower;
+	_upper = sim._upper;
+}
+
+void Agent::act(Environment& location)
+{
+	location._heater = _act;
+}

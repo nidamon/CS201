@@ -14,13 +14,14 @@ class Simulator
 {
 public:
 	Simulator() : _lower { 0 }, _upper{ 5 } {};
-	//void run(); // Calls: 
+ // Calls: 
 	// Environment.itteration(),
 	// Agent.perceive(Environment a), 
 	// Agent.think(),
 	// Agent.act(Environment), 
 	// Simulator.askOwner()
-	void askOwner(); // Gets the temperature range from the user
+	//void run(Environment location, Agent thermo);
+	bool askOwner(); // Gets the temperature range from the user, returns false if not continue
 
 	int _lower;
 	int _upper;

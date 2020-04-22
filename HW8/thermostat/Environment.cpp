@@ -14,6 +14,7 @@ void Environment::itteration()
 		_temperature += 1;
 	else
 		_temperature -= 1;
+	cout << _temperature << endl;
 }
 
 // Returns the temperature

@@ -17,9 +17,10 @@ public:
 	void itteration(); // Changes temperature depending on heater's state
 	int get_temp(); // Returns the temperature
 
+	bool _heater;
 private:
 	int _temperature;
-	bool _heater;
+
 };
 
 #define Environment_H
