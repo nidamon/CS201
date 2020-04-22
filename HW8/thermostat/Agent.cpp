@@ -24,10 +24,10 @@ void Agent::think()
 }
 
 // Gets the upper and lower bounds from Simulator
-void Agent::get_range(Simulator& sim)
+void Agent::get_range(int lower, int upper)
 {
-	_lower = sim._lower;
-	_upper = sim._upper;
+	_lower = lower;
+	_upper = upper;
 }
 
 void Agent::act(Environment& location)

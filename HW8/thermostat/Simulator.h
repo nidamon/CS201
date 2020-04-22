@@ -13,21 +13,16 @@ This header will declare the class Simulator's declarations.
 class Simulator
 {
 public:
-	Simulator() : _lower { 0 }, _upper{ 5 } {};
- // Calls: 
-	// Environment.itteration(),
-	// Agent.perceive(Environment a), 
-	// Agent.think(),
-	// Agent.act(Environment), 
-	// Simulator.askOwner()
-	//void run(Environment location, Agent thermo);
-	bool askOwner(); // Gets the temperature range from the user, returns false if not continue
+	Simulator() : _lower{ 0 }, _upper{ 5 }, _proceed{ true }, _iter_count{ 0 } {};
+	void run(); // Runs the simulation 
+	void askOwner(); // Gets the temperature range from the user, returns false if not continue
 
 	int _lower;
 	int _upper;
 
 private:
-
+	bool _proceed;
+	int _iter_count;
 };
 
 #define Simulator_H

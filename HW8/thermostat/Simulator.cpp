@@ -7,28 +7,37 @@ This header will define the class Simulator's functions.
 
 #include "thermostat.h"
 
-bool Simulator:: askOwner()
+void Simulator::askOwner() // Asks whether to continue or not
 {
-	cout << setw(9) << right << "1) " << "Continue" << endl;
-	cout << setw(9) << right << "2) " << "Quit" << endl;
-	cout << setw(7) << right << "E" << "nter a number to select an option: ";
-
 	string select_str;
 	int select;
-	while (true) // Gets the users selection
+	if (_iter_count > 0)
 	{
-		std::getline(cin, select_str);
-		istringstream instream(select_str);
-		instream >> select;
-		if (instream)
-			if (select > 0)
-				if (select < 3)
-					break;
-		cout << "You need to enter 1 or 2: ";
-	}
-	if (select == 2)
-		return false;
+		cout << setw(9) << right << "1) " << "Continue" << endl;
+		cout << setw(9) << right << "2) " << "Quit" << endl;
+		cout << setw(6) << right << "E" << "nter a number to select an option: ";
 
+
+		while (true) // Gets the users selection
+		{
+			std::getline(cin, select_str);
+			istringstream instream(select_str);
+			instream >> select;
+			if (instream)
+				if (select > 0)
+					if (select < 3)
+						break;
+			cout << "You need to enter 1 or 2: ";
+		}
+		cout << endl;
+		if (select == 2)
+		{
+			_proceed = false;
+			return;
+		}
+		else
+			_proceed = true;
+	}
 	cout << "Specify a lower temperature bound: ";
 	while (true) // Gets the user's lower bound selection
 	{
@@ -54,27 +63,34 @@ bool Simulator:: askOwner()
 		cout << "You need to enter an integer greater than your lower bound: ";
 	}
 	_upper = upper;
-	return true;
+	_iter_count++;
 }
 
-// Calls: 
-	// Environment.itteration(),
-	// Agent.perceive(Environment a), 
-	// Agent.think(),
-	// Agent.act(Environment), 
-	// Simulator.askOwner()
-//void Simulator::run(Environment location, Agent thermo)
-//{
-//	bool proceed;
-//	for (int i = 0; i < 10; i++)
-//	{
-//		if (i == 9)
-//			proceed = askOwner();
-//		if (proceed)
-//			i = 0;
-//		location.itteration();
-//		thermo.perceive(location);
-//		thermo.think();
-//		thermo.act(location);
-//	}
-//}
+void Simulator::run() // Runs the simulation 
+{
+	Environment Room;
+	Agent Thermo;
+	int i = 10;
+	while (i < 11)
+	{
+		if (i == 10)
+		{
+			askOwner();
+			i = 0;
+		}
+		if (_proceed)
+			for (int k = 0; k < 10; k++)
+			{
+				Room.itteration();
+				Thermo.perceive(Room);
+				Thermo.get_range(_lower, _upper);
+				Thermo.think();
+				Thermo.act(Room);
+				i++;
+				if (i > 10)
+					break;
+			}
+		else
+			break;
+	}
+}

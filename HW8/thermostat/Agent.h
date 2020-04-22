@@ -16,7 +16,7 @@ public:
 	Agent() : _act{ false }, _current_temp{ 0 }, _lower{ 0 }, _upper{ 5 }  {};
 	void perceive(Environment& location); // Gets the temperature from environment a
 	void think();
-	void get_range(Simulator& sim);
+	void get_range(int lower, int upper);
 	
 	void act(Environment& location);
 
