@@ -9,10 +9,18 @@ This header will declare the class Simulator's declarations.
 #define Simulator_ccp
 
 #include "thermostat.h"
+#include "Environment.h"
+#include "Agent.h"
 
 class Simulator
 {
 public:
+	void run(); // Calls: 
+	// Environment.itteration(),
+	// Agent.perceive(Evnironment), 
+	// Agent.think(),
+	// Agent.act(Environment), 
+	// Simulator.askOwner()
 
 private:
 

@@ -13,9 +13,13 @@ This header will declare the class Environment's declarations.
 class Environment
 {
 public:
+	Environment() : _heater{ false }, _temperature{ 50 } {}
+	void itteration();
+	int get_temp();
 
 private:
-
+	int _temperature;
+	bool _heater;
 };
 
 #define Environment_H
