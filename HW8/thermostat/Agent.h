@@ -13,8 +13,18 @@ This header will declare the class Agent's declarations.
 class Agent
 {
 public:
+	Agent() : _current_temp{ 0 }, _lower{ 0 }, _upper{ 5 } {};
+	void perceive(Environment location); // Gets the temperature from environment a
+	//void think();
+	//void act(Environment location);
+
+
+
 
 private:
+	int _current_temp;
+	int _lower;
+	int _upper;
 
 };
 

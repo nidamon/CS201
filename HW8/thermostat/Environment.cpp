@@ -5,7 +5,7 @@ CS 201
 This header will define the class Environment's functions.
 */
 
-#include "Environment.h"
+#include "thermostat.h"
 
 // Changes temperature depending on heater's state
 void Environment::itteration()

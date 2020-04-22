@@ -14,8 +14,8 @@ class Environment
 {
 public:
 	Environment() : _heater{ false }, _temperature{ 50 } {}
-	void itteration();
-	int get_temp();
+	void itteration(); // Changes temperature depending on heater's state
+	int get_temp(); // Returns the temperature
 
 private:
 	int _temperature;

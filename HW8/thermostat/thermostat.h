@@ -8,6 +8,10 @@ This header will declare all of the headers for thermostat, Agent, Environment, 
 #ifndef thermostat_H
 #define thermostat_H
 
+#include "Simulator.h"
+#include "Environment.h"
+#include "Agent.h"
+
 #include <iostream>
 using std::cout;
 using std::cin;
