@@ -11,15 +11,16 @@ It's predecessor was Grid.cpp from HW1.
 class Tactoe
 {
 public:
-	Tactoe() : _board{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }, _win{ false }, _loss{ false }{};
+	Tactoe() : _board{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }, _blue_win{ false }, _red_win{ false }{};
 	void user_input(); // Gets user's input and checks if placement is available
 	void game_display(); // Displays the game board
+	void win_loss_check(); // Checks for three in a row
 
 	vector <int> _board; // Vector of all the places on the 3x3 game board
 	
 private:
-	bool _win;
-	bool _loss;
+	bool _blue_win;
+	bool _red_win;
 
 };
 
@@ -33,6 +34,8 @@ int main()
 		cout << "Pick a place (1-9): ";
 		game.user_input();
 		game.game_display();
+		if (turn > 1)
+			game.win_loss_check();
 		turn++;
 	}
 
@@ -112,4 +115,39 @@ void Tactoe::game_display()
 	}
 	horizontal_line();
 	cout << endl;
+}
+
+// Checks for three in a row
+void Tactoe::win_loss_check()
+{
+	auto three_in_row = []( // Checks for victories
+		const vector<int>& _board, 
+		const int& color, 
+		const int& a, 
+		const int& b, 
+		const int& c, 
+		bool& _blue_win, 
+		bool& _red_win)
+	{
+		if (_board[a - 1] == color && _board[b - 1] == color && _board[c - 1] == color)
+		{
+			if (color == 1)
+				_blue_win = true;
+			if (color == 2)
+				_red_win = true;
+		}
+	};
+	for (int color = 0; color < 2; color++)
+	{
+		for (int i = 0; i < 3; i++)
+			three_in_row(_board, color, (1 + i * 3), (2 + i * 3), (3 + i * 3), _blue_win, _red_win); // Checks horizontal
+		for (int i = 0; i < 3; i++)
+			three_in_row(_board, color, (1 + i), (4 + i), (7 + i), _blue_win, _red_win); // Checks vertical
+		for (int i = 0; i < 2; i++)
+			three_in_row(_board, color, (1 + i * 2), (5), (9 - i * 2), _blue_win, _red_win); // Checks diagonals
+	}
+	if (_blue_win)
+		cout << "Blue Win" << endl;
+	if (_red_win)
+		cout << "Red Win" << endl;
 }
