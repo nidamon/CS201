@@ -147,6 +147,7 @@
     <ClInclude Include="agent.h" />
     <ClInclude Include="environment.h" />
     <ClInclude Include="simulator.h" />
+    <ClInclude Include="vacuum-cleaner-world.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
