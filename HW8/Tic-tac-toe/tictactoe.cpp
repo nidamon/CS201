@@ -8,30 +8,11 @@ It's predecessor was Grid.cpp from HW1.
 
 #include "tictactoe.h"
 
-class Tactoe
-{
-public:
-	Tactoe() : _board{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }, _blue_win{ false }, _red_win{ false }, _turn{ 0 }{};
-	void user_input(); // Gets user's input and checks if placement is available
-	void game_display(); // Displays the game board
-	void win_loss_check(); // Checks for three in a row
-	void run(); // Runs the game
-
-	vector <int> _board; // Vector of all the places on the 3x3 game board
-	
-private:
-	bool _blue_win;
-	bool _red_win;
-	int _turn;
-
-};
-
 int main()
 {
 
 	Tactoe game;
 	game.run();
-
 
 	// Stops the console from closing.
 	cout << "Program end" << endl;
@@ -159,12 +140,12 @@ void Tactoe::run()
 {
 	while (_turn < 9)
 	{
-		cout << "Pick a place (1-9): ";
-		user_input();
 		game_display();
 		if (_turn > 3)
 			win_loss_check();
 		if (_blue_win || _red_win)
 			break;
+		cout << "Pick a place (1-9): ";
+		user_input();
 	}
 }
