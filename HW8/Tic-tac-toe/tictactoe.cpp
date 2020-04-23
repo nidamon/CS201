@@ -11,16 +11,18 @@ It's predecessor was Grid.cpp from HW1.
 class Tactoe
 {
 public:
-	Tactoe() : _board{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }, _blue_win{ false }, _red_win{ false }{};
+	Tactoe() : _board{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }, _blue_win{ false }, _red_win{ false }, _turn{ 0 }{};
 	void user_input(); // Gets user's input and checks if placement is available
 	void game_display(); // Displays the game board
 	void win_loss_check(); // Checks for three in a row
+	void run(); // Runs the game
 
 	vector <int> _board; // Vector of all the places on the 3x3 game board
 	
 private:
 	bool _blue_win;
 	bool _red_win;
+	int _turn;
 
 };
 
@@ -28,16 +30,8 @@ int main()
 {
 
 	Tactoe game;
-	int turn = 0;
-	while (turn < 9)
-	{
-		cout << "Pick a place (1-9): ";
-		game.user_input();
-		game.game_display();
-		if (turn > 1)
-			game.win_loss_check();
-		turn++;
-	}
+	game.run();
+
 
 	// Stops the console from closing.
 	cout << "Program end" << endl;
@@ -60,12 +54,20 @@ void Tactoe::user_input()
 				if (select < 10)
 					if (_board[select - 1] == 0)
 					{
-						_board[select - 1] = 1;
-						break;
+						if (_turn % 2 == 0)
+						{
+							_board[select - 1] = 1;
+							break;
+						}
+						if (_turn % 2 == 1)
+						{
+							_board[select - 1] = 2;
+							break;
+						}
 					}
-
 		cout << "You need to enter an integer between 1-9 that has not been chosen yet: ";
 	}
+	_turn++;
 }
 
 // Displays the game board and made use of some lambda functions in this member function
@@ -137,7 +139,7 @@ void Tactoe::win_loss_check()
 				_red_win = true;
 		}
 	};
-	for (int color = 0; color < 2; color++)
+	for (int color = 1; color < 3; color++)
 	{
 		for (int i = 0; i < 3; i++)
 			three_in_row(_board, color, (1 + i * 3), (2 + i * 3), (3 + i * 3), _blue_win, _red_win); // Checks horizontal
@@ -147,7 +149,22 @@ void Tactoe::win_loss_check()
 			three_in_row(_board, color, (1 + i * 2), (5), (9 - i * 2), _blue_win, _red_win); // Checks diagonals
 	}
 	if (_blue_win)
-		cout << "Blue Win" << endl;
+		cout << "Blue Wins" << endl;
 	if (_red_win)
-		cout << "Red Win" << endl;
+		cout << "Red Wins" << endl;
+}
+
+// Runs the game
+void Tactoe::run()
+{
+	while (_turn < 9)
+	{
+		cout << "Pick a place (1-9): ";
+		user_input();
+		game_display();
+		if (_turn > 3)
+			win_loss_check();
+		if (_blue_win || _red_win)
+			break;
+	}
 }
