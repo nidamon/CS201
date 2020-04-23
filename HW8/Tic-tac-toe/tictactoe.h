@@ -18,7 +18,7 @@ using std::vector;
 using std::string;
 #include <sstream>
 using std::istringstream;
-
+#include <Windows.h>
 
 
 #endif
