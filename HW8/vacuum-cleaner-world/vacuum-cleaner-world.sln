@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vacuum-cleaner-world", "vacuum-cleaner-world.vcxproj", "{53720D1D-F317-46C6-99A8-0DE516A64FF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53720D1D-F317-46C6-99A8-0DE516A64FF2}.Debug|x64.ActiveCfg = Debug|x64
+		{53720D1D-F317-46C6-99A8-0DE516A64FF2}.Debug|x64.Build.0 = Debug|x64
+		{53720D1D-F317-46C6-99A8-0DE516A64FF2}.Debug|x86.ActiveCfg = Debug|Win32
+		{53720D1D-F317-46C6-99A8-0DE516A64FF2}.Debug|x86.Build.0 = Debug|Win32
+		{53720D1D-F317-46C6-99A8-0DE516A64FF2}.Release|x64.ActiveCfg = Release|x64
+		{53720D1D-F317-46C6-99A8-0DE516A64FF2}.Release|x64.Build.0 = Release|x64
+		{53720D1D-F317-46C6-99A8-0DE516A64FF2}.Release|x86.ActiveCfg = Release|Win32
+		{53720D1D-F317-46C6-99A8-0DE516A64FF2}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D9D31675-93ED-4ADF-A419-09DD239FF184}
+	EndGlobalSection
+EndGlobal
