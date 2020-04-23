@@ -27,20 +27,24 @@ private:
 class agent
 {
 public:
-	agent() : _moves{ 0 }, _vac_position{ 0, 0, 0, 1, 0, 0, 0, 0, 0 }, _left{ false }, _right{ false }{};
+	agent() : _moves{ 0 }, _pos{0}, _left{ false }, _right{ false }, _vacuum{ false }{};
 	void get_dirt_loc(environment& house); // Gets the location of the nearest dirt
+	
 	int _moves; // Number of moves made by the vacuum
 
-	vector<int> _vac_position; // Vector representing location of vacuum
-private:
 	bool _left;
 	bool _right;
+	bool _vacuum;
+	int _pos;
+private:
+
 };
 
 class simulator
 {
 public:
 	//simulator() : {}
+	void move(agent& vac); // Moves the vacuum cleaner left or right
 
 private:
 
@@ -50,6 +54,7 @@ private:
 
 int main()
 {
+	simulator Neo;
 	environment house;
 	agent vac;
 	random_device r;
@@ -62,11 +67,17 @@ int main()
 		cout << endl;
 		house.dirt(j, r);
 		vac.get_dirt_loc(house);
-		for (size_t i = 0; i < vac._vac_position.size(); i++)
-			cout << " " << vac._vac_position[i];
+		for (size_t i = 0; i < house._world.size(); i++)
+		{
+			if (vac._pos == i)
+				cout << " " << 1;
+			else
+				cout << "  ";
+		}
+		Neo.move(vac);
 		cout << endl;
 		vac._moves++;
-		Sleep(0100);
+		Sleep(0400);
 	}
 	cout << endl;
 	// Stops the console from closing.
@@ -87,16 +98,6 @@ void environment::dirt(int& moves, random_device& r)
 // Gets the location of the nearest dirt
 void agent::get_dirt_loc(environment& house)
 {
-	int pos = 0;
-
-	for (size_t i = 0; i < _vac_position.size(); i++) // Finds location of vacuum
-	{
-		if (_vac_position[i] == 1)
-		{
-			pos = i;
-			break;
-		}
-	}
 	int close_dirt = 0;
 	int close_dirt_dist = 9;
 	int distance = 9;
@@ -105,11 +106,11 @@ void agent::get_dirt_loc(environment& house)
 		distance = 9;
 		if (house._world[i] == 1)
 		{
-			if (pos > i)
-				distance = (pos - i);
-			if (i > pos)
-				distance = (i - pos);
-			if (pos == i)
+			if (_pos > i)
+				distance = (_pos - i);
+			if (i > _pos)
+				distance = (i - _pos);
+			if (_pos == i)
 				distance = 0;
 			if (distance < close_dirt_dist)
 			{
@@ -118,18 +119,34 @@ void agent::get_dirt_loc(environment& house)
 			}
 		}
 	};
-	if (close_dirt > pos)
+	if (close_dirt > _pos)
 	{
 		cout << "right" << endl;
 		_right = true;
+		_left = false;
+		_vacuum = false;
 	}
-	if (close_dirt < pos)
+	if (close_dirt < _pos)
 	{
 		cout << "left" << endl;
 		_left = true;
+		_right = false;
+		_vacuum = false;
 	}
-	if (close_dirt == pos)
+	if (close_dirt == _pos)
 	{
 		cout << "stay" << endl;
+		_vacuum = true;
+		_right = false;
+		_left = false;
 	}
+}
+
+// Moves the vacuum cleaner left or right
+void simulator::move(agent& vac)
+{
+	if (vac._right)
+		vac._pos += 1;
+	if (vac._left)
+		vac._pos -= 1;
 }
