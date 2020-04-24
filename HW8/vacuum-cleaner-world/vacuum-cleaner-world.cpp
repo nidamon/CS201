@@ -29,13 +29,13 @@ class agent
 public:
 	agent() : _moves{ 0 }, _pos{0}, _left{ false }, _right{ false }, _vacuum{ false }{};
 	void get_dirt_loc(environment& house); // Gets the location of the nearest dirt
-	
+	void vac_it(environment& house); // agent tells environment that that location no longer has dirt
 	int _moves; // Number of moves made by the vacuum
 
 	bool _left;
 	bool _right;
-	bool _vacuum;
-	int _pos;
+	bool _vacuum; // Clean here
+	int _pos; // Vac location
 private:
 
 };
@@ -45,6 +45,7 @@ class simulator
 public:
 	//simulator() : {}
 	void move(agent& vac); // Moves the vacuum cleaner left or right
+	void simulate(int& repeat);
 
 private:
 
@@ -55,36 +56,17 @@ private:
 int main()
 {
 	simulator Neo;
-	environment house;
-	agent vac;
-	random_device r;
-
-	for (int j = 0; j < 50; j++)
-	{
-		system("cls"); // refreshes the console screen.
-		for (size_t i = 0; i < house._world.size(); i++)
-			cout << " " << house._world[i];
-		cout << endl;
-		house.dirt(j, r);
-		vac.get_dirt_loc(house);
-		for (size_t i = 0; i < house._world.size(); i++)
-		{
-			if (vac._pos == i)
-				cout << " " << 1;
-			else
-				cout << "  ";
-		}
-		Neo.move(vac);
-		cout << endl;
-		vac._moves++;
-		Sleep(0400);
-	}
+	int repeat = 80;
+	Neo.simulate(repeat);
+	
 	cout << endl;
 	// Stops the console from closing.
 	cout << "Program end" << endl;
 	int q;
 	cin >> q;
 }
+
+
 
 // Randomly puts down dirt
 void environment::dirt(int& moves, random_device& r)
@@ -119,6 +101,7 @@ void agent::get_dirt_loc(environment& house)
 			}
 		}
 	};
+	cout << "Robot obective: ";
 	if (close_dirt > _pos)
 	{
 		cout << "right" << endl;
@@ -135,7 +118,7 @@ void agent::get_dirt_loc(environment& house)
 	}
 	if (close_dirt == _pos)
 	{
-		cout << "stay" << endl;
+		cout << "Vacuum" << endl;
 		_vacuum = true;
 		_right = false;
 		_left = false;
@@ -149,4 +132,50 @@ void simulator::move(agent& vac)
 		vac._pos += 1;
 	if (vac._left)
 		vac._pos -= 1;
+}
+
+// Agent tells environment that that location no longer has dirt
+void agent::vac_it(environment& house)
+{
+	if (_vacuum)
+		house._world[_pos] = 0;
+}
+
+
+void simulator::simulate(int& repeat)
+{
+	environment house;
+	agent vac;
+	random_device r;
+
+	for (int j = 0; j < repeat; j++)
+	{
+		system("cls"); // refreshes the console screen.
+
+		house.dirt(j, r);
+		vac.get_dirt_loc(house);
+		for (size_t i = 0; i < house._world.size(); i++)
+		{
+			if (vac._pos == i)
+				cout << "[=]";
+			else
+				cout << "   ";
+		}
+
+		cout << endl;
+		for (size_t i = 0; i < house._world.size(); i++)
+			cout << " " << house._world[i] << " ";
+		cout << endl;
+
+
+		if (!vac._vacuum)
+			move(vac);
+		else
+		{
+			Sleep(0200);
+			vac.vac_it(house);
+		}
+		vac._moves++;
+		Sleep(0400);
+	}
 }
