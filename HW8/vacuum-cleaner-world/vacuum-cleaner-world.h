@@ -25,5 +25,35 @@ using std::vector;
 using std::random_device;
 #include <Windows.h>
 
+class environment
+{
+public:
+	environment() : _world{ 0, 0, 0, 0, 0, 0, 0, 0, 0 } {};
+	void dirt(int& moves, random_device& r); // Randomly puts down dirt
+
+	vector<int> _world; // Vector representing the world
+};
+
+class agent
+{
+public:
+	agent() : _moves{ 0 }, _pos{ 0 }, _left{ false }, _right{ false }, _vacuum{ false }{};
+	void get_dirt_loc(environment& house); // Gets the location of the nearest dirt
+	void vac_it(environment& house); // agent tells environment that that location no longer has dirt
+
+	int _moves; // Number of moves made by the vacuum
+	bool _left;
+	bool _right;
+	bool _vacuum; // Clean here
+	int _pos; // Vacuum location
+};
+
+class simulator
+{
+public:
+	void move(agent& vac); // Moves the vacuum cleaner left or right
+	void simulate(int& repeat); // Simulates the world
+};
+
 #define vacuumcleanerworld_H
 #endif

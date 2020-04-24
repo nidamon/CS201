@@ -6,52 +6,8 @@ This program will use classes to imitate a mobile vacuum cleaner.
 */
 
 #include "vacuum-cleaner-world.h"
-
 // When I put the classes in seperate files, they did not want to use vector at all. 
 // I could not figure out why, so I opted to go back to having fewer files.
-
-
-
-class environment
-{
-public:
-	environment() : _world{ 0, 0, 0, 0, 0, 0, 0, 0, 0 } {};
-	void dirt(int& moves, random_device& r); // Randomly puts down dirt
-
-	vector<int> _world; // Vector representing the world
-
-private:
-	
-};
-
-class agent
-{
-public:
-	agent() : _moves{ 0 }, _pos{0}, _left{ false }, _right{ false }, _vacuum{ false }{};
-	void get_dirt_loc(environment& house); // Gets the location of the nearest dirt
-	void vac_it(environment& house); // agent tells environment that that location no longer has dirt
-	int _moves; // Number of moves made by the vacuum
-
-	bool _left;
-	bool _right;
-	bool _vacuum; // Clean here
-	int _pos; // Vac location
-private:
-
-};
-
-class simulator
-{
-public:
-	//simulator() : {}
-	void move(agent& vac); // Moves the vacuum cleaner left or right
-	void simulate(int& repeat);
-
-private:
-
-};
-
-
 
 int main()
 {
@@ -66,7 +22,7 @@ int main()
 	cin >> q;
 }
 
-
+// Class member functions below in order of creation
 
 // Randomly puts down dirt
 void environment::dirt(int& moves, random_device& r)
@@ -141,7 +97,7 @@ void agent::vac_it(environment& house)
 		house._world[_pos] = 0;
 }
 
-
+// Simulates the world
 void simulator::simulate(int& repeat)
 {
 	environment house;
@@ -157,7 +113,7 @@ void simulator::simulate(int& repeat)
 		for (size_t i = 0; i < house._world.size(); i++)
 		{
 			if (vac._pos == i)
-				cout << "[=]";
+				cout << "[=]"; // Icon for vacuum
 			else
 				cout << "   ";
 		}
@@ -167,12 +123,11 @@ void simulator::simulate(int& repeat)
 			cout << " " << house._world[i] << " ";
 		cout << endl;
 
-
 		if (!vac._vacuum)
 			move(vac);
 		else
 		{
-			Sleep(0200);
+			Sleep(0200); // Gives some delay to see the vacuum cleaning
 			vac.vac_it(house);
 		}
 		vac._moves++;
