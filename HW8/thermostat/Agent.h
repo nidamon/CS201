@@ -20,7 +20,7 @@ public:
 	
 	void act(Environment& location);
 
-	
+
 
 private:
 	int _current_temp;
