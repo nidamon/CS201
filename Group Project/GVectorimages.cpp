@@ -15,8 +15,14 @@ void Movement(
 	const vector <string>& empty_cell,
 	vector <int>& Vlast_generated_barrier_set,
 	vector <int>& random_barrier_model,
-	vector <int>& Player_posistion)
+	vector <int>& Player_posistion,
+	HANDLE& hConsole)
 {
+	auto color_text = [](int color, HANDLE& hConsole) // Color based on input
+	{
+		SetConsoleTextAttribute(hConsole, color);
+	};
+
 	// The vector Player_cell_and_empty_cell makes picking between the cells easier within this function.
 	vector<vector<string>> Player_cell_and_empty_cell = { empty_cell , player_cell };
 
@@ -33,6 +39,7 @@ void Movement(
 		}
 	}
 
+	color_text(15, hConsole); // White
 	cout << "Choose column 1, 2, or 3 to move to it: ";
 	string select_str;
 	while (true) // Gets the users selection
@@ -46,6 +53,7 @@ void Movement(
 					break;
 		cout << "You need to enter 1, 2, or 3: ";
 	}
+	color_text(7, hConsole); // Default white
 
 	int distance_of_move = (Move_to - 1) - Move_from;
 	if (distance_of_move > 0) // If moving right
@@ -290,8 +298,13 @@ void Crash(
 
 // Menu for picking skins, playing, saving, or quiting
 int Menu(
-	const vector < vector <string>>& Titles)
+	const vector < vector <string>>& Titles,
+	HANDLE& hConsole)
 {
+	auto color_text = [](int color, HANDLE& hConsole) // Color based on input
+	{
+		SetConsoleTextAttribute(hConsole, color);
+	};
 	random_device r;
 	std::default_random_engine e1(r());
 	std::uniform_int_distribution<int> uniform_dist(0, 2);
@@ -299,8 +312,12 @@ int Menu(
 	system("cls"); // refreshes the console screen.
 	int chosen_title = uniform_dist(e1);
 	// Title display here
+
+	color_text(15, hConsole); // White
 	for (size_t i = 0; i < Title1.size(); i++)
 		cout << Titles[chosen_title][i] << endl;
+	color_text(7, hConsole); // Default white
+
 	cout << endl;
 	cout << "By Nathan Damon" << endl;
 	cout << endl;
@@ -336,12 +353,20 @@ void Game_over_display(
 	const int& most_barriers_dodged_in_a_row,
 	int& players_most_barriers_dodged_in_a_row,
 	int& High_score,
-	int& Highest_score)
+	int& Highest_score,
+	HANDLE& hConsole)
 {
+	auto color_text = [](int color, HANDLE& hConsole) // Color based on input
+	{
+		SetConsoleTextAttribute(hConsole, color);
+	};
+
+	color_text(14, hConsole); // Yellow
 	system("cls"); // refreshes the console screen.
 	// Game over display here
 	for (size_t i = 0; i < Game_over.size(); i++)
 		cout << Game_over[i] << endl;
+	color_text(7, hConsole); // Default white
 
 	cout << endl;
 	cout << endl;
@@ -388,15 +413,22 @@ void Game_over_display(
 
 
 // Sub menu for saving or loading.
-int Save_load_Menu()
+int Save_load_Menu(HANDLE& hConsole)
 {
+	auto color_text = [](int color, HANDLE& hConsole) // Color based on input
+	{
+		SetConsoleTextAttribute(hConsole, color);
+	};
+
 	system("cls"); // refreshes the console screen.
 
 	cout << endl;
 	cout << "    Saved Games" << endl;
 	cout << setw(9) << right << "1) " << "Load" << endl;
 	cout << setw(9) << right << "2) " << "Save" << endl;
+	color_text(11, hConsole); // Light Blue
 	cout << setw(9) << right << "3) " << "Back" << endl;
+	color_text(7, hConsole); // Default white
 	cout << setw(7) << right << "E" << "nter a number to select an option: ";
 
 	string select_str;
@@ -675,8 +707,13 @@ void Big_output(
 	const int& lives,
 	const int& score,
 	const int& barriers_dodged_in_a_row,
-	const vector <vector <string>>& big_numbers)
+	const vector <vector <string>>& big_numbers,
+	HANDLE& hConsole)
 {
+	auto color_text = [](int color, HANDLE& hConsole) // Color based on input
+	{
+		SetConsoleTextAttribute(hConsole, color);
+	};
 	string str = "      |      ";
 	cout << " ";
 	for (size_t i = 0; i < big_numbers[0][0].size() * 11 + 30; i++)
@@ -689,17 +726,27 @@ void Big_output(
 	for (size_t i = 0; i < big_numbers[0].size(); i++)
 	{
 		int temp = score;
-		cout << str.substr(5, 7 - i) << big_numbers[lives][i] << str.substr(5 - i, 7)
-			<< big_numbers[(score / 1000000) % 10][i] << " "
+		cout << str.substr(5, 7 - i);
+		color_text(10, hConsole); // Green
+		cout << big_numbers[lives][i];
+		color_text(7, hConsole); // Default white
+		cout << str.substr(5 - i, 7);
+		color_text(14, hConsole); // Yellow
+		cout << big_numbers[(score / 1000000) % 10][i] << " "
 			<< big_numbers[(score / 100000) % 10][i] << " "
 			<< big_numbers[(score / 10000) % 10][i] << " "
 			<< big_numbers[(score / 1000) % 10][i] << " "
 			<< big_numbers[(score / 100) % 10][i] << " "
 			<< big_numbers[(score / 10) % 10][i] << " "
-			<< big_numbers[score % 10][i] << str.substr(5 - i, 7)
-			<< big_numbers[(barriers_dodged_in_a_row / 100) % 10][i] << " "
+			<< big_numbers[score % 10][i];
+		color_text(7, hConsole); // Default white
+		cout << str.substr(5 - i, 7);
+		color_text(11, hConsole); // Light blue
+		cout << big_numbers[(barriers_dodged_in_a_row / 100) % 10][i] << " "
 			<< big_numbers[(barriers_dodged_in_a_row / 10) % 10][i] << " "
-			<< big_numbers[barriers_dodged_in_a_row % 10][i] << str.substr(5 - i, 7) << endl;
+			<< big_numbers[barriers_dodged_in_a_row % 10][i];
+		color_text(7, hConsole); // Default white
+		cout << str.substr(5 - i, 7) << endl;
 	}
 
 	cout << " ";
@@ -715,8 +762,14 @@ void Big_output(
 void Skins_Menu(
 	vector <string>& player_cell,
 	const vector <vector <string>>& player_models,
-	const int& High_score)
+	const int& High_score,
+	HANDLE& hConsole)
 {
+	auto color_text = [](int color, HANDLE& hConsole) // Color based on input
+	{
+		SetConsoleTextAttribute(hConsole, color);
+	};
+
 	vector<int> score_req = { 0, 2000, 3000, 5000, 10000, 50000, 500000 }; // High score required for the corresponding skins
 	int sub_select = -1;
 	int selected_skin = -1;
@@ -730,12 +783,25 @@ void Skins_Menu(
 		cout << "    Skins:" << setw(37) << right << "High score needed:" << endl;
 		for (size_t i = 1; i < player_models.size() + 1; i++)
 		{
-			cout << setw(9) << right << i << ") " << setw(19) << left << player_models[i - 1][12] << score_req[i - 1] << endl;
+			cout << setw(9) << right << i << ") " << setw(19) << left << player_models[i - 1][12];
+			if (High_score < score_req[i - 1])
+			{
+			color_text(12, hConsole); // Red
+			cout << score_req[i - 1] << endl;
+			color_text(7, hConsole); // Default white
+			}
+			else
+				cout << score_req[i - 1] << endl;
 			if (i == selected_skin)
 				for (size_t k = 0; k < player_models[i - 1].size() - 1; k++)
 					cout << setw(11) << right << " " << player_models[i - 1][k] << endl;
 			if (i == player_models.size())
+			{
+				color_text(11, hConsole); // Light Blue
 				cout << setw(9) << right << i + 1 << ") Back" << endl;
+				color_text(7, hConsole); // Default white
+			}
+
 		}
 
 		if (sub_select > -1)

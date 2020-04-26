@@ -21,6 +21,8 @@ map<string, int> player_dodge_saves;
 vector<pair <string, int>> saves_premap;
 vector<pair <string, int>> player_dodge_saves_premap;
 
+// Makes it possible to color text
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); 
 
 int main()
 {
@@ -35,6 +37,11 @@ int main()
     int most_barriers_dodged_in_a_row = 0;
     int players_most_barriers_dodged_in_a_row = 0;
 
+    auto color_text = [](int color, HANDLE& hConsole) // Color based on input
+    {
+        SetConsoleTextAttribute(hConsole, color);
+    };
+
     Pre_load_saves(saves_premap, player_dodge_saves_premap, player_saves, player_dodge_saves, Highest_score);
     system("cls"); // refreshes the console screen.
 
@@ -42,14 +49,14 @@ int main()
     // Menu loops over everything --> backout brings to menu
     while (true)
     {
-        int select = Menu(Titles); // Outputs the title
+        int select = Menu(Titles, hConsole); // Outputs the title
 
         if (select == 1) // Play if 1
         {
             lives += 3;
             score = 0;
             Player_posistion = { 0, 1, 0 };
-            Vlast_generated_barrier_set = { 0, 1, 0 };
+            Vlast_generated_barrier_set = { 0, 0, 0 };
             most_barriers_dodged_in_a_row = 0;
             repetitions = 0;
             while (lives != 0) {
@@ -64,12 +71,19 @@ int main()
                     random_barrier_model);
 
                 cout << endl;
-                cout << "Lives left: " << lives << "   Score: " << score << "   Dodge streak: " << barriers_dodged_in_a_row << endl;
+                color_text(10, hConsole); // Green
+                cout << setw(2) << right << "L" << "ives left: " << lives;
+                color_text(14, hConsole); // Yellow
+                cout << setw(23) << right << "S" << "core: " << score;
+                color_text(11, hConsole); // Light blue
+                cout << setw(24) << right << "D" << "odge streak: " << barriers_dodged_in_a_row << endl;
+                color_text(7, hConsole); // Default white
                 Big_output(
                     lives,
                     score,
                     barriers_dodged_in_a_row,
-                    big_numbers);
+                    big_numbers,
+                    hConsole);
                 cout << endl;
 
                 Movement(
@@ -78,7 +92,8 @@ int main()
                     empty_cell,
                     Vlast_generated_barrier_set,
                     random_barrier_model,
-                    Player_posistion);
+                    Player_posistion,
+                    hConsole);
 
                 Crash(
                     Player_posistion,
@@ -90,21 +105,28 @@ int main()
                     score);
 
                 repetitions++;
-            }
-            Game_over_display(Game_over, score, most_barriers_dodged_in_a_row, players_most_barriers_dodged_in_a_row, High_score, Highest_score);
+            };
+            Game_over_display(
+                Game_over, 
+                score, most_barriers_dodged_in_a_row, 
+                players_most_barriers_dodged_in_a_row, 
+                High_score, 
+                Highest_score,
+                hConsole);
         }
         else if (select == 2) // Skin menu if 2
         {
             Skins_Menu(
                 player_cell,
                 player_models,
-                High_score);
+                High_score,
+                hConsole);
         }
         else if (select == 3) // Saves menu if 3
         {
             while (true)
             {
-                int sub_select = Save_load_Menu();
+                int sub_select = Save_load_Menu(hConsole);
                 if (sub_select == 1) // Load menu if 1
                 {
                     Pre_load_saves(saves_premap, player_dodge_saves_premap, player_saves, player_dodge_saves, Highest_score);

@@ -383,12 +383,14 @@ const vector <vector <string>> player_models = {
 void Skins_Menu(
     vector <string>& player_cell,
     const vector <vector <string>>& player_models,
-    const int& High_score);
+    const int& High_score,
+    HANDLE& hConsole);
 
 
 // Menu for picking skins(unavailable atm), playing, saving (unavailable atm), or quiting
 int Menu(
-    const vector < vector <string>>& Titles);
+    const vector < vector <string>>& Titles,
+    HANDLE& hConsole);
 
 
 // Asks the user where the want to move to and then displays a short movement animation
@@ -398,7 +400,8 @@ void Movement(
 	const vector <string>& empty_cell,
 	vector <int>& Vlast_generated_barrier_set,
 	vector <int>& random_barrier_model,
-	vector <int>& Player_posistion);
+	vector <int>& Player_posistion,
+    HANDLE& hConsole);
 
 
 // Old_Layer outputs the previous new layer.
@@ -445,11 +448,12 @@ void Game_over_display(
     const int& most_barriers_dodged_in_a_row,
     int& players_most_barriers_dodged_in_a_row,
     int& High_score,
-    int& Highest_score);
+    int& Highest_score,
+    HANDLE& hConsole);
 
 
 // Sub menu for saving or loading.
-int Save_load_Menu();
+int Save_load_Menu(HANDLE& hConsole);
 
 
 // Loads the saves of the games.
@@ -483,7 +487,8 @@ void Big_output(
     const int& lives,
     const int& score,
     const int& barriers_dodged_in_a_row,
-    const vector <vector <string>>& big_numbers);
+    const vector <vector <string>>& big_numbers,
+    HANDLE& hConsole);
 
 
 // About page.
