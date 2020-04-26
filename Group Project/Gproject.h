@@ -14,8 +14,6 @@ using std::cin;
 using std::endl;
 #include <vector>
 using std::vector;
-#include <cstdlib>
-#include <ctime>
 #include <Windows.h>
 #include <random>
 using std::random_device;
@@ -241,12 +239,76 @@ const vector <string> barrier_model_3 = { // "Person A" box
  "|                            |",
 };
 
+const vector <string> barrier_model_4 = { // Owl box
+ "|                            |",
+ "|   H>==================<H   |",
+ "|   Y \\                / Y   |",
+ "|   |  \\ ____________ /  |   |",
+ "|   |   |            |   |   |",
+ "|   |   |   (\\___/)  |   |   |",
+ "|   |   |   (o\\ /o)  |   |   |",
+ "|   |   |  /|:.V.:|\\ |   |   |",
+ "|   |   |__\\\\::::://_|   |   |",
+ "|   | _-    `\"\" \"\"`   -_ |   |",
+ "|   I>==================<I   |",
+ "|                            |",
+};
+
+const vector <string> barrier_model_5 = { // Cocker spaniel box
+ "|                            |",
+ "|   H>==================<H   |",
+ "|   Y \\                / Y   |",
+ "|   |  \\ ____________ /  |   |",
+ "|   |   |            |   |   |",
+ "|   |   |  .-\"-.     |   |   |",
+ "|   |   | /|6 6|\\    |   |   |",
+ "|   |   |{/(_0_)\\}   |   |   |",
+ "|   |   |__/=o=\\_____|   |   |",
+ "|   | _- (/_/^\\_\\)-'  -_ |   |",
+ "|   I>==================<I   |",
+ "|                            |",
+};
+
+const vector <string> barrier_model_6 = { // Little boat box
+ "|                            |",
+ "|   H>==================<H   |",
+ "|   Y \\                / Y   |",
+ "|   |  \\ ____________ /  |   |",
+ "|   |   |            |   |   |",
+ "|   |   |     ,~     |   |   |",
+ "|   |   |     |\\     |   |   |",
+ "|   |   |    /| \\    |   |   |",
+ "|   |~^~'^~ /_|__\\~^~'~^~|   |",
+ "|   |^~^ ~ '======' ~^ ~^|   |",
+ "|   I>==================<I   |",
+ "|                            |",
+};
+
+const vector <string> barrier_model_7 = { // Snowman box
+ "|                            |",
+ "|   H>==================<H   |",
+ "|   Y \\                / Y   |",
+ "|   |  \\ ____________ /  |   |",
+ "|   |   |            |   |   |",
+ "|   |   |    _[_]_   |   |   |",
+ "|   |   |     (\")    |   |   |",
+ "|   |   | `--( : )--'|   |   |",
+ "|   |   |___(  :  )__|   |   |",
+ "|   | _-  \"\"`-...-'\"\" -_ |   |",
+ "|   I>==================<I   |",
+ "|                            |",
+};
+
 // Vector of barrier models
 const vector <vector <string>> barrier_models = {
     empty_cell, // This is the empty cell
     barrier_model_1, // Rabbit box
     barrier_model_2, // Empty box
     barrier_model_3, // "Person A" box
+    barrier_model_4, // Owl box
+    barrier_model_5, // Cocker spaniel box
+    barrier_model_6, // Little boat box
+    barrier_model_7 // Snowman box
 };
 
 
@@ -390,7 +452,8 @@ void Skins_Menu(
 // Menu for picking skins(unavailable atm), playing, saving (unavailable atm), or quiting
 int Menu(
     const vector < vector <string>>& Titles,
-    HANDLE& hConsole);
+    HANDLE& hConsole,
+    random_device& r);
 
 
 // Asks the user where the want to move to and then displays a short movement animation
@@ -415,7 +478,8 @@ void New_Layer(
 	const vector <vector <string>>& barrier_models,
 	const vector <int>& Vrandom_barrier_set,
 	const int& repititions,
-	vector <int>& random_barrier_model);
+	vector <int>& random_barrier_model,
+    random_device& r);
 
 
 // Layers contains the functions and code to output all the visuals.
@@ -427,7 +491,8 @@ void Layers(
 	const int& repetitions,
 	vector <int>& Vlast_generated_barrier_set,
 	vector <int>& Vrandom_barrier_set,
-	vector <int>& random_barrier_model);
+	vector <int>& random_barrier_model,
+    random_device& r);
 
 
 // Crash determines whether or not the player has hit an obsticle

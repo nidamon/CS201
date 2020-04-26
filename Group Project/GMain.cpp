@@ -45,11 +45,12 @@ int main()
     Pre_load_saves(saves_premap, player_dodge_saves_premap, player_saves, player_dodge_saves, Highest_score);
     system("cls"); // refreshes the console screen.
 
+    random_device r;
 
     // Menu loops over everything --> backout brings to menu
     while (true)
     {
-        int select = Menu(Titles, hConsole); // Outputs the title
+        int select = Menu(Titles, hConsole, r); // Outputs the title
 
         if (select == 1) // Play if 1
         {
@@ -68,7 +69,8 @@ int main()
                     repetitions,
                     Vlast_generated_barrier_set,
                     Vrandom_barrier_set,
-                    random_barrier_model);
+                    random_barrier_model,
+                    r);
 
                 cout << endl;
                 color_text(10, hConsole); // Green

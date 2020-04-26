@@ -148,21 +148,18 @@ void New_Layer(
 	const vector<vector<string>>& barrier_models,
 	const vector <int>& Vrandom_barrier_set,
 	const int& repetitions,
-	vector <int>& random_barrier_model)
+	vector <int>& random_barrier_model,
+	random_device& r)
 {
+	std::default_random_engine e1(r());
+	std::uniform_int_distribution<int> uniform_dist(1, (barrier_models.size() - 1)); // Gets a random value between 1 and barrier_models.size().
+
 	for (int i = 0; i < 3; i++)
 	{
 		if (Vrandom_barrier_set[i] == 1) // Picks a random barrier model.
-			random_barrier_model[i] = (((((rand()) + repetitions) % (11 + 2 * i)) % (barrier_models.size() - 1)) + 1); // Will need to change the 3 when more than 3 barrier models are made.
+			random_barrier_model[i] = (uniform_dist(e1)); // Will need to change the 3 when more than 3 barrier models are made.
 		else
 			random_barrier_model[i] = 0;
-	}
-	
-// Generates the bottom layer.
-	for (int i = 0; i < 12; i++) {
-		cout << barrier_models[random_barrier_model[0]][i];
-		cout << barrier_models[random_barrier_model[1]][i];
-		cout << barrier_models[random_barrier_model[2]][i] << endl;
 	}
 }
 
@@ -190,50 +187,64 @@ void Layers(
 	const int& repetitions,
 	vector <int>& Vlast_generated_barrier_set,
 	vector <int>& Vrandom_barrier_set,
-	vector <int>& random_barrier_model)
-{	
-	int randvalue = 0; 
+	vector <int>& random_barrier_model,
+	random_device& r)
+{
 	int image_movement = 0;
 
-	srand(time(0));
-	randvalue = (((rand()) + repetitions) % 6); // Gets a random value between 0 and 5.
-	switch (randvalue) // Picks between 6 different variations of barrier setups.
-	{
-	case 0:
-		Vrandom_barrier_set = { 1 , 0 , 0 };
-		break;
-	case 1:
-		Vrandom_barrier_set = { 1 , 1 , 0 };
-		break;
-	case 2:
-		Vrandom_barrier_set = { 1 , 0 , 1 };
-		break;
-	case 3:
-		Vrandom_barrier_set = { 0 , 1 , 0 };
-		break;
-	case 4:
-		Vrandom_barrier_set = { 0 , 1 , 1 };
-		break;
-	case 5:
-		Vrandom_barrier_set = { 0 , 0 , 1 };
-		break;
-	}	
+	std::default_random_engine e1(r());
+	std::uniform_int_distribution<int> uniform_dist(0, 5); // Gets a random value between 0 and 5.
 
+	while (true) {
+		switch (uniform_dist(e1)) // Picks between 6 different variations of barrier setups.
+		{
+		case 0:
+			Vrandom_barrier_set = { 1 , 0 , 0 };
+			break;
+		case 1:
+			Vrandom_barrier_set = { 1 , 1 , 0 };
+			break;
+		case 2:
+			Vrandom_barrier_set = { 1 , 0 , 1 };
+			break;
+		case 3:
+			Vrandom_barrier_set = { 0 , 1 , 0 };
+			break;
+		case 4:
+			Vrandom_barrier_set = { 0 , 1 , 1 };
+			break;
+		case 5:
+			Vrandom_barrier_set = { 0 , 0 , 1 };
+			break;
+		}
+		int count_check = 0;
+		for (int i = 0; i < 3; i++)
+		{
+			if (Vlast_generated_barrier_set[i] > 0)
+				if (Vrandom_barrier_set[i] == 1)
+					count_check++;
+			if (Vlast_generated_barrier_set[i] == 0)
+				if (Vrandom_barrier_set[i] == 0)
+					count_check++;
+		}
+		if (count_check < 3)
+			break;
+	}
 	//vector <int> random_barrier_model(3, 0);
-
+	New_Layer(barrier_models, Vrandom_barrier_set, repetitions, random_barrier_model, r);
 	while (image_movement != 6)
 	{
 		system("cls"); // refreshes the console screen.
 
-	// Generates the top layer the rapidly shrinks.
+	// Generates the top layer that rapidly shrinks.
 		for (int i = image_movement; i < 12; i++) {
 			cout << empty_cell[i] << empty_cell[i] << empty_cell[i] << endl;
 		}
 
 		Old_Layer(barrier_models, Vlast_generated_barrier_set);
 
-	// Generates the middle layer with the player model.
-		for (int i = 0; i < 12; i++) 
+		// Generates the middle layer with the player model.
+		for (int i = 0; i < 12; i++)
 		{
 			for (size_t k = 0; k < Player_posistion.size(); k++)
 			{
@@ -245,9 +256,14 @@ void Layers(
 			cout << endl;
 		}
 
-		New_Layer(barrier_models, Vrandom_barrier_set, repetitions, random_barrier_model);
+		// Generates the bottom layer.
+		for (int i = 0; i < 12; i++) {
+			cout << barrier_models[random_barrier_model[0]][i];
+			cout << barrier_models[random_barrier_model[1]][i];
+			cout << barrier_models[random_barrier_model[2]][i] << endl;
+		}
 
-	// Generates a new layer with empty cells that increases in size.
+		// Generates a new layer with empty cells that increases in size.
 		for (int i = 0; i < image_movement; i++) {
 			cout << empty_cell[i] << empty_cell[i] << empty_cell[i] << endl;
 		}
@@ -258,7 +274,7 @@ void Layers(
 		Sleep(0050);
 
 		image_movement = image_movement + 2; // Determines how many times the overall image makes small shifts.
-	}	
+	}
 }
 
 
@@ -299,13 +315,14 @@ void Crash(
 // Menu for picking skins, playing, saving, or quiting
 int Menu(
 	const vector < vector <string>>& Titles,
-	HANDLE& hConsole)
+	HANDLE& hConsole,
+	random_device& r)
 {
 	auto color_text = [](int color, HANDLE& hConsole) // Color based on input
 	{
 		SetConsoleTextAttribute(hConsole, color);
 	};
-	random_device r;
+
 	std::default_random_engine e1(r());
 	std::uniform_int_distribution<int> uniform_dist(0, 2);
 
@@ -541,7 +558,7 @@ int Pre_load_saves(
 
 	size_t selections = player_saves.size();
 	Highest_score = player_saves[1].second; // Determines the highest score among the saves
-	for (auto i = 1; i < selections-1; i++)
+	for (size_t i = 1; i < selections-1; i++)
 	{
 		if (Highest_score < player_saves[i].second)
 			Highest_score = player_saves[i].second;
@@ -560,7 +577,7 @@ int Load_game(
 {
 	system("cls"); // refreshes the console screen.
 
-	size_t selections = player_saves.size();
+	int selections = player_saves.size();
 
 	int dodge = 0;
 	cout << "  Saves:" << endl; // Outputs the saves
@@ -819,7 +836,6 @@ void Skins_Menu(
 			if (instream)
 				if (sub_select > -1)
 					if (sub_select < player_models.size() + 2)
-
 						break;
 			cout << "You need to enter an integer: ";
 		}
