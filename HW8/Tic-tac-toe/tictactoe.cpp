@@ -10,10 +10,10 @@ It's predecessor was Grid.cpp from HW1.
 
 int main()
 {
-
 	Tactoe game;
 	game.run();
 
+	cout << endl;
 	// Stops the console from closing.
 	cout << "Program end" << endl;
 	int q;
@@ -48,7 +48,6 @@ void Tactoe::user_input()
 					}
 		cout << "You need to enter an integer between 1-9 that has not been chosen yet: ";
 	}
-	_turn++;
 }
 
 // Displays the game board and made use of some lambda functions in this member function
@@ -145,6 +144,12 @@ void Tactoe::run()
 			win_loss_check();
 		if (_blue_win || _red_win)
 			break;
+		_turn++;
+		if (_turn == 9)
+		{
+			cout << "Tie!";
+			break;
+		}
 		cout << "Pick a place (1-9): ";
 		user_input();
 	}
